@@ -1,0 +1,275 @@
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ 🚀 DeepEval Evaluation Results                                                                                                             │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_0 (Passed 2 metrics)                                                                                                          │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                            │
+│  ❌ test_case_1                                                                                                                            │
+│  ├──   Input:              What four components make up the Agent Toolkit for AWS?                                                         │
+│  │     Actual Output:      The four components are the AWS MCP Server, Agent skills, Plugins, and Rules files.                             │
+│  │     Expected Output:    The four components are the AWS MCP Server, Agent skills, Plugins, and Rules files.                             │
+│  └── Metrics                                                                                                                               │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                           │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Contextual Recall    │ 0.00  │ 0.70      │ The score is 0.00 because the expected output sentence about the four            │
+│              │                      │       │           │ components does not align with any information in the node(s) in retrieval       │
+│              │                      │       │           │ context.                                                                         │
+│        PASS  │ Contextual Precision │ 1.00  │ 0.70      │ The score is 1.00 because all relevant nodes ar...                               │
+│                                                                                                                                            │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_2 (Passed 2 metrics)                                                                                                          │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_3 (Passed 2 metrics)                                                                                                          │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                            │
+│  ❌ test_case_4                                                                                                                            │
+│  ├──   Input:              Why should older AWS API MCP Server or AWS Knowledge MCP Server entries be removed when switching to the AWS    │
+│  │                         MCP Server?                                                                                                     │
+│  │     Actual Output:      They should be removed to avoid tool conflicts that can confuse AI agents and reduce performance. The guide     │
+│  │                         recommends switching to the managed AWS MCP Server because it reduces setup and maintenance effort and          │
+│  │                         provides enhanced security controls through IAM condition keys.                                                 │
+│  │     Expected Output:    They should be removed to avoid tool conflicts that can confuse AI agents and reduce performance. The guide     │
+│  │                         recommends switching to the managed AWS MCP Server because it reduces setup and maintenance effort and          │
+│  │                         provides enhanced security controls through IAM condition keys.                                                 │
+│  └── Metrics                                                                                                                               │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                           │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Contextual Recall    │ 0.50  │ 0.70      │ The score is 0.50 because the expected output mentions removing older servers    │
+│              │                      │       │           │ to avoid conflicts, which aligns with node 1 in the retrieval context but does   │
+│              │                      │       │           │ not cover the other recommendations about switching to the managed AWS MCP       │
+│              │                      │       │           │ Server.                                                                          │
+│        PASS  │ Contextual Precision │ 1.00  │ 0.70      │ The score is 1.00 because all relevant nodes (n...                               │
+│                                                                                                                                            │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_5 (Passed 2 metrics)                                                                                                          │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                            │
+│  ❌ test_case_6                                                                                                                            │
+│  ├──   Input:              What are AWS Knowledge Tools provided by the AWS MCP Server?                                                    │
+│  │     Actual Output:      They include aws___retrieve_skill for retrieving domain-specific AWS expertise, aws___search_documentation      │
+│  │                         for searching AWS documentation and skills, aws___read_documentation for retrieving AWS documentation as        │
+│  │                         markdown, aws___list_regions for listing AWS Regions, and aws___get_regional_availability for checking          │
+│  │                         regional availability.                                                                                          │
+│  │     Expected Output:    They include aws___retrieve_skill for retrieving domain-specific AWS expertise, aws___search_documentation      │
+│  │                         for searching AWS documentation and skills, aws___read_documentation for retrieving AWS documentation as        │
+│  │                         markdown, aws___list_regions for listing AWS Regions, and aws___get_regional_availability for checking          │
+│  │                         regional availability.                                                                                          │
+│  └── Metrics                                                                                                                               │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                           │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        PASS  │ Contextual Recall    │ 1.00  │ 0.70      │ The score is 1.00 because all sentences in the ...                               │
+│        FAIL  │ Contextual Precision │ 0.58  │ 0.70      │ The score is 0.58 because nodes 1 and 4-6 are ranked higher than they should     │
+│              │                      │       │           │ be, as their reasons indicate they are irrelevant to the input. Node 2 and       │
+│              │                      │       │           │ node 3, which provide relevant information about AWS Knowledge Tools, are        │
+│              │                      │       │           │ ranked correctly.                                                                │
+│                                                                                                                                            │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                            │
+│  ❌ test_case_7                                                                                                                            │
+│  ├──   Input:              What is an Agent Toolkit skill and how do agents use it?                                                        │
+│  │     Actual Output:      A skill is a directory containing a SKILL.md file and optional supporting files. The instructions describe      │
+│  │                         the steps, APIs, mistakes to avoid, and verification procedures for a task. Agents determine whether a skill    │
+│  │                         is relevant, load its instructions, follow its procedures, and release the skill content after the task.        │
+│  │     Expected Output:    A skill is a directory containing a SKILL.md file and optional supporting files. The instructions describe      │
+│  │                         the steps, APIs, mistakes to avoid, and verification procedures for a task. Agents determine whether a skill    │
+│  │                         is relevant, load its instructions, follow its procedures, and release the skill content after the task.        │
+│  └── Metrics                                                                                                                               │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                           │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Contextual Recall    │ 0.50  │ 0.70      │ The score is 0.50 because the expected output discusses the structure and        │
+│              │                      │       │           │ content of a skill, which partially aligns with the node in the retrieval        │
+│              │                      │       │           │ context mentioning skills providing structured guidance. However, the provided   │
+│              │                      │       │           │ supportive reason only partly matches, while the unsupportive reason indicates   │
+│              │                      │       │           │ no clear alignment.                                                              │
+│        FAIL  │ Contextual Precision │ 0.42  │ 0.70      │ The score is 0.42 because nodes ranked 1 and 5 are irrelevant to the input,      │
+│              │                      │       │           │ ranking lower than relevant nodes 3 and 4. Node 1 explains restrictions on       │
+│              │                      │       │           │ agent actions but does not address skills or their usage. Node 5 discusses       │
+│              │                      │       │           │ skill management commands instead of defining what a skill is or how agents      │
+│              │                      │       │           │ use them.                                                                        │
+│                                                                                                                                            │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_8 (Passed 2 metrics)                                                                                                          │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                            │
+│  ❌ test_case_9                                                                                                                            │
+│  ├──   Input:              What CloudWatch metrics are available for the AWS MCP Server?                                                   │
+│  │     Actual Output:      The available metrics are Invocation, Success, UserError, SystemError, and Throttle. They measure tool          │
+│  │                         invocations, successful requests, 4XX client errors excluding throttles, 5XX server errors, and 429             │
+│  │                         throttled requests respectively.                                                                                │
+│  │     Expected Output:    The available metrics are Invocation, Success, UserError, SystemError, and Throttle. They measure tool          │
+│  │                         invocations, successful requests, 4XX client errors excluding throttles, 5XX server errors, and 429             │
+│  │                         throttled requests respectively.                                                                                │
+│  └── Metrics                                                                                                                               │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                           │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Contextual Recall    │ 0.00  │ 0.70      │ The score is 0.00 because the expected output does not contain any information   │
+│              │                      │       │           │ about the specific metrics mentioned in the retrieval context, such as           │
+│              │                      │       │           │ Invocation, Success, UserError, SystemError, and Throttle.                       │
+│        PASS  │ Contextual Precision │ 1.00  │ 0.70      │ The score is 1.00 because all relevant nodes (r...                               │
+│                                                                                                                                            │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_10 (Passed 2 metrics)                                                                                                         │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_11 (Passed 2 metrics)                                                                                                         │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_12 (Passed 2 metrics)                                                                                                         │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_13 (Passed 2 metrics)                                                                                                         │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_14 (Passed 2 metrics)                                                                                                         │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                            │
+│  ❌ test_case_15                                                                                                                           │
+│  ├──   Input:              What is Azure Cognitive Search's pricing model?                                                                 │
+│  │     Actual Output:      This is not covered in the provided documentation.                                                              │
+│  │     Expected Output:    This is not covered in the provided documentation.                                                              │
+│  └── Metrics                                                                                                                               │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                           │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Contextual Recall    │ 0.00  │ 0.70      │ The score is 0.00 because the sentence 'This is not covered in the provided      │
+│              │                      │       │           │ documentation.' does not match any part of the retrieval context provided.       │
+│        FAIL  │ Contextual Precision │ 0.00  │ 0.70      │ The score is 0.00 because all nodes are ranked as irrelevant (verdict 'no'),     │
+│              │                      │       │           │ starting from the first node which states that it does not provide information   │
+│              │                      │       │           │ about Azure Cognitive Search's pricing model. Each subsequent node further       │
+│              │                      │       │           │ confirms irrelevance by discussing unrelated topics such as Amazon CloudSearch   │
+│              │                      │       │           │ features, operations, and access permissions.                                    │
+│                                                                                                                                            │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                            │
+│  ❌ test_case_16                                                                                                                           │
+│  ├──   Input:              How does Amazon CloudSearch automatically scale for increasing data volume?                                     │
+│  │     Actual Output:      When the data exceeds the capacity of the current search instance type, CloudSearch scales to a larger          │
+│  │                         instance type. If the data exceeds the largest instance type, it partitions the search index across multiple    │
+│  │                         search instances. When the data volume shrinks, it can scale down to fewer or smaller instances.                │
+│  │     Expected Output:    When the data exceeds the capacity of the current search instance type, CloudSearch scales to a larger          │
+│  │                         instance type. If the data exceeds the largest instance type, it partitions the search index across multiple    │
+│  │                         search instances. When the data volume shrinks, it can scale down to fewer or smaller instances.                │
+│  └── Metrics                                                                                                                               │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                           │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Contextual Recall    │ 0.67  │ 0.70      │ The score is 0.67 because the supportive reasons align well with the second      │
+│              │                      │       │           │ node in the retrieval context, which discusses scaling to a larger instance      │
+│              │                      │       │           │ type and partitioning across multiple instances when data exceeds capacity.      │
+│              │                      │       │           │ However, there's no direct attribution for the part about scaling down,          │
+│              │                      │       │           │ leading to a moderate score.                                                     │
+│        PASS  │ Contextual Precision │ 0.89  │ 0.70      │ The score is 0.89 because the first three nodes...                               │
+│                                                                                                                                            │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                            │
+│  ❌ test_case_17                                                                                                                           │
+│  ├──   Input:              What is a dynamic field in Amazon CloudSearch?                                                                  │
+│  │     Actual Output:      A dynamic field is defined using a wildcard at the beginning, end, or as the only character in the field        │
+│  │                         name. Its pattern determines which unrecognized document fields inherit its indexing options. Regular index     │
+│  │                         fields take precedence over dynamic fields.                                                                     │
+│  │     Expected Output:    A dynamic field is defined using a wildcard at the beginning, end, or as the only character in the field        │
+│  │                         name. Its pattern determines which unrecognized document fields inherit its indexing options. Regular index     │
+│  │                         fields take precedence over dynamic fields.                                                                     │
+│  └── Metrics                                                                                                                               │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                           │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        PASS  │ Contextual Recall    │ 1.00  │ 0.70      │ The score is 1.00 because all sentences in the ...                               │
+│        FAIL  │ Contextual Precision │ 0.50  │ 0.70      │ The score is 0.50 because the first and third nodes are ranked higher than       │
+│              │                      │       │           │ relevant ones (ranked 2 and 4), which should be lower. Specifically, node 1's    │
+│              │                      │       │           │ reason indicates it does not discuss dynamic fields defined with wildcards,      │
+│              │                      │       │           │ while node 3 incorrectly states there is no information about indexing options   │
+│              │                      │       │           │ for unrecognized fields.                                                         │
+│                                                                                                                                            │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_18 (Passed 2 metrics)                                                                                                         │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                            │
+│  ❌ test_case_19                                                                                                                           │
+│  ├──   Input:              What are autocomplete suggesters in Amazon CloudSearch used for?                                                │
+│  │     Actual Output:      Suggesters provide autocomplete suggestions for incomplete queries. They are based on a particular text         │
+│  │                         field and can return matching field values and document IDs; fuzzy matching can also be configured to           │
+│  │                         correct certain typos.                                                                                          │
+│  │     Expected Output:    Suggesters provide autocomplete suggestions for incomplete queries. They are based on a particular text         │
+│  │                         field and can return matching field values and document IDs; fuzzy matching can also be configured to           │
+│  │                         correct certain typos.                                                                                          │
+│  └── Metrics                                                                                                                               │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                           │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Contextual Recall    │ 0.50  │ 0.70      │ The score is 0.50 because the expected output discusses suggesters and their     │
+│              │                      │       │           │ functionality, which aligns with the first node's description of configuring     │
+│              │                      │       │           │ suggesters for autocomplete suggestions. However, there is no clear mention of   │
+│              │                      │       │           │ text fields or document IDs in the retrieval context.                            │
+│        PASS  │ Contextual Precision │ 0.70  │ 0.70      │ The score is 0.70 because the first and last no...                               │
+│                                                                                                                                            │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                            │
+│  ❌ test_case_20                                                                                                                           │
+│  ├──   Input:              What is the maximum number of search hits that can be retrieved at once in Amazon CloudSearch?                  │
+│  │     Actual Output:      The maximum number of hits that can be retrieved at once is 10,000. The size parameter can contain values       │
+│  │                         from 0 through 10,000.                                                                                          │
+│  │     Expected Output:    The maximum number of hits that can be retrieved at once is 10,000. The size parameter can contain values       │
+│  │                         from 0 through 10,000.                                                                                          │
+│  └── Metrics                                                                                                                               │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                           │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        PASS  │ Contextual Recall    │ 1.00  │ 0.70      │ The score is 1.00 because all information in th...                               │
+│        FAIL  │ Contextual Precision │ 0.50  │ 0.70      │ The score is 0.50 because the first and third nodes (ranked 1st and 3rd) are     │
+│              │                      │       │           │ irrelevant, providing information about suggesters, synonyms, replicas, and      │
+│              │                      │       │           │ general limits that do not directly answer the specific question about maximum   │
+│              │                      │       │           │ hits. The second node (ranked 2nd) correctly addresses the query by stating      │
+│              │                      │       │           │ the maximum number of hits is 10,000, but it is ranked lower than other          │
+│              │                      │       │           │ irrelevant nodes.                                                                │
+│                                                                                                                                            │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                            │
+│  ❌ test_case_21                                                                                                                           │
+│  ├──   Input:              What is the current stock price of Amazon.com, Inc.?                                                            │
+│  │     Actual Output:      This is not covered in the provided documentation.                                                              │
+│  │     Expected Output:    This is not covered in the provided documentation.                                                              │
+│  └── Metrics                                                                                                                               │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                           │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Contextual Recall    │ 0.00  │ 0.70      │ The score is 0.00 because the expected output claims something not covered in    │
+│              │                      │       │           │ the documentation, but the retrieval context indicates traffic routing through   │
+│              │                      │       │           │ AWS infrastructure, making it irrelevant to the stated expectation.              │
+│        PASS  │ Contextual Precision │ 1.00  │ 0.70      │ The score is 1.00 because the single relevant n...                               │
+│                                                                                                                                            │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Aggregate Metrics                                                                                                                          │
+│                                                                                                                                            │
+│  Metric                                 ┃ Average Score             ┃ Pass Rate                                              ┃ Total       │
+│ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━ │
+│  Contextual Recall                      │ 0.73                      │ 63.64% | passed=14 | failed=8                          │ 22          │
+│  Contextual Precision                   │ 0.82                      │ 77.27% | passed=17 | failed=5                          │ 22          │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+
+⚠ WARNING: No hyperparameters logged.
+» Log hyperparameters to attribute prompts and models to your test runs.
+
+================================================================================
+
+
+✓ Evaluation completed 🎉! (time taken: 2911.53s | token cost: None)
+» Test Results (22 total tests):
+   » Pass Rate: 50.0% | Passed: 11 | Failed: 11
+
+
+"Suggestions: Increase the Top-K value, though this may decrease precision by introducing noise."

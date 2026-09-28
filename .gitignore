@@ -4,3 +4,4 @@ try.ipynb
 .venv
 .env
 __pycache__/
+.deepeval
