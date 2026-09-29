@@ -1,6 +1,9 @@
 from src._3retrieval.retriever import retrieve_top_k, load_index,rerank_chunks, INDEX_FILE, METADATA_FILE
 from src._4prompts.prompt_templates import build_prompt
 from src._5llm.llm_client import generate_response
+from dotenv import load_dotenv
+import boto3
+import os
 
 def ask(query, index, chunks, retrieve_k=10, top_k=3):
     candidates = retrieve_top_k(query,index, chunks, k=retrieve_k)

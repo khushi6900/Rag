@@ -1,3 +1,7 @@
 .rag-venv
 pdfs
 try.ipynb
+.venv
+.env
+__pycache__/
+.deepeval
