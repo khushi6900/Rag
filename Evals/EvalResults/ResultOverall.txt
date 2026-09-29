@@ -1,0 +1,315 @@
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ 🚀 DeepEval Evaluation Results                                                                                              │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                             │
+│  ❌ test_case_0                                                                                                             │
+│  ├──   Input:            What is the Agent Toolkit for AWS designed to provide AI coding agents?                            │
+│  │     Actual Output:    The Agent Toolkit for AWS is designed to provide AI coding agents the tools, knowledge, and        │
+│  │                       guardrails they need to build, deploy, and manage applications on AWS. It works with the coding    │
+│  │                       agents that developers already use, such as Kiro, Claude Code, Cursor, and Codex, without          │
+│  │                       requiring developers to switch tools or learn a new workflow.                                      │
+│  └── Metrics                                                                                                                │
+│           Status      ┃ Metric                                     ┃ Score        ┃ Threshold            ┃ Reason           │
+│      ━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━  │
+│            PASS       │ Faithfulness                               │ 1.00         │ 0.70                 │ N/A              │
+│            PASS       │ Answer Relevancy                           │ 1.00         │ 0.70                 │ N/A              │
+│            FAIL       │ Contextual Relevancy                       │ 0.68         │ 0.70                 │ N/A              │
+│                                                                                                                             │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_1 (Passed 3 metrics)                                                                                           │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                             │
+│  ❌ test_case_2                                                                                                             │
+│  ├──   Input:            What is the role of the AWS MCP Server in the Agent Toolkit for AWS?                               │
+│  │     Actual Output:    The AWS MCP Server in the Agent Toolkit for AWS is a managed server that gives agents access to    │
+│  │                       AWS through the Model Context Protocol (MCP). It allows Kiro, Claude Code, Cursor, Codex, and      │
+│  │                       other MCP-compatible agents to connect and search AWS documentation and get service                │
+│  │                       information.                                                                                       │
+│  └── Metrics                                                                                                                │
+│           Status      ┃ Metric                                     ┃ Score        ┃ Threshold            ┃ Reason           │
+│      ━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━  │
+│            PASS       │ Faithfulness                               │ 1.00         │ 0.70                 │ N/A              │
+│            FAIL       │ Answer Relevancy                           │ 0.45         │ 0.70                 │ N/A              │
+│            FAIL       │ Contextual Relevancy                       │ 0.42         │ 0.70                 │ N/A              │
+│                                                                                                                             │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                             │
+│  ❌ test_case_3                                                                                                             │
+│  ├──   Input:            What is the difference between OAuth and SigV4 authentication for the AWS MCP Server?              │
+│  │     Actual Output:    I don't have enough information to answer that.                                                    │
+│  └── Metrics                                                                                                                │
+│           Status      ┃ Metric                                     ┃ Score        ┃ Threshold            ┃ Reason           │
+│      ━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━  │
+│            PASS       │ Faithfulness                               │ 1.00         │ 0.70                 │ N/A              │
+│            FAIL       │ Answer Relevancy                           │ 0.00         │ 0.70                 │ N/A              │
+│            PASS       │ Contextual Relevancy                       │ 0.71         │ 0.70                 │ N/A              │
+│                                                                                                                             │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_4 (Passed 3 metrics)                                                                                           │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_5 (Passed 3 metrics)                                                                                           │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                             │
+│  ❌ test_case_6                                                                                                             │
+│  ├──   Input:            What are AWS Knowledge Tools provided by the AWS MCP Server?                                       │
+│  │     Actual Output:    Knowledge tools provide current information – When your agent needs up-to-date information, it     │
+│  │                       can search AWS documentation and retrieve API references. It can also check regional               │
+│  │                       availability and access the latest AWS service information.                                        │
+│  └── Metrics                                                                                                                │
+│           Status      ┃ Metric                                     ┃ Score        ┃ Threshold            ┃ Reason           │
+│      ━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━  │
+│            PASS       │ Faithfulness                               │ 1.00         │ 0.70                 │ N/A              │
+│            PASS       │ Answer Relevancy                           │ 1.00         │ 0.70                 │ N/A              │
+│            FAIL       │ Contextual Relevancy                       │ 0.61         │ 0.70                 │ N/A              │
+│                                                                                                                             │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                             │
+│  ❌ test_case_7                                                                                                             │
+│  ├──   Input:            What is an Agent Toolkit skill and how do agents use it?                                           │
+│  │     Actual Output:    An Agent Toolkit skill is a curated package of instructions, code scripts, and reference           │
+│  │                       materials that helps AI coding agents complete specific AWS tasks. Agents use these skills to      │
+│  │                       bridge the gap between what AI models know from training data and what they need to work           │
+│  │                       effectively with AWS, especially for newer services, complex multi-service workflows, and tasks    │
+│  │                       where best practices matter. Skills can be installed locally through a plugin or discovered at     │
+│  │                       runtime through the AWS MCP Server.                                                                │
+│  └── Metrics                                                                                                                │
+│           Status      ┃ Metric                                     ┃ Score        ┃ Threshold            ┃ Reason           │
+│      ━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━  │
+│            PASS       │ Faithfulness                               │ 1.00         │ 0.70                 │ N/A              │
+│            PASS       │ Answer Relevancy                           │ 1.00         │ 0.70                 │ N/A              │
+│            FAIL       │ Contextual Relevancy                       │ 0.67         │ 0.70                 │ N/A              │
+│                                                                                                                             │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                             │
+│  ❌ test_case_8                                                                                                             │
+│  ├──   Input:            How does the AWS MCP Server use IAM authorization?                                                 │
+│  │     Actual Output:    The AWS MCP Server uses a simplified authorization model that works like the AWS Command Line      │
+│  │                       Interface (AWS CLI) and AWS SDKs. It does not define its own IAM actions, resources, or            │
+│  │                       service-specific condition keys. Instead, it authenticates your request using SigV4, adds MCP      │
+│  │                       condition context keys (aws:ViaAWSMCPService and aws:CalledViaAWSMCP), and forwards the request    │
+│  │                       to the target AWS service, which then authorizes the request using your existing IAM policies.     │
+│  └── Metrics                                                                                                                │
+│           Status      ┃ Metric                                     ┃ Score        ┃ Threshold            ┃ Reason           │
+│      ━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━  │
+│            PASS       │ Faithfulness                               │ 0.83         │ 0.70                 │ N/A              │
+│            PASS       │ Answer Relevancy                           │ 1.00         │ 0.70                 │ N/A              │
+│            FAIL       │ Contextual Relevancy                       │ 0.57         │ 0.70                 │ N/A              │
+│                                                                                                                             │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_9 (Passed 3 metrics)                                                                                           │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                             │
+│  ❌ test_case_10                                                                                                            │
+│  ├──   Input:            What is Amazon CloudSearch?                                                                        │
+│  │     Actual Output:    Amazon CloudSearch is a fully managed service in the cloud that makes it easy to set up,           │
+│  │                       manage, and scale a search solution for your website or application. With Amazon CloudSearch,      │
+│  │                       you can search large collections of data such as web pages, document files, forum posts, or        │
+│  │                       product information. You can quickly add search capabilities without having to become a search     │
+│  │                       expert or worry about hardware provisioning, setup, and maintenance. As your volume of data and    │
+│  │                       traffic fluctuates, Amazon CloudSearch scales to meet your needs.                                  │
+│  └── Metrics                                                                                                                │
+│           Status      ┃ Metric                                     ┃ Score        ┃ Threshold            ┃ Reason           │
+│      ━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━  │
+│            PASS       │ Faithfulness                               │ 1.00         │ 0.70                 │ N/A              │
+│            PASS       │ Answer Relevancy                           │ 1.00         │ 0.70                 │ N/A              │
+│            FAIL       │ Contextual Relevancy                       │ 0.48         │ 0.70                 │ N/A              │
+│                                                                                                                             │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                             │
+│  ❌ test_case_11                                                                                                            │
+│  ├──   Input:            What are the main steps for building a search solution with Amazon CloudSearch?                    │
+│  │     Actual Output:    The main steps for building a search solution with Amazon CloudSearch are:                         │
+│  │                                                                                                                          │
+│  │                       1. Create and configure a search domain.                                                           │
+│  │                       2. Upload the data you want to search to your domain.                                              │
+│  │                                                                                                                          │
+│  │                       Source: cloudsearch-dg.pdf                                                                         │
+│  └── Metrics                                                                                                                │
+│           Status      ┃ Metric                                     ┃ Score        ┃ Threshold            ┃ Reason           │
+│      ━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━  │
+│            PASS       │ Faithfulness                               │ 1.00         │ 0.70                 │ N/A              │
+│            PASS       │ Answer Relevancy                           │ 0.75         │ 0.70                 │ N/A              │
+│            FAIL       │ Contextual Relevancy                       │ 0.63         │ 0.70                 │ N/A              │
+│                                                                                                                             │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                             │
+│  ❌ test_case_12                                                                                                            │
+│  ├──   Input:            What is a facet in Amazon CloudSearch and what is it used for?                                     │
+│  │     Actual Output:    A facet in Amazon CloudSearch is an index field that represents a category you want to use to      │
+│  │                       refine and filter search results. When you submit search requests to Amazon CloudSearch, you       │
+│  │                       can request facet information to find out how many documents share the same value in a             │
+│  │                       particular field. You can display this information along with the search results and use it to     │
+│  │                       enable users to interactively refine their searches. This is often referred to as faceted          │
+│  │                       navigation or faceted search.                                                                      │
+│  └── Metrics                                                                                                                │
+│           Status      ┃ Metric                                     ┃ Score        ┃ Threshold            ┃ Reason           │
+│      ━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━  │
+│            PASS       │ Faithfulness                               │ 1.00         │ 0.70                 │ N/A              │
+│            PASS       │ Answer Relevancy                           │ 1.00         │ 0.70                 │ N/A              │
+│            FAIL       │ Contextual Relevancy                       │ 0.65         │ 0.70                 │ N/A              │
+│                                                                                                                             │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                             │
+│  ❌ test_case_13                                                                                                            │
+│  ├──   Input:            How does Amazon CloudSearch process search strings before matching documents?                      │
+│  │     Actual Output:    Amazon CloudSearch processes search strings by:                                                    │
+│  │                       • Converting all characters to lowercase                                                           │
+│  │                       • Splitting the string into separate terms on whitespace and punctuation boundaries                │
+│  │                       • Removing terms that are on the stopword list for the field being searched                        │
+│  │                       • Mapping stems and synonyms according to the stemming and synonym options configured for the      │
+│  │                       field being searched                                                                               │
+│  └── Metrics                                                                                                                │
+│           Status      ┃ Metric                                     ┃ Score        ┃ Threshold            ┃ Reason           │
+│      ━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━  │
+│            PASS       │ Faithfulness                               │ 1.00         │ 0.70                 │ N/A              │
+│            PASS       │ Answer Relevancy                           │ 1.00         │ 0.70                 │ N/A              │
+│            FAIL       │ Contextual Relevancy                       │ 0.43         │ 0.70                 │ N/A              │
+│                                                                                                                             │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                             │
+│  ❌ test_case_14                                                                                                            │
+│  ├──   Input:            What are the four query parsers supported by Amazon CloudSearch?                                   │
+│  │     Actual Output:    The four query parsers supported by Amazon CloudSearch are:                                        │
+│  │                       • simple                                                                                           │
+│  │                       • structured                                                                                       │
+│  │                       • lucene                                                                                           │
+│  │                       • dismax                                                                                           │
+│  └── Metrics                                                                                                                │
+│           Status      ┃ Metric                                     ┃ Score        ┃ Threshold            ┃ Reason           │
+│      ━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━  │
+│            PASS       │ Faithfulness                               │ 1.00         │ 0.70                 │ N/A              │
+│            PASS       │ Answer Relevancy                           │ 1.00         │ 0.70                 │ N/A              │
+│            FAIL       │ Contextual Relevancy                       │ 0.61         │ 0.70                 │ N/A              │
+│                                                                                                                             │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                             │
+│  ❌ test_case_15                                                                                                            │
+│  ├──   Input:            What is Azure Cognitive Search's pricing model?                                                    │
+│  │     Actual Output:    I don't have enough information to answer that.                                                    │
+│  └── Metrics                                                                                                                │
+│           Status      ┃ Metric                                     ┃ Score        ┃ Threshold            ┃ Reason           │
+│      ━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━  │
+│            PASS       │ Faithfulness                               │ 1.00         │ 0.70                 │ N/A              │
+│            FAIL       │ Answer Relevancy                           │ 0.00         │ 0.70                 │ N/A              │
+│            FAIL       │ Contextual Relevancy                       │ 0.00         │ 0.70                 │ N/A              │
+│                                                                                                                             │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                             │
+│  ❌ test_case_16                                                                                                            │
+│  ├──   Input:            How does Amazon CloudSearch automatically scale for increasing data volume?                        │
+│  │     Actual Output:    When the amount of data you add to your domain exceeds the capacity of the initial search          │
+│  │                       instance type, Amazon CloudSearch scales your search domain to a larger search instance type.      │
+│  │                       After a domain exceeds the capacity of the largest search instance type, Amazon CloudSearch        │
+│  │                       partitions the search index across multiple search instances. The number of search instances       │
+│  │                       required to hold the index partitions is sometimes referred to as the domain's width.              │
+│  └── Metrics                                                                                                                │
+│           Status      ┃ Metric                                     ┃ Score        ┃ Threshold            ┃ Reason           │
+│      ━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━  │
+│            FAIL       │ Faithfulness                               │ 0.67         │ 0.70                 │ N/A              │
+│            PASS       │ Answer Relevancy                           │ 1.00         │ 0.70                 │ N/A              │
+│            FAIL       │ Contextual Relevancy                       │ 0.63         │ 0.70                 │ N/A              │
+│                                                                                                                             │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                             │
+│  ❌ test_case_17                                                                                                            │
+│  ├──   Input:            What is a dynamic field in Amazon CloudSearch?                                                     │
+│  │     Actual Output:    A dynamic field in Amazon CloudSearch provides a way to index documents without knowing in         │
+│  │                       advance exactly what fields they contain. A dynamic field's name defines a pattern that            │
+│  │                       contains a wildcard (*) as the first, last, or only character. Any unrecognized document field     │
+│  │                       that matches the pattern is configured with the dynamic field's indexing options.                  │
+│  └── Metrics                                                                                                                │
+│           Status      ┃ Metric                                     ┃ Score        ┃ Threshold            ┃ Reason           │
+│      ━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━  │
+│            FAIL       │ Faithfulness                               │ 0.67         │ 0.70                 │ N/A              │
+│            PASS       │ Answer Relevancy                           │ 1.00         │ 0.70                 │ N/A              │
+│            FAIL       │ Contextual Relevancy                       │ 0.52         │ 0.70                 │ N/A              │
+│                                                                                                                             │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_18 (Passed 3 metrics)                                                                                          │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                             │
+│  ❌ test_case_19                                                                                                            │
+│  ├──   Input:            What are autocomplete suggesters in Amazon CloudSearch used for?                                   │
+│  │     Actual Output:    Autocomplete suggesters in Amazon CloudSearch are used to provide suggestions as users enter       │
+│  │                       terms in the Search field. They enable you to display likely matches before users finish typing    │
+│  │                       their queries. Suggestions are based on the contents of a particular text field and are            │
+│  │                       possible matches for an incomplete search query.                                                   │
+│  └── Metrics                                                                                                                │
+│           Status      ┃ Metric                                     ┃ Score        ┃ Threshold            ┃ Reason           │
+│      ━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━  │
+│            PASS       │ Faithfulness                               │ 1.00         │ 0.70                 │ N/A              │
+│            PASS       │ Answer Relevancy                           │ 1.00         │ 0.70                 │ N/A              │
+│            FAIL       │ Contextual Relevancy                       │ 0.53         │ 0.70                 │ N/A              │
+│                                                                                                                             │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                             │
+│  ❌ test_case_20                                                                                                            │
+│  ├──   Input:            What is the maximum number of search hits that can be retrieved at once in Amazon CloudSearch?     │
+│  │     Actual Output:    The maximum number of hits you can retrieve at once in Amazon CloudSearch is 10,000.               │
+│  └── Metrics                                                                                                                │
+│           Status      ┃ Metric                                     ┃ Score        ┃ Threshold            ┃ Reason           │
+│      ━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━  │
+│            PASS       │ Faithfulness                               │ 1.00         │ 0.70                 │ N/A              │
+│            PASS       │ Answer Relevancy                           │ 1.00         │ 0.70                 │ N/A              │
+│            FAIL       │ Contextual Relevancy                       │ 0.36         │ 0.70                 │ N/A              │
+│                                                                                                                             │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                             │
+│  ❌ test_case_21                                                                                                            │
+│  ├──   Input:            What is the current stock price of Amazon.com, Inc.?                                               │
+│  │     Actual Output:    I don't have enough information to answer that.                                                    │
+│  └── Metrics                                                                                                                │
+│           Status      ┃ Metric                                     ┃ Score        ┃ Threshold            ┃ Reason           │
+│      ━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━  │
+│            PASS       │ Faithfulness                               │ 1.00         │ 0.70                 │ N/A              │
+│            PASS       │ Answer Relevancy                           │ 1.00         │ 0.70                 │ N/A              │
+│            FAIL       │ Contextual Relevancy                       │ 0.00         │ 0.70                 │ N/A              │
+│                                                                                                                             │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Aggregate Metrics                                                                                                           │
+│                                                                                                                             │
+│  Metric                             ┃ Average Score          ┃ Pass Rate                                       ┃ Total      │
+│ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━ │
+│  Faithfulness                       │ 0.96                   │ 90.91% | passed=20 | failed=2                   │ 22         │
+│  Answer Relevancy                   │ 0.87                   │ 86.36% | passed=19 | failed=3                   │ 22         │
+│  Contextual Relevancy               │ 0.58                   │ 27.27% | passed=6 | failed=16                   │ 22         │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+
+⚠ WARNING: No hyperparameters logged.
+» Log hyperparameters to attribute prompts and models to your test runs.
+
+================================================================================
+
+
+✓ Evaluation completed 🎉! (time taken: 654.69s | token cost: None)
+» Test Results (22 total tests):
+   » Pass Rate: 22.73% | Passed: 5 | Failed: 17
+
+ ================================================================================ 
+
+» Want to share evals with your team, or a place for your test cases to live? ❤️ 🏡
+  » Run 'deepeval view' to analyze and save testing results on Confident AI.

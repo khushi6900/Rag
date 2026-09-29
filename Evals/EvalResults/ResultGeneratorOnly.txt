@@ -1,0 +1,249 @@
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ 🚀 DeepEval Evaluation Results                                                                                              │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_0 (Passed 2 metrics)                                                                                           │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                             │
+│  ❌ test_case_1                                                                                                             │
+│  ├──   Input:            what is the price per million requests for api gateway http apis?                                  │
+│  │     Actual Output:    I cannot find the answer in the provided context.                                                  │
+│  └── Metrics                                                                                                                │
+│       Status ┃ Metric           ┃ Score ┃ Threshold ┃ Reason                                                                │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        PASS  │ Faithfulness     │ 1.00  │ 0.70      │ The score is 1.00 because there are no contradi...                    │
+│        FAIL  │ Answer Relevancy │ 0.50  │ 0.70      │ The score is 0.50 because the response includes a statement           │
+│              │                  │       │           │ indicating an inability to fulfill the request, directly detracting   │
+│              │                  │       │           │ from relevance. However, the attempt to address the query, even       │
+│              │                  │       │           │ unsuccessfully, prevents a lower score.                               │
+│                                                                                                                             │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                             │
+│  ❌ test_case_2                                                                                                             │
+│  ├──   Input:            who is the current ceo of amazon web services?                                                     │
+│  │     Actual Output:    I cannot find the answer in the provided context.                                                  │
+│  └── Metrics                                                                                                                │
+│       Status ┃ Metric           ┃ Score ┃ Threshold ┃ Reason                                                                │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        PASS  │ Faithfulness     │ 1.00  │ 0.70      │ The score is 1.00 because there are no contradi...                    │
+│        FAIL  │ Answer Relevancy │ 0.50  │ 0.70      │ The score is 0.50 because the response primarily states an            │
+│              │                  │       │           │ inability to answer the question, which is unhelpful and irrelevant   │
+│              │                  │       │           │ to providing the CEO's name. While acknowledging the request, it      │
+│              │                  │       │           │ doesn't fulfill it, limiting its relevancy.                           │
+│                                                                                                                             │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_3 (Passed 2 metrics)                                                                                           │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                             │
+│  ❌ test_case_4                                                                                                             │
+│  ├──   Input:            what is a nat gateway and what connectivity types does it support?                                 │
+│  │     Actual Output:    A NAT gateway is a Network Address Translation (NAT) service. It supports two connectivity         │
+│  │                       types:                                                                                             │
+│  │                                                                                                                          │
+│  │                       • Public – (Default) Instances in private subnets can connect to the internet through a public     │
+│  │                       NAT gateway, but the instances can't receive unsolicited inbound connections from the internet.    │
+│  │                                                                                                                          │
+│  │                       • Private – Instances in private subnets can connect to other VPCs or your on-premises network     │
+│  │                       through a private NAT gateway, but the instances can't receive unsolicited inbound connections     │
+│  │                       from the other VPCs or the on-premises network.                                                    │
+│  └── Metrics                                                                                                                │
+│       Status ┃ Metric           ┃ Score ┃ Threshold ┃ Reason                                                                │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        PASS  │ Faithfulness     │ 1.00  │ 0.70      │ The score is 1.00 because there are no contradi...                    │
+│        FAIL  │ Answer Relevancy │ 0.67  │ 0.70      │ The score is 0.67 because while the response defines a NAT gateway,   │
+│              │                  │       │           │ it includes details about limitations that don't directly address     │
+│              │                  │       │           │ the 'connectivity types' question, reducing its overall relevance.    │
+│              │                  │       │           │ It isn't lower because it *does* provide a basic definition of a      │
+│              │                  │       │           │ NAT gateway, fulfilling part of the request.                          │
+│                                                                                                                             │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_5 (Passed 2 metrics)                                                                                           │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_6 (Passed 2 metrics)                                                                                           │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_7 (Passed 2 metrics)                                                                                           │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_8 (Passed 2 metrics)                                                                                           │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                             │
+│  ❌ test_case_9                                                                                                             │
+│  ├──   Input:            how does api gateway throttle requests?                                                            │
+│  │     Actual Output:    API Gateway throttles requests using the token bucket algorithm, where a token counts for a        │
+│  │                       request. It examines the rate and a burst of request submissions against all APIs in your          │
+│  │                       account, per Region. When request submissions exceed the steady-state request rate and burst       │
+│  │                       limits, API Gateway begins to throttle requests. Clients may receive 429 Too Many Requests         │
+│  │                       error responses at this point.                                                                     │
+│  └── Metrics                                                                                                                │
+│       Status ┃ Metric           ┃ Score ┃ Threshold ┃ Reason                                                                │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        PASS  │ Faithfulness     │ 1.00  │ 0.70      │ The score is 1.00 because there are no contradi...                    │
+│        FAIL  │ Answer Relevancy │ 0.60  │ 0.70      │ The score is 0.60 because the response includes several single-word   │
+│              │                  │       │           │ outputs that don't contribute to explaining API Gateway request       │
+│              │                  │       │           │ throttling, significantly reducing its helpfulness. However, it       │
+│              │                  │       │           │ isn't lower as it likely contains *some* relevant information         │
+│              │                  │       │           │ amidst the noise.                                                     │
+│                                                                                                                             │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_10 (Passed 2 metrics)                                                                                          │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                             │
+│  ❌ test_case_11                                                                                                            │
+│  ├──   Input:            what is an event bus in eventbridge and what types are there?                                      │
+│  │     Actual Output:    An event bus in EventBridge is a router that receives events and delivers them to zero or more     │
+│  │                       destinations, or targets. There are two types of event buses:                                      │
+│  │                                                                                                                          │
+│  │                       1. A default event bus that automatically receives events from AWS services.                       │
+│  │                       2. Custom event buses, which you can create to specify which events they receive.                  │
+│  │                       3. Partner event buses, which receive events from SaaS partners.                                   │
+│  └── Metrics                                                                                                                │
+│       Status ┃ Metric           ┃ Score ┃ Threshold ┃ Reason                                                                │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        PASS  │ Faithfulness     │ 1.00  │ 0.70      │ The score is 1.00 because there are no contradi...                    │
+│        FAIL  │ Answer Relevancy │ 0.67  │ 0.70      │ The score is 0.67 because the response includes repeated labels       │
+│              │                  │       │           │ that don't contribute to explaining event buses or their types,       │
+│              │                  │       │           │ lowering relevancy. However, it does address the core question of     │
+│              │                  │       │           │ what an event bus is in EventBridge, justifying the score being       │
+│              │                  │       │           │ above 0.5.                                                            │
+│                                                                                                                             │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_12 (Passed 2 metrics)                                                                                          │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                             │
+│  ❌ test_case_13                                                                                                            │
+│  ├──   Input:            how do eventbridge archives work and how long are events retained?                                 │
+│  │     Actual Output:    EventBridge archives allow you to specify which events to send to the archive and how long to      │
+│  │                       retain them. You can define an event pattern for filtering the events sent to the archive and      │
+│  │                       specify the number of days to retain events in the archive. By default, EventBridge stores         │
+│  │                       events in an archive indefinitely. Each archive receives events from a single source event bus,    │
+│  │                       and you cannot change the source event bus once an archive is created. You can create multiple     │
+│  │                       archives for a given event bus.                                                                    │
+│  │                                                                                                                          │
+│  │                       I cannot find the answer in the provided context.                                                  │
+│  └── Metrics                                                                                                                │
+│       Status ┃ Metric           ┃ Score ┃ Threshold ┃ Reason                                                                │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        PASS  │ Faithfulness     │ 1.00  │ 0.70      │ The score is 1.00 because there are no contradi...                    │
+│        FAIL  │ Answer Relevancy │ 0.62  │ 0.70      │ The score is 0.62 because while the response touches on EventBridge   │
+│              │                  │       │           │ archives and retention, it includes irrelevant details about          │
+│              │                  │       │           │ archive limitations and acknowledges gaps in information,             │
+│              │                  │       │           │ detracting from a fully focused and accurate answer. It isn't lower   │
+│              │                  │       │           │ because it does attempt to address the core question, but the         │
+│              │                  │       │           │ presence of inaccuracies and irrelevant statements prevents a         │
+│              │                  │       │           │ higher score.                                                         │
+│                                                                                                                             │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_14 (Passed 2 metrics)                                                                                          │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_15 (Passed 2 metrics)                                                                                          │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_16 (Passed 2 metrics)                                                                                          │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_17 (Passed 2 metrics)                                                                                          │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                             │
+│  ❌ test_case_18                                                                                                            │
+│  ├──   Input:            what are rules files in the agent toolkit for aws and where do i put them?                         │
+│  │     Actual Output:    Rules files are project-level configuration files that set guardrails and preferences for how      │
+│  │                       agents work in your project. They tell agents how to use AWS most effectively and securely. The    │
+│  │                       location of the rules file depends on the agent:                                                   │
+│  │                                                                                                                          │
+│  │                       - For **Claude Code**, place the rules file in `CLAUDE.md` at the project root.                    │
+│  │                       - For **Codex**, place the rules file in `AGENTS.md` at the project root.                          │
+│  │                       - For **Cursor**, create a new `.mdc` file in the `.cursor/rules/` directory, for example, name    │
+│  │                       it `.cursor/rules/aws.mdc`.                                                                        │
+│  │                                                                                                                          │
+│  │                       Your agent may still support legacy files, but they are deprecated.                                │
+│  └── Metrics                                                                                                                │
+│       Status ┃ Metric           ┃ Score ┃ Threshold ┃ Reason                                                                │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        PASS  │ Faithfulness     │ 1.00  │ 0.70      │ The score is 1.00 because there are no contradi...                    │
+│        FAIL  │ Answer Relevancy │ 0.67  │ 0.70      │ The score is 0.67 because the output primarily lists filenames and    │
+│              │                  │       │           │ directory names without explaining their function as rules files or   │
+│              │                  │       │           │ providing clear guidance on their placement within the AWS agent      │
+│              │                  │       │           │ toolkit, despite the input directly asking for this information.      │
+│              │                  │       │           │ While it identifies *potential* rule files, it doesn't address the    │
+│              │                  │       │           │ 'rules' aspect or 'where to put them' sufficiently to warrant a       │
+│              │                  │       │           │ higher score.                                                         │
+│                                                                                                                             │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                             │
+│  ❌ test_case_19                                                                                                            │
+│  ├──   Input:            does the agent toolkit for aws cost anything?                                                      │
+│  │     Actual Output:    You can use the Agent Toolkit for AWS for free. You only pay for the AWS resources your agent      │
+│  │                       provisions or interacts with, at standard AWS pricing.                                             │
+│  └── Metrics                                                                                                                │
+│       Status ┃ Metric           ┃ Score ┃ Threshold ┃ Reason                                                                │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        PASS  │ Faithfulness     │ 1.00  │ 0.70      │ The score is 1.00 because there are no contradi...                    │
+│        FAIL  │ Answer Relevancy │ 0.67  │ 0.70      │ The score is 0.67 because while the response generally discusses      │
+│              │                  │       │           │ AWS costs, it includes irrelevant information about overall AWS       │
+│              │                  │       │           │ pricing instead of focusing specifically on the cost of the Agent     │
+│              │                  │       │           │ Toolkit. It's not a low score as it acknowledges cost is a factor,    │
+│              │                  │       │           │ but lacks precise detail.                                             │
+│                                                                                                                             │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_20 (Passed 2 metrics)                                                                                          │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                             │
+│  ❌ test_case_21                                                                                                            │
+│  ├──   Input:            is aws___call_aws deprecated and what should i use instead?                                        │
+│  │     Actual Output:    We deprecated aws___call_aws as of July 15, 2026 and will remove it on August 31, 2026. We         │
+│  │                       recommend using aws___run_script for running AWS operations instead.                               │
+│  └── Metrics                                                                                                                │
+│       Status ┃ Metric           ┃ Score ┃ Threshold ┃ Reason                                                                │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        PASS  │ Faithfulness     │ 1.00  │ 0.70      │ The score is 1.00 because there are no contradi...                    │
+│        FAIL  │ Answer Relevancy │ 0.57  │ 0.70      │ The score is 0.57 because the response includes dates and a           │
+│              │                  │       │           │ 'Deprecated' statement without providing details about *how*          │
+│              │                  │       │           │ `aws___call_aws` is deprecated or, crucially, what the recommended    │
+│              │                  │       │           │ alternatives are. While acknowledging deprecation is a start, the     │
+│              │                  │       │           │ lack of actionable information significantly lowers the relevancy,    │
+│              │                  │       │           │ but it isn't a complete miss as it does acknowledge the status.       │
+│                                                                                                                             │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Aggregate Metrics                                                                                                           │
+│                                                                                                                             │
+│  Metric                       ┃ Average Score           ┃ Pass Rate                                            ┃ Total      │
+│ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━ │
+│  Faithfulness                 │ 1.00                    │ 100.00% | passed=22 | failed=0                       │ 22         │
+│  Answer Relevancy             │ 0.84                    │ 59.09% | passed=13 | failed=9                        │ 22         │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+
+⚠ WARNING: No hyperparameters logged.
+» Log hyperparameters to attribute prompts and models to your test runs.
+
+================================================================================
+
+
+✓ Evaluation completed 🎉! (time taken: 337.04s | token cost: None)
+» Test Results (22 total tests):
+   » Pass Rate: 59.09% | Passed: 13 | Failed: 9
+
+ ================================================================================ 
+
+» Want to share evals with your team, or a place for your test cases to live? ❤️ 🏡
+  » Run 'deepeval view' to analyze and save testing results on Confident AI.
+
