@@ -50,7 +50,7 @@ for i, data in enumerate(goldens, 1):
     test_case.append(LLMTestCase(
         input=query,
         expected_output=data['ground_truth'],
-        actual_output=data['ground_truth'],
+        actual_output=data['ground_truth'], ##This is not used for retriver only fordeeavl
         retrieval_context=text_result,
     ))
 
