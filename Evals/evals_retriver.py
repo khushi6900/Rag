@@ -3,27 +3,54 @@ from deepeval import evaluate
 from deepeval.test_case import LLMTestCase
 from deepeval.metrics import ContextualPrecisionMetric, ContextualRecallMetric
 from deepeval.models.base_model import DeepEvalBaseLLM
-from deepeval.models import OllamaModel
 from deepeval.evaluate import AsyncConfig 
-from src._3retrieval.retriever import (retrieve_and_rerank , 
-                                       load_index,)
+import boto3
+from src._3retrieval.retriever import (retrieve_and_rerank, load_index)
 from dotenv import load_dotenv
 import json
 import os
 import time
 
 load_dotenv()
-GOLDEN_DATA = "GoldenDataSet/golden_dataset.json"
-INDEX_FILE  = "D:/VsCode/AWS-RAG/faiss_index.bin"
-MetaData    = "D:/VsCode/AWS-RAG/chunk_metadata.json"
-os.environ["DEEPEVAL_DISABLE_TIMEOUTS"] = "1"
 
+class BedrockJudge(DeepEvalBaseLLM):
+    def __init__(self, model_id="google.gemma-3-27b-it", region="us-east-1"):
+        self.model_id = model_id
+        self.client = boto3.client("bedrock-runtime", region_name=region)
+
+    def load_model(self):
+        return self.client
+
+    def generate(self, prompt: str) -> str:
+        response = self.client.converse(
+            modelId=self.model_id,
+            messages=[{
+                "role": "user",
+                "content": [{"text": prompt}]
+            }],
+            inferenceConfig={
+                "maxTokens": 2048,
+                "temperature": 0.0
+            }
+        )
+        return response["output"]["message"]["content"][0]["text"]
+
+    async def a_generate(self, prompt: str) -> str:
+        return self.generate(prompt)
+
+    def get_model_name(self) -> str:
+        return f"Bedrock-{self.model_id}"
+
+GOLDEN_DATA = "GoldenDataSet/golden_dataset.json"
+INDEX_FILE  = "faiss_index.bin"
+MetaData    = "chunk_metadata.json"
+os.environ["DEEPEVAL_DISABLE_TIMEOUTS"] = "1"
 os.environ["DEEPEVAL_DISABLE_CACHE"] = "YES"
 
 with open(GOLDEN_DATA) as f:
     goldens = json.load(f)
 
-JUDGE_MODEL = OllamaModel(model = "qwen2.5:7b" , base_url = "http://10.10.2.73:11434")
+JUDGE_MODEL = BedrockJudge(model_id="google.gemma-3-27b-it", region="us-east-1")
 index , chunks = load_index(index_file = INDEX_FILE, metadata_file = MetaData)
 CACHE_FILE = "Evals/retrieval_cache.json"
 cache = json.load(open(CACHE_FILE)) if os.path.exists(CACHE_FILE) else {}
@@ -72,6 +99,3 @@ evaluate(
     metrics = metric,
     async_config = async_config
 )
-
-
-
