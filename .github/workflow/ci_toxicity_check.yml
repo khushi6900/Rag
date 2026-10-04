@@ -1,0 +1,49 @@
+# Path in your repo: .github/workflows/ci-toxicity-test.yml
+#
+# This is your FIRST CI workflow — it only runs one script, on purpose.
+# Once this turns green, you understand CI. Everything after this is
+# just "add more steps."
+
+name: CI - Toxicity Eval Test   # the label you'll see in the Actions tab
+
+on:                              # WHEN should this run?
+  push:
+    branches: [ main ]           # every time you push to main
+  pull_request:
+    branches: [ main ]           # every time someone opens a PR into main
+
+jobs:                           # WHAT should run?
+  test:                         # name of this job (your choice)
+    runs-on: ubuntu-latest      # a fresh, empty Linux computer — nothing
+                                 # installed except what you tell it to
+
+    env:                        # secret values injected as environment
+                                 # variables — never hardcoded, never
+                                 # printed in logs
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+
+    steps:                      # the actual commands, run top to bottom
+
+      - name: Check out your code
+        uses: actions/checkout@v4
+        # downloads your repo's files onto this fresh computer —
+        # without this step, there's no code here at all
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+        # installs Python itself on the fresh computer
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+        # installs whatever packages your scripts import
+        # (boto3, deepeval, etc.) — must be listed in requirements.txt
+
+      - name: Run the toxicity eval script
+        run: python -m Evals.evals_toxicity
+        # -m Evals.evals_toxicity (not a file path) because Evals has
+        # an __init__.py, making it a Python package — this runs it
+        # as a module so internal imports between your eval files work
