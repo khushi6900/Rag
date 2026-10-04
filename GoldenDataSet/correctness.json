@@ -1,0 +1,170 @@
+[
+  {
+    "id": "c001",
+    "query": "what is a vpc and how is it different from a subnet?",
+    "expected_output": "A VPC (virtual private cloud) is a virtual network dedicated to your AWS account and logically isolated from other virtual networks in the AWS Cloud. You can specify its IP address range, add subnets, add gateways, and associate security groups. A subnet is a range of IP addresses within the VPC where you launch AWS resources such as EC2 instances, and you can connect a subnet to the internet, other VPCs, and your own data centers and route its traffic using route tables.",
+    "actual_output": null,
+    "source_doc": "vpc-ug.pdf",
+    "is_unanswerable": false
+  },
+  {
+    "id": "c002",
+    "query": "what are the differences between security groups and network acls?",
+    "expected_output": "Security groups operate at the instance level and apply to all instances associated with the group, while network ACLs operate at the subnet level and apply to all instances in the associated subnets. Security groups have allow rules only and evaluate all rules before deciding, whereas network ACLs have allow and deny rules and evaluate rules in ascending order until a match is found. Security groups are stateful, so return traffic is automatically allowed; network ACLs are stateless, so return traffic must be explicitly allowed. You can secure instances with security groups alone, but network ACLs can be added as an additional layer of defense.",
+    "actual_output": null,
+    "source_doc": "vpc-ug.pdf",
+    "is_unanswerable": false
+  },
+  {
+    "id": "c003",
+    "query": "what is a nat gateway and what connectivity types does it support?",
+    "expected_output": "A NAT gateway is a Network Address Translation service that lets instances in a private subnet connect to services outside the VPC while preventing external services from initiating connections to those instances. It supports two connectivity types: public (the default), which lets private-subnet instances reach the internet, is created in a public subnet and requires an Elastic IP address; and private, which lets instances connect to other VPCs or an on-premises network through a transit gateway or virtual private gateway and cannot have an Elastic IP address associated with it.",
+    "actual_output": null,
+    "source_doc": "vpc-ug.pdf",
+    "is_unanswerable": false
+  },
+  {
+    "id": "c004",
+    "query": "what does an internet gateway do in a vpc?",
+    "expected_output": "An internet gateway is a horizontally scaled, redundant, and highly available VPC component that allows communication between your VPC and the internet, supporting both IPv4 and IPv6 traffic, without availability risks or bandwidth constraints. It lets resources in public subnets that have a public IPv4 or IPv6 address connect to the internet, and lets internet resources initiate connections to them. It also provides a target in VPC route tables for internet-routable traffic.",
+    "actual_output": null,
+    "source_doc": "vpc-ug.pdf",
+    "is_unanswerable": false
+  },
+  {
+    "id": "c005",
+    "query": "what is amazon api gateway and what kinds of apis can it create?",
+    "expected_output": "Amazon API Gateway is an AWS service for creating, publishing, maintaining, monitoring, and securing REST, HTTP, and WebSocket APIs at any scale. Its REST APIs are HTTP-based, enable stateless client-server communication, and implement standard HTTP methods such as GET, POST, PUT, PATCH, and DELETE. Its WebSocket APIs follow the WebSocket protocol for stateful, full-duplex communication and route incoming messages based on message content.",
+    "actual_output": null,
+    "source_doc": "apigateway-dg.pdf",
+    "is_unanswerable": false
+  },
+  {
+    "id": "c006",
+    "query": "should i use rest apis or http apis in api gateway?",
+    "expected_output": "REST APIs support more features than HTTP APIs, while HTTP APIs are designed with minimal features so they can be offered at a lower price. Choose REST APIs if you need features such as API keys, per-client throttling, request validation, AWS WAF integration, or private API endpoints. Choose HTTP APIs if you don't need the features included with REST APIs.",
+    "actual_output": null,
+    "source_doc": "apigateway-dg.pdf",
+    "is_unanswerable": false
+  },
+  {
+    "id": "c007",
+    "query": "how does a lambda authorizer work in api gateway?",
+    "expected_output": "A Lambda authorizer (formerly a custom authorizer) controls access to your API. When a client makes a request to an API method, API Gateway calls the Lambda authorizer, which takes the caller's identity as input and returns an IAM policy as output. It can be used to implement a custom authorization scheme that uses request parameters to determine the caller's identity or a bearer token strategy such as OAuth or SAML.",
+    "actual_output": null,
+    "source_doc": "apigateway-dg.pdf",
+    "is_unanswerable": false
+  },
+  {
+    "id": "c008",
+    "query": "how does api gateway throttle requests?",
+    "expected_output": "API Gateway throttles requests using the token bucket algorithm, where a token counts for a request. It examines the rate and burst of request submissions against all APIs in your account, per Region. When submissions exceed the steady-state request rate and burst limits, API Gateway begins to throttle requests and clients may receive 429 Too Many Requests errors. Throttles and quotas are applied on a best-effort basis and are targets rather than guaranteed ceilings.",
+    "actual_output": null,
+    "source_doc": "apigateway-dg.pdf",
+    "is_unanswerable": false
+  },
+  {
+    "id": "c009",
+    "query": "what is amazon eventbridge and what two ways does it offer to process events?",
+    "expected_output": "EventBridge is a serverless service that uses events to connect application components together, making it easier to build scalable event-driven applications. It offers two ways to process and deliver events: event buses, which are routers that receive events and deliver them to zero or more targets and suit routing from many sources to many targets, and pipes, which are intended for point-to-point integrations where each pipe receives events from a single source and delivers them to a single target, with support for advanced transformation and enrichment.",
+    "actual_output": null,
+    "source_doc": "user-guide.pdf",
+    "is_unanswerable": false
+  },
+  {
+    "id": "c010",
+    "query": "what is an event bus in eventbridge and what types are there?",
+    "expected_output": "An event bus is a router that receives events and delivers them to zero or more destinations, or targets. Use one when you need to route events from many sources to many targets, with optional transformation before delivery. Your account includes a default event bus that automatically receives events from AWS services. You can also create custom event buses and specify which events they receive, and partner event buses that receive events from SaaS partners.",
+    "actual_output": null,
+    "source_doc": "user-guide.pdf",
+    "is_unanswerable": false
+  },
+  {
+    "id": "c011",
+    "query": "what is eventbridge scheduler and when should i use it instead of scheduled rules?",
+    "expected_output": "EventBridge Scheduler is a serverless scheduler for creating, running, and managing tasks from one central managed service. It supports cron and rate expressions for recurring patterns and one-time invocations, flexible delivery time windows, retry limits, and maximum retention time for failed API invocations. It offers improved scalability over EventBridge scheduled rules with a wider set of target API operations and AWS services, and AWS recommends using it to invoke targets on a schedule.",
+    "actual_output": null,
+    "source_doc": "user-guide.pdf",
+    "is_unanswerable": false
+  },
+  {
+    "id": "c012",
+    "query": "how do eventbridge archives work and how long are events retained?",
+    "expected_output": "When you create an archive you can specify an event pattern to filter which events are sent to it and how long to retain them. You set the retention as a number of days, and by default EventBridge stores events in an archive indefinitely. Each archive receives events from a single source event bus that cannot be changed after creation, and you can create multiple archives for a given event bus.",
+    "actual_output": null,
+    "source_doc": "user-guide.pdf",
+    "is_unanswerable": false
+  },
+  {
+    "id": "c013",
+    "query": "what is the aws cdk and what are its two main parts?",
+    "expected_output": "The AWS CDK is an open-source software development framework for defining cloud infrastructure in code and provisioning it through AWS CloudFormation. It has two primary parts: the AWS CDK Construct Library, a collection of pre-written modular reusable constructs, and the AWS CDK Toolkit, which includes the CDK CLI and a programmatic library for tasks such as synthesis and deployment. It supports TypeScript, JavaScript, Python, Java, C#/.NET, and Go.",
+    "actual_output": null,
+    "source_doc": "awscdk.pdf",
+    "is_unanswerable": false
+  },
+  {
+    "id": "c014",
+    "query": "what are l1, l2 and l3 constructs in the aws cdk?",
+    "expected_output": "Constructs come in three levels of increasing abstraction. L1 constructs (CFN resources, named starting with Cfn) map directly to a single CloudFormation resource and offer no abstraction, giving complete control. L2 constructs are curated constructs that also map to single CloudFormation resources but provide an intent-based API with sensible defaults, best-practice security policies, and helper methods. L3 constructs, also known as patterns, are the highest level and contain collections of resources configured to work together for a specific task or architecture.",
+    "actual_output": null,
+    "source_doc": "awscdk.pdf",
+    "is_unanswerable": false
+  },
+  {
+    "id": "c015",
+    "query": "what is cdk bootstrapping and what resources does it create?",
+    "expected_output": "Bootstrapping is the process of preparing your AWS environment for use with the AWS CDK, and an environment must be bootstrapped before you deploy a CDK stack into it. It provisions bootstrap resources: an Amazon S3 bucket to store CDK project files such as Lambda function code and assets, an Amazon ECR repository used primarily for Docker images, and IAM roles that grant the permissions the CDK needs to perform deployments.",
+    "actual_output": null,
+    "source_doc": "awscdk.pdf",
+    "is_unanswerable": false
+  },
+  {
+    "id": "c016",
+    "query": "what is a stack in the aws cdk?",
+    "expected_output": "An AWS CDK stack is the smallest single unit of deployment. It represents a collection of AWS resources defined with CDK constructs, and when you deploy a CDK app the resources in a stack are deployed together as an AWS CloudFormation stack. You define a stack by extending or inheriting from the Stack construct.",
+    "actual_output": null,
+    "source_doc": "awscdk.pdf",
+    "is_unanswerable": false
+  },
+  {
+    "id": "c017",
+    "query": "what are rules files in the agent toolkit for aws and where do i put them?",
+    "expected_output": "Rules files are project-level configuration files that set guardrails and preferences for how agents work in your project, telling them how to use AWS effectively and securely, for example by directing them to use the AWS MCP Server, discover skills, or search documentation before acting. Location depends on the agent: CLAUDE.md in the project root for Claude Code, AGENTS.md in the project root for Codex, a .mdc file in .cursor/rules/ for Cursor, and a .md file in .kiro/steering/ for Kiro.",
+    "actual_output": null,
+    "source_doc": "mcp-ug.pdf",
+    "is_unanswerable": false
+  },
+  {
+    "id": "c018",
+    "query": "does the agent toolkit for aws cost anything?",
+    "expected_output": "You can use the Agent Toolkit for AWS at no additional charge. You pay only for the AWS resources your agent provisions or interacts with, at standard AWS pricing.",
+    "actual_output": null,
+    "source_doc": "mcp-ug.pdf",
+    "is_unanswerable": false
+  },
+  {
+    "id": "c019",
+    "query": "how can i tell iam actions initiated through the aws mcp server apart from direct api calls?",
+    "expected_output": "The AWS MCP Server automatically adds two global condition context keys, aws:ViaAWSMCPService and aws:CalledViaAWSMCP, to all requests. These keys let you differentiate MCP-initiated actions from direct API calls in your IAM policies, and CloudTrail logs all API calls for audit visibility.",
+    "actual_output": null,
+    "source_doc": "mcp-ug.pdf",
+    "is_unanswerable": false
+  },
+  {
+    "id": "c020",
+    "query": "is aws___call_aws deprecated and what should i use instead?",
+    "expected_output": "Yes. aws___call_aws was deprecated as of July 15, 2026 and will be removed on August 31, 2026. The guide recommends aws___run_script for running AWS operations because it provides the same access to AWS APIs, so no functionality is lost. aws___run_script executes Python code in a sandboxed environment with AWS API access.",
+    "actual_output": null,
+    "source_doc": "mcp-ug.pdf",
+    "is_unanswerable": false
+  },
+  {
+    "id": "c021",
+    "query": "what is the price per million requests for api gateway http apis?",
+    "expected_output": "The provided documentation does not cover this, so a faithful generator should say it cannot answer from the given context rather than inventing an answer.",
+    "actual_output": null,
+    "source_doc": null,
+    "is_unanswerable": true
+  }
+]

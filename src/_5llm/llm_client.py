@@ -1,6 +1,7 @@
 import boto3
 import json
-
+from dotenv import load_dotenv
+load_dotenv()
 REGION = "us-east-1" 
 LLM_MODEL_ID = "amazon.nova-micro-v1:0"
 

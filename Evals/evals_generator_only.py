@@ -4,13 +4,15 @@ from deepeval import evaluate
 from deepeval.test_case import LLMTestCase
 from deepeval.metrics import FaithfulnessMetric, AnswerRelevancyMetric
 import json
-import time
+import time                             
 from deepeval.models   import OllamaModel
 from deepeval.evaluate import AsyncConfig
 from src._5llm.llm_client import generate_response_from_context
+from Evals.bedrok_model import BedrockJudge
 
 GOLDEN_PATH = "GoldenDataSet/FaithfullnessDataset.json"
-JUDGE_MODEL = OllamaModel(model="qwen2.5:7b", base_url="http://10.10.2.73:11434")
+# JUDGE_MODEL = OllamaModel(model="qwen2.5:7b", base_url="http://10.10.2.73:11434")
+JUDGE_MODEL = BedrockJudge(region="us-east-1",)
 os.environ["DEEPEVAL_DISABLE_TIMEOUTS"] = "1"
 THRESHOLD = 0.7
 
@@ -70,15 +72,6 @@ async_mode = AsyncConfig(
         )
 
 evaluate(test_cases=test_case , metrics=metrix,
-        async_config = async_mode ,
-        #  hyperparameters={
-        #          "embedding_model": "Quwn 9B Ollama ",
-        #          "chunk_size": 1500,
-        #          "chunk_overlap": 200,
-        #          "top_k": 5,
-        #          "judge_model": "qwen2.5:3b",
-        #          # "golden_set": GOLDEN_PATH,
-        #      }
-        )
+        async_config = async_mode , )
 
 

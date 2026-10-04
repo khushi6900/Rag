@@ -5,8 +5,7 @@ from deepeval.metrics import ContextualPrecisionMetric, ContextualRecallMetric
 from deepeval.models.base_model import DeepEvalBaseLLM
 from deepeval.models import OllamaModel
 from deepeval.evaluate import AsyncConfig 
-from src._3retrieval.retriever import (retrieve_and_rerank , 
-                                       load_index,)
+from src._3retrieval.retriever import (retrieve_and_rerank , load_index,)
 from dotenv import load_dotenv
 import json
 import os
@@ -17,7 +16,6 @@ GOLDEN_DATA = "GoldenDataSet/golden_dataset.json"
 INDEX_FILE  = "D:/VsCode/AWS-RAG/faiss_index.bin"
 MetaData    = "D:/VsCode/AWS-RAG/chunk_metadata.json"
 os.environ["DEEPEVAL_DISABLE_TIMEOUTS"] = "1"
-
 os.environ["DEEPEVAL_DISABLE_CACHE"] = "YES"
 
 with open(GOLDEN_DATA) as f:
@@ -48,9 +46,9 @@ for i, data in enumerate(goldens, 1):
         time.sleep(3)                              # proactive, avoids backoff storms
 
     test_case.append(LLMTestCase(
-        input=query,
+        input=query,    
         expected_output=data['ground_truth'],
-        actual_output=data['ground_truth'],
+        actual_output=data['ground_truth'], ## this is not used for precision and recall 
         retrieval_context=text_result,
     ))
 

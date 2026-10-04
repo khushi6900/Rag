@@ -11,13 +11,23 @@ from deepeval.evaluate import AsyncConfig
 import json
 import os 
 import time
+from rag_pipeline import ask,load_index
+from src._3retrieval.retriever import INDEX_FILE, METADATA_FILE
+from Evals.bedrok_model import BedrockJudge
+from dotenv import load_dotenv
+load_dotenv()
+
 
 GOLDEN_PATH = "GoldenDataSet/golden_dataset.json"
-JUDGE_MODEL = OllamaModel(model="qwen2.5:7b", base_url="http://10.10.2.73:11434")
+# JUDGE_MODEL = OllamaModel(model="qwen2.5:7b", base_url="http://10.10.2.73:11434")
+JUDGE_MODEL = BedrockJudge(region="us-east-1",)
 os.environ["DEEPEVAL_DISABLE_TIMEOUTS"] = "1"
 CACHE_PATH = "Evals/pipeline_cache.json"
 
+index, chunks = load_index(INDEX_FILE, METADATA_FILE)
 cache = {}
+
+
 if os.path.exists(CACHE_PATH):
     with open(CACHE_PATH) as f:
         cache = json.load(f)
@@ -36,7 +46,10 @@ for i, golden in enumerate(goldens, 1):
         context = cache[query]["context"]
     else:
         print(f"[{i}/{len(goldens)}] API CALL: {query[:50]}")
-        answer, context = generate_response(prompt=query)   # ← must return BOTH now
+        result = ask(query, index, chunks)
+        # print("REsssultttttttttttttttt" , result)
+        answer = result["answer"]
+        context = [c["text"] for c in result.get("retrieved_chunks", [])]# ← must return BOTH now
         cache[query] = {"answer": answer, "context": context}
         with open(CACHE_PATH, "w") as f:                    # save after EVERY question
             json.dump(cache, f, indent=2)
@@ -51,7 +64,7 @@ for i, golden in enumerate(goldens, 1):
 ###evaluatoins Metric 
 metrics = [
     FaithfulnessMetric(
-        threshold = 0.7, 
+        threshold = 0.7,    
         model = JUDGE_MODEL,
         include_reason=False
     ),
@@ -74,6 +87,6 @@ max_concurrent=2
 
 evaluate(
     test_cases = test_case, 
-    metrics = [metrics],
+    metrics = metrics,
     async_config = aysnc_config
 )
