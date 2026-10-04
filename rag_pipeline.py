@@ -21,15 +21,6 @@ def ask(query, index, chunks, retrieve_k=10, top_k=3):
     sources = list({r["source"] for r in top_chunks})
     return {"answer": answer, "sources": sources, "retrieved_chunks": top_chunks}
 
-<<<<<<< HEAD
-# if __name__ == "__main__":
-#     index, chunks = load_index(INDEX_FILE, METADATA_FILE)
-#     query = "Who is narendra modi?"
-#     result = ask(query, index, chunks)
-#     print(f"Query: {query}")
-#     print(f"Answer: {result['answer']}")
-#     print(f"Sources: {result['sources']}")
-=======
 if __name__ == "__main__":
     index, chunks = load_index(INDEX_FILE, METADATA_FILE)
     query = "What is cloud source?"
@@ -38,4 +29,3 @@ if __name__ == "__main__":
     # print(f"Query: {query}")
     # print(f"Answer: {result['answer']}")
     # print(f"Sources: {result['sources']}")
->>>>>>> 7727f53d4476e572ef102f9b15806c5e0584fcac
