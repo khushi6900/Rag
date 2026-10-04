@@ -27,10 +27,7 @@ JUDGE_MODEL = BedrockJudge(region="us-east-1",)
 os.environ["DEEPEVAL_DISABLE_TIMEOUTS"] = "1"
 CACHE_PATH = "Evals/pipeline_cache.json"
 
-index, chunks = load_index(INDEX_FILE, METADATA_FILE)
 cache = {}
-
-
 if os.path.exists(CACHE_PATH):
     with open(CACHE_PATH) as f:
         cache = json.load(f)
