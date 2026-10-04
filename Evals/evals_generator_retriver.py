@@ -1,4 +1,5 @@
-from src._5llm.llm_client import generate_response
+from src._3retrieval.retriever import load_index
+from rag_pipeline import ask
 from deepeval import evaluate
 from deepeval.test_case import LLMTestCase
 from deepeval.metrics import (
@@ -6,8 +7,10 @@ from deepeval.metrics import (
         AnswerRelevancyMetric, 
         ContextualRelevancyMetric
 )
-from deepeval.models import OllamaModel
+from pydantic import BaseModel
+from deepeval.models.base_model import DeepEvalBaseLLM
 from deepeval.evaluate import AsyncConfig
+import boto3
 import json
 import os 
 import time
@@ -36,6 +39,7 @@ with open(GOLDEN_PATH) as f:
     goldens = json.load(f)
 
 # ---------- phase 1: run pipeline (cached) ----------
+index, chunks = load_index(index_file=INDEX_FILE, metadata_file=METADATA_FILE)
 test_case = []
 for i, golden in enumerate(goldens, 1):
     query = golden["question"]
@@ -66,17 +70,17 @@ metrics = [
     FaithfulnessMetric(
         threshold = 0.7,    
         model = JUDGE_MODEL,
-        include_reason=False
+        include_reason=True
     ),
     AnswerRelevancyMetric(
         threshold = 0.7,
         model = JUDGE_MODEL,
-        include_reason=False
+        include_reason=True
     ),
     ContextualRelevancyMetric(
         threshold = 0.7,
         model = JUDGE_MODEL,
-        include_reason=False
+        include_reason=True
     )
 
 ]
@@ -87,6 +91,7 @@ max_concurrent=2
 
 evaluate(
     test_cases = test_case, 
+    metrics = metrics,
     metrics = metrics,
     async_config = aysnc_config
 )

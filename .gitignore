@@ -1,6 +1,7 @@
 .rag-venv
 pdfs
 try.ipynb
+try.py
 .venv
 .env
 __pycache__/
