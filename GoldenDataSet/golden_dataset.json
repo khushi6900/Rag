@@ -76,7 +76,7 @@
   },
   {
     "question": "What is Azure Cognitive Search's pricing model?",
-    "ground_truth": "This is not covered in the provided documentation.",
+    "ground_truth": "I don't have enough information to answer that",
     "source_doc": null
   },
   {
@@ -106,7 +106,7 @@
   },
   {
     "question": "What is the current stock price of Amazon.com, Inc.?",
-    "ground_truth": "This is not covered in the provided documentation.",
+    "ground_truth": "I don't have enough information to answer that",
     "source_doc": null
   }
 ]

@@ -22,9 +22,9 @@ def ask(query, index, chunks, retrieve_k=10, top_k=3):
 
 if __name__ == "__main__":
     index, chunks = load_index(INDEX_FILE, METADATA_FILE)
-    query = "What is cloud source?"
+    query = "What is Amazon CloudSearch?"
     result = ask(query, index, chunks)
-    print(result)
-    # print(f"Query: {query}")
-    # print(f"Answer: {result['answer']}")
+    # print(result)
+    print(f"Query: {query}")
+    print(f"Answer: {result['answer']}")
     # print(f"Sources: {result['sources']}")
