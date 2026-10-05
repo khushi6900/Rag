@@ -4,53 +4,56 @@ import numpy as np
 import faiss
 from tqdm import tqdm
 import re
+import time
+from rank_bm25 import BM25Okapi
+import pickle
 
 # ---- CONFIG ----
-REGION = "us-east-1" 
-EMBED_MODEL_ID = "amazon.titan-embed-text-v2:0"  # Titan Embeddings v2
+REGION = "us-east-1"
+EMBED_MODEL_ID = "amazon.titan-embed-text-v2:0"
 CHUNKS_FILE = "all_chunks.json"
 INDEX_FILE = "faiss_index.bin"
 METADATA_FILE = "chunk_metadata.json"
+CHECKPOINT_FILE = "embed_checkpoint.json"
+CHECKPOINT_EVERY = 500
 
 bedrock = boto3.client("bedrock-runtime", region_name=REGION)
 
-def get_embedding(text):
+def get_embedding(text, max_retries=5):
+    """Calls Titan embedding with exponential backoff on throttling."""
     body = json.dumps({"inputText": text})
 
-    response = bedrock.invoke_model(
-        modelId=EMBED_MODEL_ID,
-        body=body,
-        contentType="application/json",
-        accept="application/json"
-    )
-
-    response_body = json.loads(response["body"].read())
-    return response_body["embedding"]
+    for attempt in range(max_retries):
+        try:
+            response = bedrock.invoke_model(
+                modelId=EMBED_MODEL_ID,
+                body=body,
+                contentType="application/json",
+                accept="application/json"
+            )
+            response_body = json.loads(response["body"].read())
+            return response_body["embedding"]
+        except Exception as e:
+            if "Throttling" in str(e) and attempt < max_retries - 1:
+                wait = 2 ** attempt
+                tqdm.write(f"  Throttled, waiting {wait}s (attempt {attempt+1}/{max_retries})")
+                time.sleep(wait)
+                continue
+            raise  # real error, or out of retries — let caller handle/log it
 
 def is_low_quality(text):
-    if re.search(r'\.{10,}', text): # consecutive dots
+    if re.search(r'\.{10,}', text):  # consecutive dots
         return True
-
-    # digit_ratio = sum(c.isdigit() for c in text) / max(len(text), 1)
-    # if digit_ratio > 0.15:
-    #     return True
-
-    # lines = [l for l in text.split("\n") if l.strip()]
-    # if lines:
-    #     short_lines = sum(1 for l in lines if len(l.strip()) < 40)
-    #     if short_lines / len(lines) > 0.7 and len(lines) > 3:
-    #         return True
-        
     return False
 
 def embed_all_chunks(chunks):
-    vectors=[]
-    valid_chunks=[]
+    vectors = []
+    valid_chunks = []
 
-    for chunk in tqdm(chunks, desc="Embedding chunks", unit="chunk"):
+    for i, chunk in enumerate(tqdm(chunks, desc="Embedding chunks", unit="chunk")):
         text = chunk["text"]
         if not text.strip() or is_low_quality(text):
-            print(f"Skipping low-quality or empty chunk : {text[:30]}...")
+            tqdm.write(f"Skipping low-quality or empty chunk: {text[:30]}...")
             continue
 
         try:
@@ -58,16 +61,33 @@ def embed_all_chunks(chunks):
             vectors.append(embedding)
             valid_chunks.append(chunk)
         except Exception as e:
-            tqdm.write(f"Error embedding chunk: {e}. Skipping this chunk.")
+            tqdm.write(f"Error embedding chunk (permanently skipping): {e}")
+
+        # periodic checkpoint — protects against losing hours of progress on a crash
+        if (i + 1) % CHECKPOINT_EVERY == 0:
+            with open(CHECKPOINT_FILE, "w", encoding="utf-8") as f:
+                json.dump({
+                    "processed_count": i + 1,
+                    "valid_chunks": valid_chunks,
+                    "vectors": vectors
+                }, f)
+            tqdm.write(f"  Checkpoint saved at chunk {i+1}/{len(chunks)}")
 
     vectors_np = np.array(vectors, dtype="float32")
     return vectors_np, valid_chunks
+
 
 def build_faiss_index(vectors_np):
     dimension = vectors_np.shape[1]
     index = faiss.IndexFlatL2(dimension)
     index.add(vectors_np)
     return index
+
+def build_bm25_index(chunks):
+    """Tokenizes chunk text and builds a BM25 index. Run once, save alongside FAISS."""
+    tokenized_corpus = [chunk["text"].lower().split() for chunk in chunks]
+    bm25 = BM25Okapi(tokenized_corpus)
+    return bm25
 
 if __name__ == "__main__":
     with open(CHUNKS_FILE, "r", encoding="utf-8") as f:
