@@ -5,4 +5,7 @@ try.ipynb
 .venv
 .env
 __pycache__/
+.deepeval\
+Evals/*.json
+Evals/*.txt
 .deepeval

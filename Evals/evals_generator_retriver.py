@@ -20,26 +20,14 @@ import os
 import time
 
 class BedrockJudge(DeepEvalBaseLLM):
-    def __init__(self, model_id="amazon.nova-pro-v1:0", region="us-east-1"):
+    def __init__(self, model_id="google.gemma-3-27b-it", region="us-east-1"):
         self.model_id = model_id
-        boto_config = Config(
-            retries = {
-                "max_attempts": 10,
-                "mode": "adaptive"
-            }
-        )
-        self.client = boto3.client("bedrock-runtime", region_name=region, config=boto_config)
+        self.client = boto3.client("bedrock-runtime", region_name=region)
 
     def load_model(self):
         return self.client
 
     def generate(self, prompt: str) -> str:
-        max_retries = 6
-        delay = 3
-
-        for attempt in range(max_retries):
-            try:
-                time.sleep(2)
                 response = self.client.converse(
                     modelId=self.model_id,
                     messages=[{
@@ -52,50 +40,40 @@ class BedrockJudge(DeepEvalBaseLLM):
                     }
                 )
                 return response["output"]["message"]["content"][0]["text"]
-
-            except ClientError as e:
-                error_code = e.response.get("error", {}).get("code")
-                if error_code in ["ThrottlingException", "TooManyRequestsException"]:
-                    wait_time = delay * (2 ** attempt)
-                    print(f"\n[Bedrock Judge] Throttled by AWS Bedrock. Retrying in {wait_time}s (Attempt {attempt + 1}/{max_retries})...")
-                    time.sleep(wait_time)
-                else:
-                    raise e
-        raise RuntimeError(f"exceeded max retries")
-
+        
     async def a_generate(self, prompt: str) -> str:
-        return self.generate(prompt)
+            return self.generate(prompt)
     
     def generate_with_schema(self, prompt: str, schema: type[BaseModel]) -> BaseModel:
-        json_schema_str = json.dumps(schema.model_json_schema())
-        formatted_prompt = (
-            f"{prompt}\n\n"
-            "CRITICAL: Respond ONLY with a valid JSON object matching this schema:\n"
-            f"{json_schema_str}\n"
-            "Do not include any conversational text, explanations, or markdown code blocks."
-        )
-        raw_output = self.generate(formatted_prompt).strip()
+            json_schema_str = json.dumps(schema.model_json_schema())
+            formatted_prompt = (
+                f"{prompt}\n\n"
+                "CRITICAL: Respond ONLY with a valid JSON object matching this schema:\n"
+                f"{json_schema_str}\n"
+                "Do not include any conversational text, explanations, or markdown code blocks."
+            )
+            raw_output = self.generate(formatted_prompt).strip()
     
             # Clean markdown code fences if model returns them
-        if raw_output.startswith("```json"):
-            raw_output = raw_output[7:]
-        if raw_output.startswith("```"):
-            raw_output = raw_output[3:]
-        if raw_output.endswith("```"):
-            raw_output = raw_output[:-3]
+            if raw_output.startswith("```json"):
+                raw_output = raw_output[7:]
+            if raw_output.startswith("```"):
+                raw_output = raw_output[3:]
+            if raw_output.endswith("```"):
+                raw_output = raw_output[:-3]
                 
-        return schema.model_validate_json(raw_output.strip())
+            return schema.model_validate_json(raw_output.strip())
     
     async def a_generate_with_schema(self, prompt: str, schema: type[BaseModel]) -> BaseModel:
-        return self.generate_with_schema(prompt, schema)
+            return self.generate_with_schema(prompt, schema)
     
     def get_model_name(self) -> str:
-        return f"Bedrock-{self.model_id}"
+            return f"Bedrock-{self.model_id}"
 
 INDEX_FILE = "faiss_index.bin"
 METADATA_FILE = "chunk_metadata.json" 
 GOLDEN_PATH = "GoldenDataSet/golden_dataset.json"
-JUDGE_MODEL = BedrockJudge(model_id="amazon.nova-pro-v1:0", region="us-east-1")
+JUDGE_MODEL = BedrockJudge(model_id="google.gemma-3-27b-it", region="us-east-1")
 os.environ["DEEPEVAL_DISABLE_TIMEOUTS"] = "1"
 CACHE_PATH = "Evals/pipeline_cache.json"
 
@@ -120,9 +98,10 @@ for i, golden in enumerate(goldens, 1):
         context = cache[query]["context"]
     else:
         print(f"[{i}/{len(goldens)}] API CALL: {query[:50]}")
-        result = ask(query, index,chunks)
+        result = ask(query, index, chunks)
+        # print("REsssultttttttttttttttt" , result)
         answer = result["answer"]
-        context = [c["text"] for c in result["retrieved_chunks"]]
+        context = [c["text"] for c in result.get("retrieved_chunks", [])]# ← must return BOTH now
         cache[query] = {"answer": answer, "context": context}
         with open(CACHE_PATH, "w") as f:                    # save after EVERY question
             json.dump(cache, f, indent=2)
@@ -138,7 +117,7 @@ for i, golden in enumerate(goldens, 1):
 ###evaluatoins Metric 
 metrics = [
     FaithfulnessMetric(
-        threshold = 0.7, 
+        threshold = 0.7,    
         model = JUDGE_MODEL,
         include_reason=True
     ),
@@ -170,6 +149,7 @@ max_concurrent=1
 
 evaluate(
     test_cases = test_case, 
+    metrics = metrics,
     metrics = metrics,
     async_config = aysnc_config
 )

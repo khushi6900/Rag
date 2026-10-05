@@ -12,6 +12,7 @@ from deepeval.models.base_model import DeepEvalBaseLLM
 from deepeval.evaluate import AsyncConfig
 
 from src._5llm.llm_client import generate_response_from_context
+from Evals.bedrok_model import BedrockJudge
 
 class BedrockJudge(DeepEvalBaseLLM):
     def __init__(self, model_id = "google.gemma-3-27b-it", region = "us-east-1"):

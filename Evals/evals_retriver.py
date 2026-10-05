@@ -4,46 +4,17 @@ from deepeval.test_case import LLMTestCase
 from deepeval.metrics import ContextualPrecisionMetric, ContextualRecallMetric
 from deepeval.models.base_model import DeepEvalBaseLLM
 from deepeval.evaluate import AsyncConfig 
-import boto3
-from src._3retrieval.retriever import (retrieve_and_rerank, load_index)
+from bedrok_model import BedrockJudge
+from src._3retrieval.retriever import (retrieve_and_rerank , load_index,)
 from dotenv import load_dotenv
 import json
 import os
 import time
 
 load_dotenv()
-
-class BedrockJudge(DeepEvalBaseLLM):
-    def __init__(self, model_id="google.gemma-3-27b-it", region="us-east-1"):
-        self.model_id = model_id
-        self.client = boto3.client("bedrock-runtime", region_name=region)
-
-    def load_model(self):
-        return self.client
-
-    def generate(self, prompt: str) -> str:
-        response = self.client.converse(
-            modelId=self.model_id,
-            messages=[{
-                "role": "user",
-                "content": [{"text": prompt}]
-            }],
-            inferenceConfig={
-                "maxTokens": 2048,
-                "temperature": 0.0
-            }
-        )
-        return response["output"]["message"]["content"][0]["text"]
-
-    async def a_generate(self, prompt: str) -> str:
-        return self.generate(prompt)
-
-    def get_model_name(self) -> str:
-        return f"Bedrock-{self.model_id}"
-
 GOLDEN_DATA = "GoldenDataSet/golden_dataset.json"
-INDEX_FILE  = "faiss_index.bin"
-MetaData    = "chunk_metadata.json"
+INDEX_FILE  = "D:/VsCode/AWS-RAG/faiss_index.bin"
+MetaData    = "D:/VsCode/AWS-RAG/chunk_metadata.json"
 os.environ["DEEPEVAL_DISABLE_TIMEOUTS"] = "1"
 os.environ["DEEPEVAL_DISABLE_CACHE"] = "YES"
 
@@ -75,9 +46,9 @@ for i, data in enumerate(goldens, 1):
         time.sleep(3)                              # proactive, avoids backoff storms
 
     test_case.append(LLMTestCase(
-        input=query,
+        input=query,    
         expected_output=data['ground_truth'],
-        actual_output=data['ground_truth'], ##This is not used for retriver only fordeeavl
+        actual_output=data['ground_truth'], ## this is not used for precision and recall 
         retrieval_context=text_result,
     ))
 
