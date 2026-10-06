@@ -9,3 +9,6 @@ __pycache__/
 Evals/*.json
 Evals/*.txt
 .deepeval
+Evals\generator_cache.json
+Evals\pipeline_cache.json
+Evals\retrieval_cache.json
