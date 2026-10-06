@@ -14,6 +14,7 @@ EMBED_MODEL_ID = "amazon.titan-embed-text-v2:0"
 CHUNKS_FILE = "all_chunks.json"
 INDEX_FILE = "faiss_index.bin"
 METADATA_FILE = "chunk_metadata.json"
+BM25_FILE = "bm25_index.pkl"
 CHECKPOINT_FILE = "embed_checkpoint.json"
 CHECKPOINT_EVERY = 500
 
@@ -90,21 +91,31 @@ def build_bm25_index(chunks):
     return bm25
 
 if __name__ == "__main__":
-    with open(CHUNKS_FILE, "r", encoding="utf-8") as f:
-        chunks = json.load(f)
+    # with open(CHUNKS_FILE, "r", encoding="utf-8") as f:
+    #     chunks = json.load(f)
 
-    print(f"Loaded {len(chunks)} chunks from {CHUNKS_FILE}")
+    # print(f"Loaded {len(chunks)} chunks from {CHUNKS_FILE}")
 
-    vectors_np, valid_chunks = embed_all_chunks(chunks)
-    print(f"Successfully embedded {len(valid_chunks)} chunks")
-    print(f"Embedding shape: {vectors_np.shape}")
-    print(f"Vector dimension: {vectors_np.shape[1]}")
+    # vectors_np, valid_chunks = embed_all_chunks(chunks)
+    # print(f"Successfully embedded {len(valid_chunks)} chunks")
+    # print(f"Embedding shape: {vectors_np.shape}")
+    # print(f"Vector dimension: {vectors_np.shape[1]}")
 
-    index = build_faiss_index(vectors_np)
-    print(f"FAISS index built with {index.ntotal} vectors")
+    # index = build_faiss_index(vectors_np)
+    # print(f"FAISS index built with {index.ntotal} vectors")
 
-    faiss.write_index(index, INDEX_FILE)
-    with open(METADATA_FILE, "w", encoding="utf-8") as f:
-        json.dump(valid_chunks, f, ensure_ascii=False, indent=2)
+    # faiss.write_index(index, INDEX_FILE)
+    # with open(METADATA_FILE, "w", encoding="utf-8") as f:
+    #     json.dump(valid_chunks, f, ensure_ascii=False, indent=2)
 
-    print(f"FAISS index saved to {INDEX_FILE}")
+    # print(f"FAISS index saved to {INDEX_FILE}")
+    with open(METADATA_FILE, "r", encoding="utf-8") as f:
+        valid_chunks = json.load(f)
+ 
+    print(f"Loaded {len(valid_chunks)} chunks from {METADATA_FILE} for BM25 indexing")
+ 
+    bm25 = build_bm25_index(valid_chunks)
+    with open(BM25_FILE, "wb") as f:
+        pickle.dump(bm25, f)
+ 
+    print(f"BM25 index saved to {BM25_FILE}")

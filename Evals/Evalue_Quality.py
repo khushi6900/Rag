@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from deepeval.metrics.g_eval import Rubric
 from deepeval import evaluate
 from rag_pipeline import ask
-from src._3retrieval.retriever import INDEX_FILE , METADATA_FILE , load_index
+from src._3retrieval.retriever import INDEX_FILE , METADATA_FILE , load_index, load_bm25, BM25_FILE
 import os 
 import time
 import json
@@ -20,16 +20,13 @@ CACHE_PATH = "Evals/Gval_cache.json"
 JUDGE_MODEL = BedrockJudge()
 ### Loading the index and chunkss 
 index , chunks =  load_index(index_file = INDEX_FILE , metadata_file = METADATA_FILE)
-
+bm25 = load_bm25(BM25_FILE)
 cache_data= {}
 if os.path.exists(CACHE_PATH):
     with open(CACHE_PATH) as f:
         cache_data = json.load(f)
 with open(GOLDEN_DATASET) as f:
     golden_data = json.load(f)
-
-
-
 
 test_case = []
 for i , data in enumerate(golden_data , 1):
@@ -41,7 +38,7 @@ for i , data in enumerate(golden_data , 1):
         print(f"Fetch From Cache {query[:50]}")
         answer = cache_data[query]['answer']
     else:
-        answer = ask(query, index, chunks, retrieve_k=10, top_k=3)
+        answer = ask(query, index, chunks, bm25, retrieve_k=10, top_k=3)
         # print("answer -------->>>>>>" , answer)
         cache_data[query] = {"answer" : answer}
         with open(CACHE_PATH, "w") as f:

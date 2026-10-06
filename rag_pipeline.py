@@ -1,13 +1,11 @@
-from src._3retrieval.retriever import retrieve_top_k, load_index,rerank_chunks, INDEX_FILE, METADATA_FILE
+from src._3retrieval.retriever import hybrid_retrieve, load_bm25, load_index,rerank_chunks, INDEX_FILE, METADATA_FILE, BM25_FILE
 from src._4prompts.prompt_templates import build_prompt
 from src._5llm.llm_client import generate_response
 from dotenv import load_dotenv
-import boto3
-import os
 
 load_dotenv()
-def ask(query, index, chunks, retrieve_k=10, top_k=3):
-    candidates = retrieve_top_k(query,index, chunks, k=retrieve_k)
+def ask(query, index, chunks, bm25, retrieve_k=10, top_k=3):
+    candidates = hybrid_retrieve(query,index, chunks, bm25, k=retrieve_k)
     if not candidates:
         return {"answer": "I don't have enough information to answer that.", "sources": []}
     # print(f"Retrieved {len(candidates)} candidate chunks for query: '{query}'")
@@ -23,8 +21,9 @@ def ask(query, index, chunks, retrieve_k=10, top_k=3):
 
 if __name__ == "__main__":
     index, chunks = load_index(INDEX_FILE, METADATA_FILE)
+    bm25 = load_bm25(BM25_FILE)
     query = "What is Amazon CloudSearch?"
-    result = ask(query, index, chunks)
+    result = ask(query, index, chunks, bm25)
     # print(result)
     print(f"Query: {query}")
     print(f"Answer: {result['answer']}")

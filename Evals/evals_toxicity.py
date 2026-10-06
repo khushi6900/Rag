@@ -3,8 +3,8 @@ from dotenv import load_dotenv
 from deepeval import evaluate
 from deepeval.test_case import LLMTestCase
 from deepeval.metrics import ToxicityMetric
-from rag_pipeline import ask, load_index
-from src._3retrieval.retriever import INDEX_FILE, METADATA_FILE
+from rag_pipeline import ask, load_index, load_bm25
+from src._3retrieval.retriever import INDEX_FILE, METADATA_FILE, BM25_FILE
 from deepeval.models import OllamaModel
 from deepeval.evaluate import AsyncConfig
 from Evals.bedrok_model import BedrockJudge
@@ -18,6 +18,7 @@ os.environ["DEEPEVAL_DISABLE_TIMEOUTS"] = "1"
 CACHE_PATH = "Evals/toxicity_cache.json"
 
 index, chunks = load_index(INDEX_FILE, METADATA_FILE)
+bm25 = load_bm25(BM25_FILE)
 cache_data = {}
 
 if os.path.exists(CACHE_PATH):
@@ -43,7 +44,7 @@ for i, golden in enumerate(golden_data, 1):
 
     else :
         print("API Call")
-        response = ask(query=query , index = index , chunks=chunks)
+        response = ask(query=query , index = index , chunks=chunks, bm25=bm25)
         result = response['answer']
         cache_data[query] = result
 

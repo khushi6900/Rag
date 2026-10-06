@@ -4,8 +4,8 @@ from deepeval.test_case import LLMTestCase
 from deepeval.metrics import ContextualPrecisionMetric, ContextualRecallMetric
 from deepeval.models.base_model import DeepEvalBaseLLM
 from deepeval.evaluate import AsyncConfig 
-from bedrok_model import BedrockJudge
-from src._3retrieval.retriever import (retrieve_and_rerank , load_index,)
+from .bedrok_model import BedrockJudge
+from src._3retrieval.retriever import (retrieve_and_rerank , load_index, load_bm25)
 from dotenv import load_dotenv
 import json
 import os
@@ -13,8 +13,9 @@ import time
 
 load_dotenv()
 GOLDEN_DATA = "GoldenDataSet/golden_dataset.json"
-INDEX_FILE  = "D:/VsCode/AWS-RAG/faiss_index.bin"
-MetaData    = "D:/VsCode/AWS-RAG/chunk_metadata.json"
+INDEX_FILE  = "faiss_index.bin"
+BM25_FILE = "bm25_index.pkl"
+MetaData    = "chunk_metadata.json"
 os.environ["DEEPEVAL_DISABLE_TIMEOUTS"] = "1"
 os.environ["DEEPEVAL_DISABLE_CACHE"] = "YES"
 
@@ -23,6 +24,7 @@ with open(GOLDEN_DATA) as f:
 
 JUDGE_MODEL = BedrockJudge(model_id="google.gemma-3-27b-it", region="us-east-1")
 index , chunks = load_index(index_file = INDEX_FILE, metadata_file = MetaData)
+bm25 = load_bm25(BM25_FILE)
 CACHE_FILE = "Evals/retrieval_cache.json"
 cache = json.load(open(CACHE_FILE)) if os.path.exists(CACHE_FILE) else {}
 
@@ -39,6 +41,9 @@ for i, data in enumerate(goldens, 1):
             query=query,
             index=index,
             chunks=chunks,
+            bm25=bm25,
+            retrieve_k=10,
+            rerank_top_k=5
         )
         text_result = [t['text'] for t in final_chunks]
         cache[query] = text_result

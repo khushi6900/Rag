@@ -4,6 +4,7 @@ import numpy as np
 import faiss
 import time
 import os
+import pickle
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -11,6 +12,7 @@ load_dotenv()
 REGION = "us-east-1"
 EMBED_MODEL_ID = "amazon.titan-embed-text-v2:0"
 INDEX_FILE = "faiss_index.bin"
+BM25_FILE = "bm25_index.pkl"
 METADATA_FILE = "chunk_metadata.json"
 RERANK_REGION = "us-west-2"
 RERANK_MODEL_ID = "amazon.rerank-v1:0" 
@@ -30,6 +32,10 @@ rerank_client = boto3.client(
       region_name=RERANK_REGION,
       **aws_credentials)
 
+def load_bm25(bm25_file):
+    with open(bm25_file, "rb") as f:
+        return pickle.load(f)
+    
 def get_embedding(text):
     body = json.dumps({"inputText": text})
 
@@ -68,6 +74,47 @@ def retrieve_top_k(query, index, chunks, k=10):
             "distance": float(distance[0][rank])
         })
 
+    return results
+
+def retrieve_bm25(query, bm25, chunks, k=10):
+    tokenized_query = query.lower().split()
+    scores = bm25.get_scores(tokenized_query)
+    top_indices = np.argsort(scores)[::-1][:k]
+
+    results = []
+    for idx in top_indices:
+        results.append({
+            "source": chunks[idx]["source"],
+            "text": chunks[idx]["text"],
+            "bm25_score": float(scores[idx])
+        })
+    return results
+
+def hybrid_retrieve(query, index, chunks, bm25, k=10, rrf_k=60):
+    """Combines dense (FAISS) and sparse (BM25) results using Reciprocal Rank Fusion."""
+    dense_results = retrieve_top_k(query, index, chunks, k=k)
+    sparse_results = retrieve_bm25(query, bm25, chunks, k=k)
+
+    # RRF: score = sum(1 / (rrf_k + rank)) across every list a chunk appears in
+    scores = {}
+    text_lookup = {}
+
+    for rank, r in enumerate(dense_results):
+        key = r["text"]  # use chunk text as the dedup key
+        scores[key] = scores.get(key, 0) + 1 / (rrf_k + rank + 1)
+        text_lookup[key] = r
+
+    for rank, r in enumerate(sparse_results):
+        key = r["text"]
+        scores[key] = scores.get(key, 0) + 1 / (rrf_k + rank + 1)
+        text_lookup[key] = r
+
+    ranked = sorted(scores.items(), key=lambda x: x[1], reverse=True)
+
+    results = []
+    for key, score in ranked[:k]:
+        chunk = text_lookup[key]
+        results.append({**chunk, "rrf_score": score})
     return results
 
 def rerank_chunks(query, candidates, top_k=4, max_retries=5):
@@ -127,7 +174,7 @@ def rerank_chunks(query, candidates, top_k=4, max_retries=5):
 #         print(f"Result{i+1}: Source: {r['source']}, Distance: {r['distance']:.4f}")
 #         print(f"Text: {r['text']}")
 #         print("-" * 80)
-def retrieve_and_rerank(query, index, chunks, retrieve_k=10, rerank_top_k=5):
+def retrieve_and_rerank(query, index, chunks, bm25, retrieve_k=10, rerank_top_k=5):
     """
     End-to-end retrieval pipeline:
     1. Dense Vector Search via FAISS (retrieve_top_k)
@@ -136,7 +183,7 @@ def retrieve_and_rerank(query, index, chunks, retrieve_k=10, rerank_top_k=5):
     Returns the final top reranked chunks ready for LLM prompt context or evaluation.
     """
     # 1. First-stage retrieval (Dense Embeddings)
-    candidates = retrieve_top_k(query, index, chunks, k=retrieve_k)
+    candidates = hybrid_retrieve(query, index, chunks,bm25, k=retrieve_k)
     if not candidates:
         return []
         

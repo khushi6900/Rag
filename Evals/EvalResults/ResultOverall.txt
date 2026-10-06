@@ -1,286 +1,409 @@
-╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ 🚀 DeepEval Evaluation Results                                                                                                                             │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ ✅ test_case_0 (Passed 3 metrics)                                                                                                                          │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│                                                                                                                                                            │
-│  ❌ test_case_1                                                                                                                                            │
-│  ├──   Input:            What four components make up the Agent Toolkit for AWS?                                                                           │
-│  │     Actual Output:    The four components that make up the Agent Toolkit for AWS are:                                                                   │
-│  │                                                                                                                                                         │
-│  │                       1. AWS MCP Server                                                                                                                 │
-│  │                       2. Skills                                                                                                                         │
-│  │                       3. Plugins                                                                                                                        │
-│  │                       4. Rules files                                                                                                                    │
-│  └── Metrics                                                                                                                                               │
-│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                                           │
-│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
-│        PASS  │ Faithfulness         │ 1.00  │ 0.70      │ The score is 1.00 because there are no contradi...                                               │
-│        PASS  │ Answer Relevancy     │ 0.80  │ 0.70      │ The score is 0.80 because the response correctl...                                               │
-│        FAIL  │ Contextual Relevancy │ 0.62  │ 0.70      │ The score is 0.62 because, although the retrieval context includes relevant information about    │
-│              │                      │       │           │ the Agent Toolkit for AWS, such as 'The Agent Toolkit for AWS includes four components that      │
-│              │                      │       │           │ work together: AWS MCP Server, a managed server that gives agents access to AWS through the      │
-│              │                      │       │           │ Model Context Protocol (MCP); Kiro, Claude Code, Cursor, Codex, and other MCP-compatible         │
-│              │                      │       │           │ agents connect to this server. Agents can search AWS documentation and get service               │
-│              │                      │       │           │ information', it also contains several statements that do not directly address the specific      │
-│              │                      │       │           │ components, leading to a moderate relevancy score.                                               │
-│                                                                                                                                                            │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│                                                                                                                                                            │
-│  ❌ test_case_2                                                                                                                                            │
-│  ├──   Input:            What is the role of the AWS MCP Server in the Agent Toolkit for AWS?                                                              │
-│  │     Actual Output:    The AWS MCP Server in the Agent Toolkit for AWS is a managed server that gives agents access to AWS through the Model Context     │
-│  │                       Protocol (MCP). It allows Kiro, Claude Code, Cursor, Codex, and other MCP-compatible agents to connect and search AWS             │
-│  │                       documentation and get service information.                                                                                        │
-│  └── Metrics                                                                                                                                               │
-│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                                           │
-│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
-│        PASS  │ Faithfulness         │ 1.00  │ 0.70      │ The score is 1.00 because there are no contradi...                                               │
-│        PASS  │ Answer Relevancy     │ 1.00  │ 0.70      │ The score is 1.00 because the response provided...                                               │
-│        FAIL  │ Contextual Relevancy │ 0.44  │ 0.70      │ The score is 0.44 because, although there are relevant statements such as 'AWS MCP Server – A    │
-│              │                      │       │           │ managed server that gives agents access to AWS through the Model Context Protocol (MCP)' and     │
-│              │                      │       │           │ 'Monitoring is an important part of maintaining the reliability, availability, and performance   │
-│              │                      │       │           │ of AWS MCP Server', a significant portion of the retrieval context is irrelevant, discussing     │
-│              │                      │       │           │ unrelated topics like 'gaps in training', 'Skills', 'Plugins', and 'Rules files', which do not   │
-│              │                      │       │           │ contribute to understanding the specific role of the AWS MCP Server in the Agent Toolkit for     │
-│              │                      │       │           │ AWS.                                                                                             │
-│                                                                                                                                                            │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│                                                                                                                                                            │
-│  ❌ test_case_3                                                                                                                                            │
-│  ├──   Input:            What is the difference between OAuth and SigV4 authentication for the AWS MCP Server?                                             │
-│  │     Actual Output:    I don't have enough information to answer that.                                                                                   │
-│  └── Metrics                                                                                                                                               │
-│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                                           │
-│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
-│        PASS  │ Faithfulness         │ 1.00  │ 0.70      │ The score is 1.00 because there are no contradi...                                               │
-│        FAIL  │ Answer Relevancy     │ 0.00  │ 0.70      │ The score is 0.00 because the statement does not provide any information about the difference    │
-│              │                      │       │           │ between OAuth and SigV4 authentication for the AWS MCP Server.                                   │
-│        PASS  │ Contextual Relevancy │ 0.84  │ 0.70      │ The score is 0.84 because the retrieval context...                                               │
-│                                                                                                                                                            │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ ✅ test_case_4 (Passed 3 metrics)                                                                                                                          │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│                                                                                                                                                            │
-│  ❌ test_case_5                                                                                                                                            │
-│  ├──   Input:            How does multi-profile support work with the AWS MCP Server?                                                                      │
-│  │     Actual Output:    Multi-profile support with the AWS MCP Server allows you to configure multiple AWS CLI profiles to switch between accounts or     │
-│  │                       roles on a per-call basis. The MCP Proxy for AWS adds an `aws_profile` parameter to the server's auth-requiring tools,            │
-│  │                       enabling the agent to route each request through a different set of credentials without restarting. This feature requires         │
-│  │                       SigV4 authentication and is not available when proxying to other MCP servers. To use this feature, you configure the proxy        │
-│  │                       with multiple profiles at startup (via the `--profile` flag or `AWS_MCP_PROXY_PROFILES` environment variable). The proxy then     │
-│  │                       injects an optional `aws_profile` parameter into the schema of `call_aws`, `run_script`, `get_presigned_url`, and `get_tasks`,    │
-│  │                       allowing the agent to route individual requests through different AWS credential profiles. The `aws_profile` parameter is         │
-│  │                       stripped by the proxy before forwarding to the server.                                                                            │
-│  └── Metrics                                                                                                                                               │
-│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                                           │
-│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
-│        PASS  │ Faithfulness         │ 1.00  │ 0.70      │ The score is 1.00 because there are no contradi...                                               │
-│        PASS  │ Answer Relevancy     │ 1.00  │ 0.70      │ The score is 1.00 because the actual output is ...                                               │
-│        FAIL  │ Contextual Relevancy │ 0.63  │ 0.70      │ The score is 0.63 because, although the retrieval context contains relevant information such     │
-│              │                      │       │           │ as 'Multi-profile support When using the MCP Proxy for AWS with the AWS MCP Server, you can      │
-│              │                      │       │           │ configure multiple AWS CLI profiles to switch between accounts or roles on a per-call basis',    │
-│              │                      │       │           │ it also includes irrelevant details like 'The retrieval context contained the                    │
-│              │                      │       │           │ information'renewal' when it has nothing to do with how multi-profile support works with the     │
-│              │                      │       │           │ AWS MCP Server' and 'The retrieval context contained the information 'Note' when it does not     │
-│              │                      │       │           │ provide any specific details about how multi-profile support works'.                             │
-│                                                                                                                                                            │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ ✅ test_case_6 (Passed 3 metrics)                                                                                                                          │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ ✅ test_case_7 (Passed 3 metrics)                                                                                                                          │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ ✅ test_case_8 (Passed 3 metrics)                                                                                                                          │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ ✅ test_case_9 (Passed 3 metrics)                                                                                                                          │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│                                                                                                                                                            │
-│  ❌ test_case_10                                                                                                                                           │
-│  ├──   Input:            What is Amazon CloudSearch?                                                                                                       │
-│  │     Actual Output:    Amazon CloudSearch is a fully managed service in the cloud that makes it easy to set up, manage, and scale a search solution      │
-│  │                       for your website or application. With Amazon CloudSearch, you can search large collections of data such as web pages, document    │
-│  │                       files, forum posts, or product information. You can quickly add search capabilities without having to become a search expert      │
-│  │                       or worry about hardware provisioning, setup, and maintenance. As your volume of data and traffic fluctuates, Amazon               │
-│  │                       CloudSearch scales to meet your needs.                                                                                            │
-│  └── Metrics                                                                                                                                               │
-│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                                           │
-│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
-│        PASS  │ Faithfulness         │ 1.00  │ 0.70      │ The score is 1.00 because there are no contradi...                                               │
-│        PASS  │ Answer Relevancy     │ 1.00  │ 0.70      │ The score is 1.00 because the response provided...                                               │
-│        FAIL  │ Contextual Relevancy │ 0.37  │ 0.70      │ The score is 0.37 because, despite containing relevant information such as 'Amazon CloudSearch   │
-│              │                      │       │           │ is a fully managed service in the cloud that makes it easy to set up, manage, and scale a        │
-│              │                      │       │           │ search solution for your website or application.', the retrieval context is largely diluted by   │
-│              │                      │       │           │ irrelevant content like 'Note This document describes the Amazon CloudSearch 2013-01-01 API.     │
-│              │                      │       │           │ If you have' and 'Copyright © 2026 Amazon Web Services, Inc. and/or its affiliates. All rights   │
-│              │                      │       │           │ reserved.', which do not contribute to a clear understanding of what Amazon CloudSearch is.      │
-│                                                                                                                                                            │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│                                                                                                                                                            │
-│  ❌ test_case_11                                                                                                                                           │
-│  ├──   Input:            What are the main steps for building a search solution with Amazon CloudSearch?                                                   │
-│  │     Actual Output:    The main steps for building a search solution with Amazon CloudSearch are:                                                        │
-│  │                                                                                                                                                         │
-│  │                       1. Create and configure a search domain.                                                                                          │
-│  │                       2. Upload the data you want to search to your domain.                                                                             │
-│  │                                                                                                                                                         │
-│  │                       Source: cloudsearch-dg.pdf                                                                                                        │
-│  └── Metrics                                                                                                                                               │
-│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                                           │
-│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
-│        PASS  │ Faithfulness         │ 1.00  │ 0.70      │ The score is 1.00 because there are no contradi...                                               │
-│        PASS  │ Answer Relevancy     │ 1.00  │ 0.70      │ The score is 1.00 because the actual output pro...                                               │
-│        FAIL  │ Contextual Relevancy │ 0.67  │ 0.70      │ The score is 0.67 because, while the retrieval context includes relevant steps such as 'Create   │
-│              │                      │       │           │ and configure a search domain' and 'Upload and index the data you want to search', it also       │
-│              │                      │       │           │ contains irrelevant information like'submitting a support ticket' and 'API version               │
-│              │                      │       │           │ information', which do not contribute to the main steps for building a search solution with      │
-│              │                      │       │           │ Amazon CloudSearch.                                                                              │
-│                                                                                                                                                            │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ ✅ test_case_12 (Passed 3 metrics)                                                                                                                         │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│                                                                                                                                                            │
-│  ❌ test_case_13                                                                                                                                           │
-│  ├──   Input:            How does Amazon CloudSearch process search strings before matching documents?                                                     │
-│  │     Actual Output:    Amazon CloudSearch processes search strings by:                                                                                   │
-│  │                       • Converting all characters to lowercase                                                                                          │
-│  │                       • Splitting the string into separate terms on whitespace and punctuation boundaries                                               │
-│  │                       • Removing terms that are on the stopword list for the field being searched                                                       │
-│  │                       • Mapping stems and synonyms according to the stemming and synonym options configured for the field being searched                │
-│  └── Metrics                                                                                                                                               │
-│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                                           │
-│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
-│        PASS  │ Faithfulness         │ 1.00  │ 0.70      │ The score is 1.00 because there are no contradi...                                               │
-│        PASS  │ Answer Relevancy     │ 1.00  │ 0.70      │ The score is 1.00 because the output provided a...                                               │
-│        FAIL  │ Contextual Relevancy │ 0.67  │ 0.70      │ The score is 0.67 because, although the context contains relevant information about how Amazon   │
-│              │                      │       │           │ CloudSearch processes search strings, such as 'When you submit a search request, Amazon          │
-│              │                      │       │           │ CloudSearch performs text processing on the search string' and 'Split the string into separate   │
-│              │                      │       │           │ terms on whitespace and punctuation boundaries', a significant portion of the context is about   │
-│              │                      │       │           │ unrelated topics like data preparation, document representation, and index population, which     │
-│              │                      │       │           │ do not contribute to understanding the search string processing mechanism.                       │
-│                                                                                                                                                            │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ ✅ test_case_14 (Passed 3 metrics)                                                                                                                         │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│                                                                                                                                                            │
-│  ❌ test_case_15                                                                                                                                           │
-│  ├──   Input:            What is Azure Cognitive Search's pricing model?                                                                                   │
-│  │     Actual Output:    I don't have enough information to answer that.                                                                                   │
-│  └── Metrics                                                                                                                                               │
-│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                                           │
-│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
-│        PASS  │ Faithfulness         │ 1.00  │ 0.70      │ The score is 1.00 because there are no contradi...                                               │
-│        FAIL  │ Answer Relevancy     │ 0.00  │ 0.70      │ The score is 0.00 because the statement does not provide any information about Azure Cognitive   │
-│              │                      │       │           │ Search's pricing model, making it completely irrelevant to the input question.                   │
-│        FAIL  │ Contextual Relevancy │ 0.00  │ 0.70      │ The score is 0.00 because the retrieval context contains no relevant information about Azure     │
-│              │                      │       │           │ Cognitive Search's pricing model, instead focusing on unrelated topics such as Amazon            │
-│              │                      │       │           │ CloudSearch's scaling capabilities and usage patterns.                                           │
-│                                                                                                                                                            │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ ✅ test_case_16 (Passed 3 metrics)                                                                                                                         │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│                                                                                                                                                            │
-│  ❌ test_case_17                                                                                                                                           │
-│  ├──   Input:            What is a dynamic field in Amazon CloudSearch?                                                                                    │
-│  │     Actual Output:    A dynamic field in Amazon CloudSearch provides a way to index documents without knowing in advance exactly what fields they       │
-│  │                       contain. A dynamic field's name defines a pattern that contains a wildcard (*) as the first, last, or only character. Any         │
-│  │                       unrecognized document field that matches the pattern is configured with the dynamic field's indexing options.                     │
-│  └── Metrics                                                                                                                                               │
-│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                                           │
-│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
-│        PASS  │ Faithfulness         │ 1.00  │ 0.70      │ The score is 1.00 because there are no contradi...                                               │
-│        PASS  │ Answer Relevancy     │ 1.00  │ 0.70      │ The score is 1.00 because the response provided...                                               │
-│        FAIL  │ Contextual Relevancy │ 0.62  │ 0.70      │ The score is 0.62 because, although there are relevant statements such as 'Dynamic fields        │
-│              │                      │       │           │ provide a way to index documents without knowing in advance exactly what fields they contain'    │
-│              │                      │       │           │ and 'A dynamic field's name defines a pattern that contains a wildcard (*) as the first, last,   │
-│              │                      │       │           │ or only character', there are several reasons for irrelevancy including discussions on AWS SDK   │
-│              │                      │       │           │ support, API version information, and unrelated feature descriptions which dilute the direct     │
-│              │                      │       │           │ relevance to the definition and function of a dynamic field in Amazon CloudSearch.               │
-│                                                                                                                                                            │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ ✅ test_case_18 (Passed 3 metrics)                                                                                                                         │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│                                                                                                                                                            │
-│  ❌ test_case_19                                                                                                                                           │
-│  ├──   Input:            What are autocomplete suggesters in Amazon CloudSearch used for?                                                                  │
-│  │     Actual Output:    Autocomplete suggesters in Amazon CloudSearch are used to provide suggestions as users enter terms in the Search field. They      │
-│  │                       enable you to display likely matches before users finish typing their queries. Suggestions are based on the contents of a         │
-│  │                       particular text field and are possible matches for an incomplete search query.                                                    │
-│  └── Metrics                                                                                                                                               │
-│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                                           │
-│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
-│        PASS  │ Faithfulness         │ 1.00  │ 0.70      │ The score is 1.00 because there are no contradi...                                               │
-│        PASS  │ Answer Relevancy     │ 1.00  │ 0.70      │ The score is 1.00 because the actual output pro...                                               │
-│        FAIL  │ Contextual Relevancy │ 0.43  │ 0.70      │ The score is 0.43 because, although the retrieval context contains relevant information such     │
-│              │                      │       │           │ as 'Getting Autocomplete Suggestions in Amazon CloudSearch' and 'Suggestions are possible        │
-│              │                      │       │           │ matches for an incomplete search query', a significant portion of the context is unrelated,      │
-│              │                      │       │           │ discussing topics like 'using the post_tag option','sorting results by relevance score', and     │
-│              │                      │       │           │ 'deep paging and result pagination', which do not contribute to understanding the function of    │
-│              │                      │       │           │ autocomplete suggesters.                                                                         │
-│                                                                                                                                                            │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│                                                                                                                                                            │
-│  ❌ test_case_20                                                                                                                                           │
-│  ├──   Input:            What is the maximum number of search hits that can be retrieved at once in Amazon CloudSearch?                                    │
-│  │     Actual Output:    The maximum number of hits you can retrieve at once in Amazon CloudSearch is 10,000.                                              │
-│  └── Metrics                                                                                                                                               │
-│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                                           │
-│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
-│        PASS  │ Faithfulness         │ 1.00  │ 0.70      │ The score is 1.00 because there are no contradi...                                               │
-│        PASS  │ Answer Relevancy     │ 1.00  │ 0.70      │ The score is 1.00 because the response directly...                                               │
-│        FAIL  │ Contextual Relevancy │ 0.47  │ 0.70      │ The score is 0.47 because, although the retrieval context contains relevant information such     │
-│              │                      │       │           │ as 'The maximum number of hits you can retrieve at once is 10,000. The size parameter can        │
-│              │                      │       │           │ contain values in the range 0 - 10000.' and 'You can get the first 10,000 hits using the size    │
-│              │                      │       │           │ and start parameters.', a significant portion of the context is irrelevant, including details    │
-│              │                      │       │           │ about suggesters, API versions, and unrelated parameters, which dilutes the overall relevance.   │
-│                                                                                                                                                            │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│                                                                                                                                                            │
-│  ❌ test_case_21                                                                                                                                           │
-│  ├──   Input:            What is the current stock price of Amazon.com, Inc.?                                                                              │
-│  │     Actual Output:    I don't have enough information to answer that.                                                                                   │
-│  └── Metrics                                                                                                                                               │
-│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                                           │
-│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
-│        PASS  │ Faithfulness         │ 1.00  │ 0.70      │ The score is 1.00 because there are no contradi...                                               │
-│        FAIL  │ Answer Relevancy     │ 0.00  │ 0.70      │ The score is 0.00 because the statement does not provide the requested stock price               │
-│              │                      │       │           │ information.                                                                                     │
-│        FAIL  │ Contextual Relevancy │ 0.00  │ 0.70      │ The score is 0.00 because the retrieval context is entirely irrelevant to the input, as it       │
-│              │                      │       │           │ only contains cryptographic information about Amazon's root CA certificates, alias names, SHA    │
-│              │                      │       │           │ values, client certificates, and details about pinging the Amazon website, none of which         │
-│              │                      │       │           │ relate to the current stock price of Amazon.com, Inc.                                            │
-│                                                                                                                                                            │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ Aggregate Metrics                                                                                                                                          │
-│                                                                                                                                                            │
-│  Metric                                     ┃ Average Score                ┃ Pass Rate                                                      ┃ Total        │
-│ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━ │
-│  Faithfulness                               │ 0.99                         │ 100.00% | passed=22 | failed=0                                 │ 22           │
-│  Answer Relevancy                           │ 0.85                         │ 86.36% | passed=19 | failed=3                                  │ 22           │
-│  Contextual Relevancy                       │ 0.63                         │ 50.00% | passed=11 | failed=11                                 │ 22           │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ 🚀 DeepEval Evaluation Results                                                                                                       │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_0 (Passed 5 metrics)                                                                                                    │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                      │
+│  ❌ test_case_1                                                                                                                      │
+│  ├──   Input:              What four components make up the Agent Toolkit for AWS?                                                   │
+│  │     Actual Output:      The Agent Toolkit for AWS includes four components that work together:                                    │
+│  │                         • AWS MCP Server                                                                                          │
+│  │                         • Plugins                                                                                                 │
+│  │                         • Skills                                                                                                  │
+│  │                         • Additional plugins                                                                                      │
+│  │     Expected Output:    The four components are the AWS MCP Server, Agent skills, Plugins, and Rules files.                       │
+│  └── Metrics                                                                                                                         │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                     │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Faithfulness         │ 0.60  │ 0.70      │ The score is 0.60 because the actual output incorrectly includes           │
+│              │                      │       │           │ 'Skills' as a component of the Agent Toolkit for AWS and mentions          │
+│              │                      │       │           │ 'additional plugins' which are not listed in the retrieval context.        │
+│        PASS  │ Answer Relevancy     │ 1.00  │ 0.70      │ The score is 1.00 because the response provided...                         │
+│        FAIL  │ Contextual Relevancy │ 0.33  │ 0.70      │ The score is 0.33 because, although there are relevant statements like     │
+│              │                      │       │           │ 'The Agent Toolkit for AWS includes four components that work together'    │
+│              │                      │       │           │ and 'AWS MCP Server – A managed server that gives agents access to AWS     │
+│              │                      │       │           │ through the Model Context Protocol (MCP)', many parts of the context are   │
+│              │                      │       │           │ irrelevant, discussing skills, plugins, and user guides that do not        │
+│              │                      │       │           │ directly address the specific components of the Agent Toolkit for AWS.     │
+│        PASS  │ Contextual Precision │ 1.00  │ 0.70      │ The score is 1.00 because the first node, which...                         │
+│        PASS  │ Contextual Recall    │ 1.00  │ 0.70      │ The score is 1.00 because the expected output i...                         │
+│                                                                                                                                      │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                      │
+│  ❌ test_case_2                                                                                                                      │
+│  ├──   Input:              What is the role of the AWS MCP Server in the Agent Toolkit for AWS?                                      │
+│  │     Actual Output:      The AWS MCP Server is a managed server that gives agents access to AWS through the Model Context          │
+│  │                         Protocol (MCP). Agents can search AWS documentation and retrieve service information without              │
+│  │                         authentication. To execute AWS API calls, agents run Python scripts in a sandboxed environment.           │
+│  │     Expected Output:    It is a managed server that gives agents access to AWS through the Model Context Protocol. Agents can     │
+│  │                         search AWS documentation without authentication, while API calls, sandboxed scripts, and curated          │
+│  │                         skills use the agent's existing IAM credentials.                                                          │
+│  └── Metrics                                                                                                                         │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                     │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Faithfulness         │ 0.50  │ 0.70      │ The score is 0.50 because the actual output incorrectly suggests that      │
+│              │                      │       │           │ Python scripts can be run in a sandboxed environment on the AWS MCP        │
+│              │                      │       │           │ Server for executing AWS API calls, contradicting the requirement for      │
+│              │                      │       │           │ agents to use their IAM credentials.                                       │
+│        PASS  │ Answer Relevancy     │ 0.80  │ 0.70      │ The score is 0.80 because the response mostly a...                         │
+│        PASS  │ Contextual Relevancy │ 0.75  │ 0.70      │ The score is 0.75 because, although the context...                         │
+│        PASS  │ Contextual Precision │ 1.00  │ 0.70      │ The score is 1.00 because all nodes in retrieva...                         │
+│        PASS  │ Contextual Recall    │ 1.00  │ 0.70      │ The score is 1.00 because all sentences in the ...                         │
+│                                                                                                                                      │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_3 (Passed 5 metrics)                                                                                                    │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_4 (Passed 5 metrics)                                                                                                    │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_5 (Passed 5 metrics)                                                                                                    │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                      │
+│  ❌ test_case_6                                                                                                                      │
+│  ├──   Input:              What are AWS Knowledge Tools provided by the AWS MCP Server?                                              │
+│  │     Actual Output:      AWS Knowledge Tools provided by the AWS MCP Server include read-only tools such as documentation          │
+│  │                         search, documentation retrieval, and regional availability. These tools require unauthenticated access    │
+│  │                         and are limited to per source IP address. Tools that run AWS API calls or execute scripts require         │
+│  │                         authentication.                                                                                           │
+│  │     Expected Output:    They include aws___retrieve_skill for retrieving domain-specific AWS expertise,                           │
+│  │                         aws___search_documentation for searching AWS documentation and skills, aws___read_documentation for       │
+│  │                         retrieving AWS documentation as markdown, aws___list_regions for listing AWS Regions, and                 │
+│  │                         aws___get_regional_availability for checking regional availability.                                       │
+│  └── Metrics                                                                                                                         │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                     │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Faithfulness         │ 0.67  │ 0.70      │ The score is 0.67 because the actual output incorrectly implies that       │
+│              │                      │       │           │ read-only knowledge tools on the AWS MCP Server require unauthenticated    │
+│              │                      │       │           │ access, which contradicts the context stating these tools are merely       │
+│              │                      │       │           │ limited to unauthenticated requests.                                       │
+│        PASS  │ Answer Relevancy     │ 1.00  │ 0.70      │ The score is 1.00 because the response is perfe...                         │
+│        FAIL  │ Contextual Relevancy │ 0.36  │ 0.70      │ The score is 0.36 because, although there are relevant statements such     │
+│              │                      │       │           │ as 'Skills provide structured guidance – Your agent uses skills            │
+│              │                      │       │           │ installed locally through a plugin or discovers them at runtime through    │
+│              │                      │       │           │ the AWS MCP Server.' and 'AWS MCP Server provides the following tools to   │
+│              │                      │       │           │ help you complete AWS tasks through natural language interactions.', the   │
+│              │                      │       │           │ majority of the context is deemed irrelevant due to incomplete             │
+│              │                      │       │           │ information and unrelated content like deprecation notices and             │
+│              │                      │       │           │ authentication requirements, as noted in the reasons for irrelevancy.      │
+│        FAIL  │ Contextual Precision │ 0.00  │ 0.70      │ The score is 0.00 because all nodes in retrieval contexts are              │
+│              │                      │       │           │ irrelevant. The first node discusses general skills and knowledge tools    │
+│              │                      │       │           │ but does not list specific AWS Knowledge Tools provided by the AWS MCP     │
+│              │                      │       │           │ Server. The second node mentions the deprecation of a tool and             │
+│              │                      │       │           │ recommends another, but it does not list the specific tools as required.   │
+│              │                      │       │           │ The third node describes limitations and requirements for                  │
+│              │                      │       │           │ unauthenticated requests but does not list the specific tools provided     │
+│              │                      │       │           │ by the AWS MCP Server.                                                     │
+│        PASS  │ Contextual Recall    │ 1.00  │ 0.70      │ The score is 1.00 because all elements in the e...                         │
+│                                                                                                                                      │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                      │
+│  ❌ test_case_7                                                                                                                      │
+│  ├──   Input:              What is an Agent Toolkit skill and how do agents use it?                                                  │
+│  │     Actual Output:      An Agent Toolkit skill is a directory containing a SKILL.md file and optional supporting files. The       │
+│  │                         SKILL.md file provides step-by-step instructions, decision guides, and reference materials that guide     │
+│  │                         the agent through complex procedures while following AWS best practices.                                  │
+│  │                                                                                                                                   │
+│  │                         Agents use skills in the following way:                                                                   │
+│  │                         1. The agent reads the skill's description to determine if it is relevant to the current task.            │
+│  │                         2. If relevant, the agent loads the full instructions from the SKILL.md file.                             │
+│  │                         3. The agent follows the skill's procedures, loading reference files only as needed.                      │
+│  │     Expected Output:    A skill is a directory containing a SKILL.md file and optional supporting files. The instructions         │
+│  │                         describe the steps, APIs, mistakes to avoid, and verification procedures for a task. Agents determine     │
+│  │                         whether a skill is relevant, load its instructions, follow its procedures, and release the skill          │
+│  │                         content after the task.                                                                                   │
+│  └── Metrics                                                                                                                         │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                     │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Faithfulness         │ 0.67  │ 0.70      │ The score is 0.67 because the actual output incorrectly states that the    │
+│              │                      │       │           │ SKILL.md file provides step-by-step instructions, decision guides, and     │
+│              │                      │       │           │ reference materials, when in fact it is the skill directory that           │
+│              │                      │       │           │ contains these elements, with the SKILL.md file being crucial for the      │
+│              │                      │       │           │ skill's functionality.                                                     │
+│        PASS  │ Answer Relevancy     │ 1.00  │ 0.70      │ The score is 1.00 because the response provided...                         │
+│        FAIL  │ Contextual Relevancy │ 0.60  │ 0.70      │ The score is 0.60 because, although the retrieval context includes         │
+│              │                      │       │           │ relevant information such as 'Skills provide structured guidance – Your    │
+│              │                      │       │           │ agent uses skills installed locally through a plugin or discovers them     │
+│              │                      │       │           │ at runtime through the AWS MCP Server' and 'Regardless of how a skill      │
+│              │                      │       │           │ was installed, your agent uses it the same way:', there are several        │
+│              │                      │       │           │ irrelevant and unclear statements like 'Knowledge tools provide current    │
+│              │                      │       │           │ information – When your agent needs up-to-date' and 'Skills 22' that       │
+│              │                      │       │           │ dilute the overall relevance.                                              │
+│        FAIL  │ Contextual Precision │ 0.58  │ 0.70      │ The score is 0.58 because the first node, which is irrelevant as it        │
+│              │                      │       │           │ doesn't directly define what a skill is or how agents use it, is ranked    │
+│              │                      │       │           │ higher than the second and third nodes, which are relevant and provide     │
+│              │                      │       │           │ direct definitions and explanations on the topic. However, the second      │
+│              │                      │       │           │ node, though relevant, doesn't fully cover the process, which slightly     │
+│              │                      │       │           │ lowers the score. The third node, being the most relevant and detailed,    │
+│              │                      │       │           │ should ideally be ranked higher to improve the score.                      │
+│        PASS  │ Contextual Recall    │ 1.00  │ 0.70      │ The score is 1.00 because all sentences in the ...                         │
+│                                                                                                                                      │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_8 (Passed 5 metrics)                                                                                                    │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_9 (Passed 5 metrics)                                                                                                    │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_10 (Passed 5 metrics)                                                                                                   │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                      │
+│  ❌ test_case_11                                                                                                                     │
+│  ├──   Input:              What are the main steps for building a search solution with Amazon CloudSearch?                           │
+│  │     Actual Output:      The main steps for building a search solution with Amazon CloudSearch are:                                │
+│  │                                                                                                                                   │
+│  │                         • Create and configure a search domain.                                                                   │
+│  │                         • Upload and index the data you want to search.                                                           │
+│  │                         • Send search requests to your domain.                                                                    │
+│  │     Expected Output:    The main steps are to create and configure a search domain, upload the data to the domain for             │
+│  │                         indexing, and search the domain by sending search requests to its search endpoint.                        │
+│  └── Metrics                                                                                                                         │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                     │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        PASS  │ Faithfulness         │ 1.00  │ 0.70      │ The score is 1.00 because there are no contradi...                         │
+│        PASS  │ Answer Relevancy     │ 1.00  │ 0.70      │ The score is 1.00 because the response provided...                         │
+│        FAIL  │ Contextual Relevancy │ 0.60  │ 0.70      │ The score is 0.60 because, although the retrieval context includes         │
+│              │                      │       │           │ relevant information such as 'To build a search solution with Amazon       │
+│              │                      │       │           │ CloudSearch, you take the following steps: • Create and configure a        │
+│              │                      │       │           │ search domain. A search domain includes your searchable data and the       │
+│              │                      │       │           │ search instances that handle your search requests.', it also contains      │
+│              │                      │       │           │ irrelevant information like 'CloudSearch?' when it does not provide a      │
+│              │                      │       │           │ step for building a search solution and 'If you have' which is             │
+│              │                      │       │           │ incomplete and does not provide any relevant information about the main    │
+│              │                      │       │           │ steps for building a search solution with Amazon CloudSearch.              │
+│        PASS  │ Contextual Precision │ 1.00  │ 0.70      │ The score is 1.00 because all relevant nodes, s...                         │
+│        PASS  │ Contextual Recall    │ 1.00  │ 0.70      │ The score is 1.00 because the expected output i...                         │
+│                                                                                                                                      │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_12 (Passed 5 metrics)                                                                                                   │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                      │
+│  ❌ test_case_13                                                                                                                     │
+│  ├──   Input:              How does Amazon CloudSearch process search strings before matching documents?                             │
+│  │     Actual Output:      When you submit a search request, Amazon CloudSearch performs text processing on the search string.       │
+│  │                         The search string is processed to:                                                                        │
+│  │                         • Convert all characters to lowercase                                                                     │
+│  │                         • Split the string into separate terms on whitespace and punctuation boundaries                           │
+│  │                         • Remove terms that are on the stopword list for the field being searched.                                │
+│  │                         • Map stems and synonyms according to the stemming and synonym options configured for the field.          │
+│  │     Expected Output:    It converts characters to lowercase, splits the string into terms using whitespace and punctuation        │
+│  │                         boundaries, removes field-specific stopwords, and maps stems and synonyms according to the configured     │
+│  │                         field analysis options. It then looks up the processed terms in the index and filters and sorts the       │
+│  │                         matching documents.                                                                                       │
+│  └── Metrics                                                                                                                         │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                     │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        PASS  │ Faithfulness         │ 1.00  │ 0.70      │ The score is 1.00 because there are no contradi...                         │
+│        PASS  │ Answer Relevancy     │ 1.00  │ 0.70      │ The score is 1.00 because the response provided...                         │
+│        FAIL  │ Contextual Relevancy │ 0.62  │ 0.70      │ The score is 0.62 because, although the retrieval context contains         │
+│              │                      │       │           │ relevant information such as 'Amazon CloudSearch performs text             │
+│              │                      │       │           │ processing on the search string' and 'Convert all characters to            │
+│              │                      │       │           │ lowercase', it also includes several irrelevant statements like            │
+│              │                      │       │           │ 'Searching for Numbers in Amazon CloudSearch' and 'Amazon CloudSearch      │
+│              │                      │       │           │ supports four numeric field types: double, double-array, int, and          │
+│              │                      │       │           │ int-array', which do not contribute to explaining how Amazon CloudSearch   │
+│              │                      │       │           │ processes search strings before matching documents.                        │
+│        PASS  │ Contextual Precision │ 1.00  │ 0.70      │ The score is 1.00 because the first node, which...                         │
+│        FAIL  │ Contextual Recall    │ 0.50  │ 0.70      │ The score is 0.50 because while the retrieval context covers the initial   │
+│              │                      │       │           │ processing steps (node 1), it fails to address the subsequent actions of   │
+│              │                      │       │           │ looking up terms in the index and filtering/sorting documents, as          │
+│              │                      │       │           │ mentioned in the latter part of the expected output (sentence 2).          │
+│                                                                                                                                      │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                      │
+│  ❌ test_case_14                                                                                                                     │
+│  ├──   Input:              What are the four query parsers supported by Amazon CloudSearch?                                          │
+│  │     Actual Output:      The four query parsers supported by Amazon CloudSearch are:                                               │
+│  │                         • simple                                                                                                  │
+│  │                         • structured                                                                                              │
+│  │                         • lucene                                                                                                  │
+│  │                         • dismax                                                                                                  │
+│  │     Expected Output:    The four query parsers are simple, structured, lucene, and dismax. The simple parser is the default       │
+│  │                         when q.parser is not specified.                                                                           │
+│  └── Metrics                                                                                                                         │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                     │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        PASS  │ Faithfulness         │ 1.00  │ 0.70      │ The score is 1.00 because there are no contradi...                         │
+│        PASS  │ Answer Relevancy     │ 1.00  │ 0.70      │ The score is 1.00 because the response accurate...                         │
+│        PASS  │ Contextual Relevancy │ 0.85  │ 0.70      │ The score is 0.85 because, despite some irrelev...                         │
+│        FAIL  │ Contextual Precision │ 0.58  │ 0.70      │ The score is 0.58 because the first node, which is irrelevant as it        │
+│              │                      │       │           │ 'does not list all four query parsers', is ranked higher than the second   │
+│              │                      │       │           │ and third nodes, which are relevant as they 'list all four query           │
+│              │                      │       │           │ parsers' and 'repeat the information about the four query parsers'. If     │
+│              │                      │       │           │ the irrelevant node was ranked lower, the score would be higher.           │
+│        PASS  │ Contextual Recall    │ 1.00  │ 0.70      │ The score is 1.00 because all information in th...                         │
+│                                                                                                                                      │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                      │
+│  ❌ test_case_15                                                                                                                     │
+│  ├──   Input:              What is Azure Cognitive Search's pricing model?                                                           │
+│  │     Actual Output:      I don't have enough information to answer that.                                                           │
+│  │     Expected Output:    I don't have enough information to answer that                                                            │
+│  └── Metrics                                                                                                                         │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                     │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        PASS  │ Faithfulness         │ 1.00  │ 0.70      │ The score is 1.00 because there are no contradi...                         │
+│        FAIL  │ Answer Relevancy     │ 0.00  │ 0.70      │ The score is 0.00 because the statement does not provide any information   │
+│              │                      │       │           │ about Azure Cognitive Search's pricing model.                              │
+│        FAIL  │ Contextual Relevancy │ 0.07  │ 0.70      │ The score is 0.07 because the retrieval context primarily discusses        │
+│              │                      │       │           │ Amazon CloudSearch and unrelated features, while only one statement        │
+│              │                      │       │           │ vaguely relates to billing for document batches, which is not specific     │
+│              │                      │       │           │ to Azure Cognitive Search's pricing model.                                 │
+│        FAIL  │ Contextual Precision │ 0.00  │ 0.70      │ The score is 0.00 because all nodes in retrieval contexts are irrelevant   │
+│              │                      │       │           │ to the input. The first node discusses 'billing for document batches in    │
+│              │                      │       │           │ Amazon CloudSearch', the second node provides 'pricing information for     │
+│              │                      │       │           │ Amazon CloudSearch', and the third node describes 'the capabilities and    │
+│              │                      │       │           │ scaling of Amazon CloudSearch', none of which are related to Azure         │
+│              │                      │       │           │ Cognitive Search's pricing model.                                          │
+│        FAIL  │ Contextual Recall    │ 0.00  │ 0.70      │ The score is 0.00 because the retrieval context lacks any nodes that       │
+│              │                      │       │           │ could support the expected output, specifically node(s) that would         │
+│              │                      │       │           │ provide specific information to confidently answer the given sentence      │
+│              │                      │       │           │ (1).                                                                       │
+│                                                                                                                                      │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                      │
+│  ❌ test_case_16                                                                                                                     │
+│  ├──   Input:              How does Amazon CloudSearch automatically scale for increasing data volume?                               │
+│  │     Actual Output:      Amazon CloudSearch automatically scales your search domain to a larger search instance type when the      │
+│  │                         amount of data you add to your domain exceeds the capacity of the initial search instance type. After     │
+│  │                         a domain exceeds the capacity of the largest search instance type, Amazon CloudSearch partitions the      │
+│  │                         search index across multiple search instances.                                                            │
+│  │     Expected Output:    When the data exceeds the capacity of the current search instance type, CloudSearch scales to a larger    │
+│  │                         instance type. If the data exceeds the largest instance type, it partitions the search index across       │
+│  │                         multiple search instances. When the data volume shrinks, it can scale down to fewer or smaller            │
+│  │                         instances.                                                                                                │
+│  └── Metrics                                                                                                                         │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                     │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        PASS  │ Faithfulness         │ 1.00  │ 0.70      │ The score is 1.00 because there are no contradi...                         │
+│        PASS  │ Answer Relevancy     │ 1.00  │ 0.70      │ The score is 1.00 because the response provided...                         │
+│        FAIL  │ Contextual Relevancy │ 0.64  │ 0.70      │ The score is 0.64 because, although the retrieval context contains         │
+│              │                      │       │           │ relevant information such as 'Amazon CloudSearch can scale to              │
+│              │                      │       │           │ accommodate the amount of data uploaded to the domain and the volume and   │
+│              │                      │       │           │ complexity of search requests' and 'Amazon CloudSearch automatically       │
+│              │                      │       │           │ scales the domain by adding instances as the volume of data or traffic     │
+│              │                      │       │           │ increases', there are also irrelevant details like 'The version number     │
+│              │                      │       │           │ of the API does not directly explain how Amazon CloudSearch scales for     │
+│              │                      │       │           │ increasing data volume' and 'The mention of the Developer Guide does not   │
+│              │                      │       │           │ provide specific information on how Amazon CloudSearch scales              │
+│              │                      │       │           │ automatically', which lower the overall relevancy.                         │
+│        PASS  │ Contextual Precision │ 1.00  │ 0.70      │ The score is 1.00 because the first and second ...                         │
+│        FAIL  │ Contextual Recall    │ 0.67  │ 0.70      │ The score is 0.67 because the retrieval context supports the scaling up    │
+│              │                      │       │           │ process as mentioned in sentences 1 and 2 of the expected output (nodes    │
+│              │                      │       │           │ 2 and 2 in retrieval context), but does not cover the scaling down         │
+│              │                      │       │           │ process when data volume shrinks as stated in sentence 3 of the expected   │
+│              │                      │       │           │ output.                                                                    │
+│                                                                                                                                      │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_17 (Passed 5 metrics)                                                                                                   │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_18 (Passed 5 metrics)                                                                                                   │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                      │
+│  ❌ test_case_19                                                                                                                     │
+│  ├──   Input:              What are autocomplete suggesters in Amazon CloudSearch used for?                                          │
+│  │     Actual Output:      Autocomplete suggesters in Amazon CloudSearch are used to implement autocomplete functionality. They      │
+│  │                         provide a list of query completions and the documents in which they were found. For more information,     │
+│  │                         see Getting Autocomplete Suggestions in Amazon CloudSearch.                                               │
+│  │     Expected Output:    Suggesters provide autocomplete suggestions for incomplete queries. They are based on a particular        │
+│  │                         text field and can return matching field values and document IDs; fuzzy matching can also be              │
+│  │                         configured to correct certain typos.                                                                      │
+│  └── Metrics                                                                                                                         │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                     │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Faithfulness         │ 0.67  │ 0.70      │ The score is 0.67 because the actual output incorrectly states that        │
+│              │                      │       │           │ suggesters provide a list of documents in which query completions were     │
+│              │                      │       │           │ found, which is not mentioned in the context.                              │
+│        PASS  │ Answer Relevancy     │ 1.00  │ 0.70      │ The score is 1.00 because the response provided...                         │
+│        FAIL  │ Contextual Relevancy │ 0.44  │ 0.70      │ The score is 0.44 because, although the retrieval context includes         │
+│              │                      │       │           │ relevant statements such as 'Autocomplete—configure a suggester and        │
+│              │                      │       │           │ submit requests to the suggester resource to get a list of query           │
+│              │                      │       │           │ completions and the documents in which they were found.' and               │
+│              │                      │       │           │ 'Suggesters—you can configure suggesters to implement autocomplete         │
+│              │                      │       │           │ functionality.', a significant portion of the context discusses            │
+│              │                      │       │           │ unrelated topics like 'Partial search results—use the partial=true         │
+│              │                      │       │           │ parameter to retrieve partial results when one' and 'By default, results   │
+│              │                      │       │           │ are sorted according to an automatically-generated relevance score,        │
+│              │                      │       │           │ _score', which dilutes the overall relevance.                              │
+│        PASS  │ Contextual Precision │ 0.83  │ 0.70      │ The score is 0.83 because the first node, which...                         │
+│        PASS  │ Contextual Recall    │ 1.00  │ 0.70      │ The score is 1.00 because all sentences in the ...                         │
+│                                                                                                                                      │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                      │
+│  ❌ test_case_20                                                                                                                     │
+│  ├──   Input:              What is the maximum number of search hits that can be retrieved at once in Amazon CloudSearch?            │
+│  │     Actual Output:      The maximum number of search hits that can be retrieved at once in Amazon CloudSearch is 10,000.          │
+│  │     Expected Output:    The maximum number of hits that can be retrieved at once is 10,000. The size parameter can contain        │
+│  │                         values from 0 through 10,000.                                                                             │
+│  └── Metrics                                                                                                                         │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                     │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        PASS  │ Faithfulness         │ 1.00  │ 0.70      │ The score is 1.00 because there are no contradi...                         │
+│        PASS  │ Answer Relevancy     │ 1.00  │ 0.70      │ The score is 1.00 because the response directly...                         │
+│        FAIL  │ Contextual Relevancy │ 0.28  │ 0.70      │ The score is 0.28 because, despite some relevant information such as       │
+│              │                      │       │           │ 'You can get the first 10,000 hits' and 'The size parameter can contain    │
+│              │                      │       │           │ values in the range 0 - 10000', the majority of the retrieval context      │
+│              │                      │       │           │ was deemed irrelevant as it discussed default numbers, pagination,         │
+│              │                      │       │           │ indexing, API versions, and other unrelated limits, thus significantly     │
+│              │                      │       │           │ lowering the overall relevancy score.                                      │
+│        PASS  │ Contextual Precision │ 1.00  │ 0.70      │ The score is 1.00 because all relevant nodes, s...                         │
+│        PASS  │ Contextual Recall    │ 1.00  │ 0.70      │ The score is 1.00 because all sentences in the ...                         │
+│                                                                                                                                      │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                      │
+│  ❌ test_case_21                                                                                                                     │
+│  ├──   Input:              What is the current stock price of Amazon.com, Inc.?                                                      │
+│  │     Actual Output:      I don't have enough information to answer that.                                                           │
+│  │     Expected Output:    I don't have enough information to answer that                                                            │
+│  └── Metrics                                                                                                                         │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                                     │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        PASS  │ Faithfulness         │ 1.00  │ 0.70      │ The score is 1.00 because there are no contradi...                         │
+│        FAIL  │ Answer Relevancy     │ 0.00  │ 0.70      │ The score is 0.00 because the statement does not provide the requested     │
+│              │                      │       │           │ stock price information.                                                   │
+│        FAIL  │ Contextual Relevancy │ 0.00  │ 0.70      │ The score is 0.00 because the retrieval context contains no relevant       │
+│              │                      │       │           │ information to the current stock price of Amazon.com, Inc., as evidenced   │
+│              │                      │       │           │ by the multiple reasons for irrelevancy and the absence of relevant        │
+│              │                      │       │           │ statements.                                                                │
+│        FAIL  │ Contextual Precision │ 0.00  │ 0.70      │ The score is 0.00 because all nodes in retrieval contexts are irrelevant   │
+│              │                      │       │           │ to the input. The first node contains 'SHA256 and SHA1 hash values', the   │
+│              │                      │       │           │ second node shows 'a ping command and its output', and the third node      │
+│              │                      │       │           │ contains 'information about pinging a website and notes about traffic      │
+│              │                      │       │           │ being blocked', none of which are related to the stock price of            │
+│              │                      │       │           │ Amazon.com, Inc.                                                           │
+│        FAIL  │ Contextual Recall    │ 0.00  │ 0.70      │ The score is 0.00 because the retrieval context does not contain any       │
+│              │                      │       │           │ information that supports the expected output.                             │
+│                                                                                                                                      │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Aggregate Metrics                                                                                                                    │
+│                                                                                                                                      │
+│  Metric                               ┃ Average Score            ┃ Pass Rate                                            ┃ Total      │
+│ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━ │
+│  Faithfulness                         │ 0.91                     │ 77.27% | passed=17 | failed=5                        │ 22         │
+│  Answer Relevancy                     │ 0.87                     │ 90.91% | passed=20 | failed=2                        │ 22         │
+│  Contextual Relevancy                 │ 0.65                     │ 54.55% | passed=12 | failed=10                       │ 22         │
+│  Contextual Precision                 │ 0.82                     │ 77.27% | passed=17 | failed=5                        │ 22         │
+│  Contextual Recall                    │ 0.86                     │ 81.82% | passed=18 | failed=4                        │ 22         │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
 
 ⚠ WARNING: No hyperparameters logged.
@@ -289,7 +412,7 @@
 ================================================================================
 
 
-✓ Evaluation completed 🎉! (time taken: 1061.21s | token cost: None)
+✓ Evaluation completed 🎉! (time taken: 1465.5s | token cost: None)
 » Test Results (22 total tests):
    » Pass Rate: 45.45% | Passed: 10 | Failed: 12
 
