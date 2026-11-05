@@ -15,6 +15,7 @@ from src._3retrieval.retriever import load_index, load_bm25
 from rag_pipeline import ask
 from deepeval import evaluate
 from deepeval.test_case import LLMTestCase
+from .grok_model import GrokJudge
 from deepeval.metrics import (
     FaithfulnessMetric,
     AnswerRelevancyMetric,
@@ -23,7 +24,7 @@ from deepeval.metrics import (
     ContextualRecallMetric,
 )
 from deepeval.models.base_model import DeepEvalBaseLLM
-from deepeval.evaluate import AsyncConfig
+from deepeval.evaluate import AsyncConfig, CacheConfig
 
 
 def _sanitize_json(s: str) -> str:
@@ -36,72 +37,72 @@ def _sanitize_json(s: str) -> str:
     return s
 
 
-class BedrockJudge(DeepEvalBaseLLM):
-    def __init__(self, model_id="amazon.nova-pro-v1:0", region="us-east-1"):
-        self.model_id = model_id
-        self.client = boto3.client(
-            "bedrock-runtime",
-            region_name=region,
-            config=Config(
-                retries={"max_attempts": 10, "mode": "adaptive"},
-                read_timeout=120,
-            ),
-        )
-    def load_model(self):
-        return self.client
+# class BedrockJudge(DeepEvalBaseLLM):
+#     def __init__(self, model_id="amazon.nova-pro-v1:0", region="us-east-1"):
+#         self.model_id = model_id
+#         self.client = boto3.client(
+#             "bedrock-runtime",
+#             region_name=region,
+#             config=Config(
+#                 retries={"max_attempts": 10, "mode": "adaptive"},
+#                 read_timeout=120,
+#             ),
+#         )
+#     def load_model(self):
+#         return self.client
 
-    def generate(self, prompt: str, temperature: float = 0.0) -> str:
-        for attempt in range(6):
-            try:
-                response = self.client.converse(
-                    modelId=self.model_id,
-                    messages=[{"role": "user", "content": [{"text": prompt}]}],
-                    inferenceConfig={"maxTokens": 2048, "temperature": temperature},
-                )
-                return response["output"]["message"]["content"][0]["text"]
-            except ClientError as e:
-                code = e.response["Error"]["Code"]
-                if code in ("ThrottlingException", "ServiceUnavailableException") and attempt < 5:
-                    wait = 2 ** attempt * 5   # 5, 10, 20, 40, 80s
-                    print(f"[BedrockJudge] {code}, sleeping {wait}s")
-                    time.sleep(wait)
-                else:
-                    raise
+#     def generate(self, prompt: str, temperature: float = 0.0) -> str:
+#         for attempt in range(6):
+#             try:
+#                 response = self.client.converse(
+#                     modelId=self.model_id,
+#                     messages=[{"role": "user", "content": [{"text": prompt}]}],
+#                     inferenceConfig={"maxTokens": 2048, "temperature": temperature},
+#                 )
+#                 return response["output"]["message"]["content"][0]["text"]
+#             except ClientError as e:
+#                 code = e.response["Error"]["Code"]
+#                 if code in ("ThrottlingException", "ServiceUnavailableException") and attempt < 5:
+#                     wait = 2 ** attempt * 5   # 5, 10, 20, 40, 80s
+#                     print(f"[BedrockJudge] {code}, sleeping {wait}s")
+#                     time.sleep(wait)
+#                 else:
+#                     raise
 
-    async def a_generate(self, prompt: str) -> str:
-        return self.generate(prompt)
+#     async def a_generate(self, prompt: str) -> str:
+#         return self.generate(prompt)
 
-    def generate_with_schema(self, prompt: str, schema: type[BaseModel]) -> BaseModel:
-        json_schema_str = json.dumps(schema.model_json_schema())
-        formatted_prompt = (
-            f"{prompt}\n\n"
-            "CRITICAL: Respond ONLY with a valid JSON object matching this schema:\n"
-            f"{json_schema_str}\n"
-            "Do not include any conversational text, explanations, or markdown code blocks."
-        )
+#     def generate_with_schema(self, prompt: str, schema: type[BaseModel]) -> BaseModel:
+#         json_schema_str = json.dumps(schema.model_json_schema())
+#         formatted_prompt = (
+#             f"{prompt}\n\n"
+#             "CRITICAL: Respond ONLY with a valid JSON object matching this schema:\n"
+#             f"{json_schema_str}\n"
+#             "Do not include any conversational text, explanations, or markdown code blocks."
+#         )
 
-        last_err = None
-        for attempt in range(3):
-            # temp 0.0 on first try, slightly higher on retries so output can differ
-            temp = 0.0 if attempt == 0 else 0.3
-            raw_output = self.generate(formatted_prompt, temperature=temp).strip()
-            try:
-                cleaned = _sanitize_json(raw_output)
-                try:
-                    return schema.model_validate_json(cleaned)
-                except Exception:
-                    # lenient parse (handles raw newlines/control chars inside strings)
-                    return schema.model_validate(json.loads(cleaned, strict=False))
-            except Exception as e:
-                last_err = e
-                print(f"[BedrockJudge] parse failed (attempt {attempt + 1}/3): {e}")
-        raise last_err
+#         last_err = None
+#         for attempt in range(3):
+#             # temp 0.0 on first try, slightly higher on retries so output can differ
+#             temp = 0.0 if attempt == 0 else 0.3
+#             raw_output = self.generate(formatted_prompt, temperature=temp).strip()
+#             try:
+#                 cleaned = _sanitize_json(raw_output)
+#                 try:
+#                     return schema.model_validate_json(cleaned)
+#                 except Exception:
+#                     # lenient parse (handles raw newlines/control chars inside strings)
+#                     return schema.model_validate(json.loads(cleaned, strict=False))
+#             except Exception as e:
+#                 last_err = e
+#                 print(f"[BedrockJudge] parse failed (attempt {attempt + 1}/3): {e}")
+#         raise last_err
 
-    async def a_generate_with_schema(self, prompt: str, schema: type[BaseModel]) -> BaseModel:
-        return self.generate_with_schema(prompt, schema)
+#     async def a_generate_with_schema(self, prompt: str, schema: type[BaseModel]) -> BaseModel:
+#         return self.generate_with_schema(prompt, schema)
 
-    def get_model_name(self) -> str:
-        return f"Bedrock-{self.model_id}"
+#     def get_model_name(self) -> str:
+#         return f"Bedrock-{self.model_id}"
 
 
 INDEX_FILE = "faiss_index.bin"
@@ -109,7 +110,9 @@ METADATA_FILE = "chunk_metadata.json"
 BM25_FILE = "bm25_index.pkl"
 GOLDEN_PATH = "GoldenDataSet/golden_dataset.json"
 CACHE_PATH = "Evals/pipeline_cache.json"
-JUDGE_MODEL = BedrockJudge(model_id="amazon.nova-pro-v1:0", region="us-east-1")
+api_groq=os.getenv("GROQ_API_KEY")
+
+JUDGE_MODEL = GrokJudge(model_id="openai/gpt-oss-20b", api_key=api_groq)
 
 cache = {}
 if os.path.exists(CACHE_PATH):
@@ -162,9 +165,14 @@ async_config = AsyncConfig(
     run_async=False,
     max_concurrent=1,
 )
+cache_config = CacheConfig(
+    use_cache=True,
+    write_cache=True
+)
 
 evaluate(
     test_cases=test_case,
     metrics=metrics,
     async_config=async_config,
+    cache_config=cache_config
 )

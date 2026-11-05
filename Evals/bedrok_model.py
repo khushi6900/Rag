@@ -45,3 +45,55 @@ class BedrockJudge(DeepEvalBaseLLM):
 
     def get_model_name(self):
         return f"bedrock:{self.model_id}"
+
+
+# class BedrockJudge(DeepEvalBaseLLM):
+#     def __init__(self, model_id = "google.gemma-3-27b-it", region = "us-east-1"):
+#         self.model_id = model_id
+#         self.client = boto3.client("bedrock-runtime", region_name = region)
+
+#     def load_model(self):
+#         return self.client
+
+#     def generate(self, prompt: str) -> str:
+#             response = self.client.converse(
+#                 modelId=self.model_id,
+#                 messages=[{
+#                     "role": "user",
+#                     "content": [{"text": prompt}]
+#                 }],
+#                 inferenceConfig={
+#                     "maxTokens": 2048,
+#                     "temperature": 0.0
+#                 }
+#             )
+#             return response["output"]["message"]["content"][0]["text"]
+    
+#     async def a_generate(self, prompt: str) -> str:
+#         return self.generate(prompt)
+
+#     def generate_with_schema(self, prompt: str, schema: type[BaseModel]) -> BaseModel:
+#         json_schema_str = json.dumps(schema.model_json_schema())
+#         formatted_prompt = (
+#             f"{prompt}\n\n"
+#             "CRITICAL: Respond ONLY with a valid JSON object matching this schema:\n"
+#             f"{json_schema_str}\n"
+#             "Do not include any conversational text, explanations, or markdown code blocks."
+#         )
+#         raw_output = self.generate(formatted_prompt).strip()
+
+#         # Clean markdown code fences if model returns them
+#         if raw_output.startswith("```json"):
+#             raw_output = raw_output[7:]
+#         if raw_output.startswith("```"):
+#             raw_output = raw_output[3:]
+#         if raw_output.endswith("```"):
+#             raw_output = raw_output[:-3]
+            
+#         return schema.model_validate_json(raw_output.strip())
+
+#     async def a_generate_with_schema(self, prompt: str, schema: type[BaseModel]) -> BaseModel:
+#         return self.generate_with_schema(prompt, schema)
+
+#     def get_model_name(self) -> str:
+#         return f"Bedrock-{self.model_id}"

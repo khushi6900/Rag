@@ -1,108 +1,28 @@
 [
   {
-    "question": "What is the Agent Toolkit for AWS designed to provide AI coding agents?",
-    "ground_truth": "It provides AI coding agents with the tools, knowledge, and guardrails needed to build, deploy, and manage applications on AWS, including secure AWS access, current documentation, and step-by-step guidance.",
-    "source_doc": "mcp-ug.pdf"
+    "question": "What is the current stock price of Amazon.com, Inc.?",
+    "ground_truth": "I don't have enough information to answer that.",
+    "source_doc": null
   },
   {
-    "question": "What four components make up the Agent Toolkit for AWS?",
-    "ground_truth": "The four components are the AWS MCP Server, Agent skills, Plugins, and Rules files.",
-    "source_doc": "mcp-ug.pdf"
+    "question": "What is the capital city of Japan?",
+    "ground_truth": "I don't have enough information to answer that.",
+    "source_doc": null
   },
   {
-    "question": "What is the role of the AWS MCP Server in the Agent Toolkit for AWS?",
-    "ground_truth": "It is a managed server that gives agents access to AWS through the Model Context Protocol. Agents can search AWS documentation without authentication, while API calls, sandboxed scripts, and curated skills use the agent's existing IAM credentials.",
-    "source_doc": "mcp-ug.pdf"
+    "question": "What will the weather be in Mumbai next Saturday?",
+    "ground_truth": "I don't have enough information to answer that.",
+    "source_doc": null
   },
   {
-    "question": "What is the difference between OAuth and SigV4 authentication for the AWS MCP Server?",
-    "ground_truth": "OAuth is the simpler option for direct connections, including web clients and users who commonly work with a single AWS account. SigV4 is the advanced option using the AWS CLI and MCP Proxy for AWS, and it supports workflows such as switching between multiple AWS accounts.",
-    "source_doc": "mcp-ug.pdf"
-  },
-  {
-    "question": "Why should older AWS API MCP Server or AWS Knowledge MCP Server entries be removed when switching to the AWS MCP Server?",
-    "ground_truth": "They should be removed to avoid tool conflicts that can confuse AI agents and reduce performance. The guide recommends switching to the managed AWS MCP Server because it reduces setup and maintenance effort and provides enhanced security controls through IAM condition keys.",
-    "source_doc": "mcp-ug.pdf"
-  },
-  {
-    "question": "How does multi-profile support work with the AWS MCP Server?",
-    "ground_truth": "With the MCP Proxy for AWS, multiple AWS CLI profiles can be configured and selected on a per-call basis. The proxy adds an aws_profile parameter to certain tools, routes the request through the selected profile's credentials, and strips that parameter before forwarding the request to the AWS MCP Server. Multi-profile switching requires SigV4 authentication.",
-    "source_doc": "mcp-ug.pdf"
-  },
-  {
-    "question": "What are AWS Knowledge Tools provided by the AWS MCP Server?",
-    "ground_truth": "They include aws___retrieve_skill for retrieving domain-specific AWS expertise, aws___search_documentation for searching AWS documentation and skills, aws___read_documentation for retrieving AWS documentation as markdown, aws___list_regions for listing AWS Regions, and aws___get_regional_availability for checking regional availability.",
-    "source_doc": "mcp-ug.pdf"
-  },
-  {
-    "question": "What is an Agent Toolkit skill and how do agents use it?",
-    "ground_truth": "A skill is a directory containing a SKILL.md file and optional supporting files. The instructions describe the steps, APIs, mistakes to avoid, and verification procedures for a task. Agents determine whether a skill is relevant, load its instructions, follow its procedures, and release the skill content after the task.",
-    "source_doc": "mcp-ug.pdf"
-  },
-  {
-    "question": "How does the AWS MCP Server use IAM authorization?",
-    "ground_truth": "The server authenticates requests using SigV4, adds standardized MCP condition context keys, and forwards the requests to the downstream AWS service. The downstream service authorizes the operation using the existing IAM policies, so separate MCP-specific IAM actions are not required.",
-    "source_doc": "mcp-ug.pdf"
-  },
-  {
-    "question": "What CloudWatch metrics are available for the AWS MCP Server?",
-    "ground_truth": "The available metrics are Invocation, Success, UserError, SystemError, and Throttle. They measure tool invocations, successful requests, 4XX client errors excluding throttles, 5XX server errors, and 429 throttled requests respectively.",
-    "source_doc": "mcp-ug.pdf"
-  },
-  {
-    "question": "What is Amazon CloudSearch?",
-    "ground_truth": "Amazon CloudSearch is a fully managed cloud service for setting up, managing, and scaling a search solution for a website or application. It can search large collections such as web pages, document files, forum posts, and product information.",
-    "source_doc": "cloudsearch-dg.pdf"
-  },
-  {
-    "question": "What are the main steps for building a search solution with Amazon CloudSearch?",
-    "ground_truth": "The main steps are to create and configure a search domain, upload the data to the domain for indexing, and search the domain by sending search requests to its search endpoint.",
-    "source_doc": "cloudsearch-dg.pdf"
-  },
-  {
-    "question": "What is a facet in Amazon CloudSearch and what is it used for?",
-    "ground_truth": "A facet is an index field representing a category used to refine and filter search results. CloudSearch can calculate how many hits share each facet value, allowing applications to display counts and provide interactive faceted navigation.",
-    "source_doc": "cloudsearch-dg.pdf"
-  },
-  {
-    "question": "How does Amazon CloudSearch process search strings before matching documents?",
-    "ground_truth": "It converts characters to lowercase, splits the string into terms using whitespace and punctuation boundaries, removes field-specific stopwords, and maps stems and synonyms according to the configured field analysis options. It then looks up the processed terms in the index and filters and sorts the matching documents.",
-    "source_doc": "cloudsearch-dg.pdf"
-  },
-  {
-    "question": "What are the four query parsers supported by Amazon CloudSearch?",
-    "ground_truth": "The four query parsers are simple, structured, lucene, and dismax. The simple parser is the default when q.parser is not specified.",
-    "source_doc": "cloudsearch-dg.pdf"
+    "question": "Who won the FIFA World Cup in 2018?",
+    "ground_truth": "I don't have enough information to answer that.",
+    "source_doc": null
   },
   {
     "question": "What is Azure Cognitive Search's pricing model?",
     "ground_truth": "I don't have enough information to answer that",
     "source_doc": null
-  },
-  {
-    "question": "How does Amazon CloudSearch automatically scale for increasing data volume?",
-    "ground_truth": "When the data exceeds the capacity of the current search instance type, CloudSearch scales to a larger instance type. If the data exceeds the largest instance type, it partitions the search index across multiple search instances. When the data volume shrinks, it can scale down to fewer or smaller instances.",
-    "source_doc": "cloudsearch-dg.pdf"
-  },
-  {
-    "question": "What is a dynamic field in Amazon CloudSearch?",
-    "ground_truth": "A dynamic field is defined using a wildcard at the beginning, end, or as the only character in the field name. Its pattern determines which unrecognized document fields inherit its indexing options. Regular index fields take precedence over dynamic fields.",
-    "source_doc": "cloudsearch-dg.pdf"
-  },
-  {
-    "question": "How can Amazon CloudSearch ignore unrecognized document fields?",
-    "ground_truth": "You can define a dynamic field named * and configure it as a literal field with search, facet, and return options disabled. Unrecognized fields then inherit those settings, so their contents are not searchable or returnable.",
-    "source_doc": "cloudsearch-dg.pdf"
-  },
-  {
-    "question": "What are autocomplete suggesters in Amazon CloudSearch used for?",
-    "ground_truth": "Suggesters provide autocomplete suggestions for incomplete queries. They are based on a particular text field and can return matching field values and document IDs; fuzzy matching can also be configured to correct certain typos.",
-    "source_doc": "cloudsearch-dg.pdf"
-  },
-  {
-    "question": "What is the maximum number of search hits that can be retrieved at once in Amazon CloudSearch?",
-    "ground_truth": "The maximum number of hits that can be retrieved at once is 10,000. The size parameter can contain values from 0 through 10,000.",
-    "source_doc": "cloudsearch-dg.pdf"
   },
   {
     "question": "What is the current stock price of Amazon.com, Inc.?",

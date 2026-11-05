@@ -11,7 +11,6 @@ bucket = 'aws-rag-docs'
 prefix = ''
 local_dir = './pdfs'
 
-
 def download_pdfs_from_s3(bucket, prefix, local_dir):
     os.makedirs(local_dir, exist_ok=True)
     paginator = s3.get_paginator('list_objects_v2')
@@ -35,13 +34,11 @@ def download_pdfs_from_s3(bucket, prefix, local_dir):
 
     return downloaded_paths
 
-
 def is_toc_page(page_text):
     """Flags a whole page as table-of-contents if dot-leaders dominate it."""
     dot_lines = len(re.findall(r'\.{4,}\s*\d+', page_text))
     total_lines = max(page_text.count("\n"), 1)
     return dot_lines / total_lines > 0.3
-
 
 def clean_page_text(page_text):
     """Strips copyright/legal/version-notice boilerplate lines from a page."""
@@ -54,7 +51,6 @@ def clean_page_text(page_text):
     for p in patterns:
         page_text = re.sub(p, '', page_text, flags=re.IGNORECASE | re.MULTILINE | re.DOTALL)
     return page_text.strip()
-
 
 def extract_txt(pdf, max_pages=None, verbose=False):
     text = []
@@ -93,7 +89,6 @@ def extract_txt(pdf, max_pages=None, verbose=False):
     full_text = "\n".join(text)
     return full_text
 
-
 def chunk_text(text, chunk_size=500, overlap=50):
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=chunk_size,
@@ -101,7 +96,6 @@ def chunk_text(text, chunk_size=500, overlap=50):
         separators=["\n\n", "\n", ".", "!", "?", ",", " ", ""]
     )
     return splitter.split_text(text)
-
 
 if __name__ == "__main__":
     pdf_folder = 'pdfs'

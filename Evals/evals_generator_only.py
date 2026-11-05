@@ -1,78 +1,29 @@
 import os
 import json
 import time
-import boto3
-from dotenv import load_dotenv
-from pydantic import BaseModel
-
 from deepeval import evaluate
 from deepeval.test_case import LLMTestCase
 from deepeval.metrics import FaithfulnessMetric, AnswerRelevancyMetric
-from deepeval.models.base_model import DeepEvalBaseLLM
-from deepeval.evaluate import AsyncConfig
+from deepeval.evaluate import AsyncConfig, CacheConfig
 
+from .grok_model import GrokJudge
 from src._5llm.llm_client import generate_response_from_context
-from Evals.bedrok_model import BedrockJudge
 
-class BedrockJudge(DeepEvalBaseLLM):
-    def __init__(self, model_id = "google.gemma-3-27b-it", region = "us-east-1"):
-        self.model_id = model_id
-        self.client = boto3.client("bedrock-runtime", region_name = region)
+api_groq=os.getenv("GROQ_API_KEY")
 
-    def load_model(self):
-        return self.client
-
-    def generate(self, prompt: str) -> str:
-            response = self.client.converse(
-                modelId=self.model_id,
-                messages=[{
-                    "role": "user",
-                    "content": [{"text": prompt}]
-                }],
-                inferenceConfig={
-                    "maxTokens": 2048,
-                    "temperature": 0.0
-                }
-            )
-            return response["output"]["message"]["content"][0]["text"]
-    
-    async def a_generate(self, prompt: str) -> str:
-        return self.generate(prompt)
-
-    def generate_with_schema(self, prompt: str, schema: type[BaseModel]) -> BaseModel:
-        json_schema_str = json.dumps(schema.model_json_schema())
-        formatted_prompt = (
-            f"{prompt}\n\n"
-            "CRITICAL: Respond ONLY with a valid JSON object matching this schema:\n"
-            f"{json_schema_str}\n"
-            "Do not include any conversational text, explanations, or markdown code blocks."
-        )
-        raw_output = self.generate(formatted_prompt).strip()
-
-        # Clean markdown code fences if model returns them
-        if raw_output.startswith("```json"):
-            raw_output = raw_output[7:]
-        if raw_output.startswith("```"):
-            raw_output = raw_output[3:]
-        if raw_output.endswith("```"):
-            raw_output = raw_output[:-3]
-            
-        return schema.model_validate_json(raw_output.strip())
-
-    async def a_generate_with_schema(self, prompt: str, schema: type[BaseModel]) -> BaseModel:
-        return self.generate_with_schema(prompt, schema)
-
-    def get_model_name(self) -> str:
-        return f"Bedrock-{self.model_id}"
-
-GOLDEN_PATH = "GoldenDataSet\FaithfullnessDataset.json"
+GOLDEN_DATA = "GoldenDataSet/golden_dataset.json"
 CACHE_FILE = "Evals/generator_cache.json"
-JUDGE_MODEL = BedrockJudge(model_id = "google.gemma-3-27b-it", region = "us-east-1")
+RETRIEVAL_CACHE = "Evals/retrieval_cache.json"
+
+JUDGE_MODEL = GrokJudge(model_id="qwen/qwen3.8-27b", api_key=api_groq)
 os.environ["DEEPEVAL_DISABLE_TIMEOUTS"] = "1"
 THRESHOLD = 0.7
 
-with open(GOLDEN_PATH , mode = 'r' , encoding="utf-8") as f:
+with open(GOLDEN_DATA) as f:
     goldens = json.load(f)
+
+with open(RETRIEVAL_CACHE, "r", encoding="utf-8") as f:
+    retrieval_cache = json.load(f)
 
 cache = {}
 if os.path.exists(CACHE_FILE):
@@ -82,7 +33,11 @@ if os.path.exists(CACHE_FILE):
 test_case = []
 for i , data in enumerate(goldens, start=1):
     # print(data)
-    query = data['query']
+    query = data['question']
+    chunks = retrieval_cache.get(query)
+    if not chunks:
+        print(f"[{i}] NO RETRIEVAL CACHE: {query[:50]}")
+        continue
 
     if query in cache:
         response = cache[query]
@@ -92,7 +47,7 @@ for i , data in enumerate(goldens, start=1):
         print(f"[{i}/{len(goldens)}] API CALL: {query[:50]}")
         response = generate_response_from_context(
             query=query, 
-            context = data['ideal_context'],
+            context = chunks,
         )
         # print("response -->" , response)
         # # break
@@ -100,15 +55,16 @@ for i , data in enumerate(goldens, start=1):
         os.makedirs(os.path.dirname(CACHE_FILE), exist_ok=True)
         with open(CACHE_FILE, "w", encoding="utf-8") as f:
             json.dump(cache, f, indent=4)
-        time.sleep(3)                              # proactive, avoids backoff storms
+        time.sleep(10)                              # proactive, avoids backoff storms
         
     # print(response)
     
     test_case.append(
         LLMTestCase(
-            input = data['query'], 
+            input = data['question'], 
             actual_output = response, 
-            retrieval_context = data['ideal_context']
+            expected_output=data["ground_truth"],
+            retrieval_context = chunks,
         )
     )
 
@@ -128,10 +84,15 @@ async_mode = AsyncConfig(
             run_async=False,
             max_concurrent=1
         )
+cache_config = CacheConfig(
+    use_cache=True,
+    write_cache=True
+)
 
 evaluate(test_cases=test_case, 
         metrics=metrics,
         async_config = async_mode ,
+        cache_config=cache_config
         #  hyperparameters={
         #          "embedding_model": "Quwn 9B Ollama ",
         #          "chunk_size": 1500,

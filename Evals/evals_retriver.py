@@ -3,8 +3,8 @@ from deepeval import evaluate
 from deepeval.test_case import LLMTestCase
 from deepeval.metrics import ContextualPrecisionMetric, ContextualRecallMetric
 from deepeval.models.base_model import DeepEvalBaseLLM
-from deepeval.evaluate import AsyncConfig 
-from .bedrok_model import BedrockJudge
+from deepeval.evaluate import AsyncConfig, CacheConfig
+from .grok_model import GrokJudge
 from src._3retrieval.retriever import (retrieve_and_rerank , load_index, load_bm25)
 from dotenv import load_dotenv
 import json
@@ -16,13 +16,14 @@ GOLDEN_DATA = "GoldenDataSet/golden_dataset.json"
 INDEX_FILE  = "faiss_index.bin"
 BM25_FILE = "bm25_index.pkl"
 MetaData    = "chunk_metadata.json"
+api_groq=os.getenv("GROQ_API_KEY")
 os.environ["DEEPEVAL_DISABLE_TIMEOUTS"] = "1"
-os.environ["DEEPEVAL_DISABLE_CACHE"] = "YES"
+# os.environ["DEEPEVAL_DISABLE_CACHE"] = "YES"
 
 with open(GOLDEN_DATA) as f:
     goldens = json.load(f)
 
-JUDGE_MODEL = BedrockJudge(model_id="google.gemma-3-27b-it", region="us-east-1")
+JUDGE_MODEL = GrokJudge(model_id="openai/gpt-oss-20b", api_key=api_groq)
 index , chunks = load_index(index_file = INDEX_FILE, metadata_file = MetaData)
 bm25 = load_bm25(BM25_FILE)
 CACHE_FILE = "Evals/retrieval_cache.json"
@@ -42,13 +43,13 @@ for i, data in enumerate(goldens, 1):
             index=index,
             chunks=chunks,
             bm25=bm25,
-            retrieve_k=10,
+            retrieve_k=20, 
             rerank_top_k=5
         )
         text_result = [t['text'] for t in final_chunks]
         cache[query] = text_result
         json.dump(cache, open(CACHE_FILE, "w"))   # save progress after each question
-        time.sleep(3)                              # proactive, avoids backoff storms
+        time.sleep(5)                              # proactive, avoids backoff storms
 
     test_case.append(LLMTestCase(
         input=query,    
@@ -57,21 +58,27 @@ for i, data in enumerate(goldens, 1):
         retrieval_context=text_result,
     ))
 
-##Define the matric 
-metric = [ContextualRecallMetric(
-    threshold = 0.7, 
-    model = JUDGE_MODEL
-            ),
-ContextualPrecisionMetric(
-    threshold =0.7, 
-    model = JUDGE_MODEL   )]
+# cache_config = CacheConfig(
+#     use_cache=True,
+#     write_cache=True
+# )
 
-async_config = AsyncConfig(
-    run_async = False, 
-    max_concurrent=1    
-)
-evaluate(
-    test_cases = test_case, 
-    metrics = metric,
-    async_config = async_config
-)
+# ##Define the matric 
+# metric = [ContextualRecallMetric(
+#     threshold = 0.7, 
+#     model = JUDGE_MODEL
+#             ),
+# ContextualPrecisionMetric(
+#     threshold =0.7, 
+#     model = JUDGE_MODEL   )]
+
+# async_config = AsyncConfig(
+#     run_async = False, 
+#     max_concurrent=1    
+# )
+# evaluate(
+#     test_cases = test_case, 
+#     metrics = metric,
+#     async_config = async_config,
+#     cache_config=cache_config
+# )

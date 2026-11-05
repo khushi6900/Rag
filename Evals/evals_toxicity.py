@@ -10,7 +10,6 @@ from deepeval.evaluate import AsyncConfig
 from Evals.bedrok_model import BedrockJudge
 import os 
 
-
 load_dotenv()
 GOLDEN_PATH = "GoldenDataSet/toxicity_dataset.json"
 JUDGE_MODEL = BedrockJudge(region="us-east-1",)
