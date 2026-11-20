@@ -219,23 +219,64 @@ def hybrid_retrieve(query, index, chunks, bm25, k=3, rrf_k=60):
 #     return reranked
 
 # =========================== BAAI rerank =================================
-reranker = CrossEncoder("BAAI/bge-reranker-v2-m3")
-def rerank_chunks(query, candidates, top_k=5):
+# reranker = CrossEncoder("BAAI/bge-reranker-v2-m3", max_length=512)
+# reranker = CrossEncoder("BAAI/bge-reranker-v2-m3")
+# reranker = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
+# reranker = CrossEncoder("BAAI/bge-reranker-base")
+# def rerank_chunks(query, candidates, top_k=5):
 
-    pairs = [[query,c["text"]] for c in candidates]
-    scores = reranker.predict(pairs)
+#     pairs = [[query,c["text"]] for c in candidates]
+#     scores = reranker.predict(pairs) #batch_size=16
     
-    scored_cand = []
-    for i, c in enumerate(candidates):
-        scored_cand.append({
-            **c,
-            "rerank_score": float(scores[i])
-        })
+#     scored_cand = []
+#     for i, c in enumerate(candidates):
+#         scored_cand.append({
+#             **c,
+#             "rerank_score": float(scores[i])
+#         })
 
-    scored_cand.sort(key=lambda x: x["rerank_score"], reverse=True)
-    return scored_cand[:top_k]
+#     scored_cand.sort(key=lambda x: x["rerank_score"], reverse=True)
+#     return scored_cand[:top_k]
 
-def retrieve_and_rerank(query, index, chunks, bm25, retrieve_k=20, rerank_top_k=5):
+# =========================== JINA rerank =================================
+def rerank_chunks(query, candidates, top_k=5):
+    req = requests.post(
+        "https://api.jina.ai/v1/rerank",
+        headers={"Authorization": f"Bearer {os.getenv('JINA_API_KEY')}"},
+        json={
+            "model": "jina-reranker-v2-base-multilingual",
+            "query": query,
+            "documents": [c["text"] for c in candidates],
+            "top_n": top_k
+        },
+        timeout=30
+    )
+    req.raise_for_status()
+    return [
+        {**candidates[r["index"]], "rerank_score": r["relevance_score"]}
+        for r in req.json()["results"]
+    ]
+
+# =========================== COHERE rerank =================================
+# def rerank_chunks(query, candidates, top_k=5):
+#     req = requests.post(
+#         "https://api.cohere.com/v2/rerank",
+#         headers={"Authorization": f"Bearer {os.getenv('COHERE_API_KEY')}"},
+#         json={
+#             "model": "rerank-v3.5",
+#             "query": query,
+#             "documents": [c["text"] for c in candidates],
+#             "top_n": top_k
+#         },
+#         timeout=30
+#     )
+#     req.raise_for_status()
+#     return [
+#         {**candidates[r["index"]], "rerank_score": r["relevance_score"]}
+#         for r in req.json()["results"]
+#     ]
+
+def retrieve_and_rerank(query, index, chunks, bm25, retrieve_k=30, rerank_top_k=5):
     """
     End-to-end retrieval pipeline:
     1. Dense Vector Search via FAISS (retrieve_top_k)
@@ -245,12 +286,13 @@ def retrieve_and_rerank(query, index, chunks, bm25, retrieve_k=20, rerank_top_k=
     """
     # 1. First-stage retrieval (Hybrid Embeddings)
     candidates = hybrid_retrieve(query, index, chunks,bm25, k=retrieve_k)
+    # print(f"==========================Candidates retrieved============================: {len(candidates)}")
     if not candidates:
         return []
         
     # 2. Second-stage reranking (BAAI Reranker)
     final_chunks = rerank_chunks(query, candidates, top_k=rerank_top_k)
-    # print(f"FInal chunksssssssss========================: {final_chunks}")
+    # print(f"======================Final chunksssssssss========================: {final_chunks}")
     return final_chunks
 
 if __name__ == "__main__":
@@ -259,11 +301,10 @@ if __name__ == "__main__":
     print(f"Loaded index with {index.ntotal} vectors and {len(chunks)} chunks.")
 
     query = "What is Amazon API Gateway?"
-    results = retrieve_and_rerank(query, index, chunks,bm25, retrieve_k=10, rerank_top_k=4)
+    results = retrieve_and_rerank(query, index, chunks,bm25, retrieve_k=20, rerank_top_k=5)
     print(f"Query: {query}")
     # print(f"Final Results: {results}")
     for i, r in enumerate(results):
         print(f"Result{i+1}: Source: {r['source']}")
         print(f"Text: {r['text']}")
         print("-" * 80)
-        

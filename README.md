@@ -1,70 +1,128 @@
-# Evaluation Results
+# AWS Docs RAG: Evaluation & Performance Results
 
-Setup: 44 in-scope golden questions and 6 out-of-scope questions, built from AWS User Guide documents. Metrics were computed using DeepEval. Retrieval was judged by `gpt-oss-20b`, while generation was judged by `qwen/qwen3.8-27b`. Both judges ran on Groq, and the judge models were different from the generator.
+## Setup
+- **Corpus:** AWS User Guide documents.
+- **Pipeline:** Hybrid search (BM25 + FAISS vector) → cross-encoder rerank → LLM answer grounded only in context.
+- **Golden set:** 44 in-scope + 6 out-of-scope questions.
+- **Metrics:** DeepEval (LLM-judged), run on Groq.
+- **Judge:** `gpt-oss-20b` for retriever. `qwen/qwen3.8-27b` for generator where generator is `gpt-oss-20b`.
+- **Tracing:** Langfuse (`@observe` spans for retrieve, rerank, llm; tokens and cost per call).
 
-## 1. Retrieval Evaluation
+---
 
-| Variant                | Candidates → Final k | Contextual Recall | Contextual Precision | Recall Pass | Precision Pass |
-| ---------------------- | -------------------- | ----------------- | -------------------- | ----------- | -------------- |
-| Hybrid (BM25 + vector) | Top 3                | 0.88              | 0.84                 | 34/44       | 38/44          |
-| + Reranker             | Top 3                | 0.85              | 0.98                 | 33/44       | 44/44          |
-| + Reranker (wide pool) | 20 → Top 5           | 0.97              | 0.94                 | 41/44       | 42/44          |
+## 1. Retrieval experiments
 
-### Key Findings
+| # | Variant | Pool → final k | Ctx Recall | Ctx Precision | Recall pass | Precision pass |
+|---|---|---|---|---|---|---|
+| 1 | Hybrid, no rerank | 3 | 0.88 | 0.84 | 34/44 | 38/44 |
+| 2 | + bge-reranker-v2-m3 | 3 | 0.85 | 0.98 | 33/44 | 44/44 |
+| 3 | + bge-reranker-v2-m3 | 20 → 5 | **0.97** | 0.94 | 41/44 | 42/44 |
+| 4 | bge-reranker-v2-m3 | 10 → 5 | 0.87 | 0.95 | 35/44 | 44/44 |
+| 5 | ms-marco-MiniLM-L-6-v2 | 20 → 5 | 0.86 | 0.91 | 33/44 | 40/44 |
+| 6 | bge-reranker-base | 20 → 5 | 0.88 | 0.94 | 34/44 | 43/44 |
+| 7 | bge-reranker-v2-m3, `max_length=256` | 20 → 5 | 0.86 | 0.93 | 34/44 | 43/44 |
+| 8 | **Jina hosted reranker (final)** | 20 → 5 | 0.88 | 0.91 | 35/44 | 42/44 |
 
-- Reranking improves precision. Contextual precision increased from 0.84 to 0.98 while keeping \\(k=3\\). This indicates that the retrieved chunks were more relevant and better ranked.
-- Recall depends on the candidate pool. A reranker only reorders retrieved candidates. Reranking the same three candidates did not improve recall (0.88 → 0.85), a difference of one question in the pass count that may reflect judge variability. Expanding the candidate pool to 20 and retaining the top 5 increased recall to 0.97.
-- There is a precision–recall trade-off. Expanding the pool improved recall but reduced precision slightly, from 0.98 to 0.94. This trade-off was accepted in favor of higher recall.
-- Final retrieval configuration: Hybrid search → rerank 20 candidates → retain the top 5.
+v2-m3 with `max_length=512` was timed (latency only, ~13 s p50, chunks fit in 512 tokens so it behaves like full length). Cohere `rerank-v3.5` was attempted but blocked by the trial rate limit, so it is not reported.
 
-Caveat: The final \\(k\\) differs across configurations (3 versus 5). With only 44 in-scope questions, each question represents approximately 2.3% of the evaluation set, so small differences should be interpreted cautiously.
+### Findings
+- **Reranking improves precision** (0.84 → 0.98 at k=3): relevant chunks rank first.
+- **Recall depends on the candidate pool, not the reranker.** A reranker only reorders what it receives. Reranking the same 3 chunks did not raise recall (0.88 → 0.85 is a one-question, within-noise change). Widening the pool to 20 raised it to 0.97.
+- **Shrinking the pool cost recall.** Pool 20 → 10 dropped recall 0.97 → 0.87.
+- **Smaller rerankers also lost recall.** MiniLM (0.86) and bge-reranker-base (0.88) both trail v2-m3 (0.97) at the same pool size.
+- **v2-m3 at full length is the quality ceiling (0.97)** with the same judge across runs, but it costs ~12 s p50 on CPU. Truncating to 256 tokens removed the gain (0.86).
+- Differences of 1-2 points are noise (1 question ≈ 2.3%).
 
-## 2. Generation Evaluation
+---
 
-Generation was evaluated using the frozen retrieval output containing the top 5 chunks. Therefore, these scores reflect generation performance within the actual retrieval pipeline.
+## 2. Generation evaluation
+Run on frozen retrieval output (top-5 chunks), so scores reflect the real pipeline.
 
-| Metric           | Score | Pass Rate |
-| ---------------- | ----- | --------- |
-| Faithfulness     | 0.99  | 43/44     |
-| Answer Relevancy | 0.95  | 42/44     |
+| Metric | Score | Pass rate |
+|---|---|---|
+| Faithfulness | 0.99 | 43/44 |
+| Answer Relevancy | 0.95 | 42/44 |
 
-### Key Findings
+The strict "answer only from context" prompt contributes to the high faithfulness.
 
-- High faithfulness: The generated answers remain grounded in the retrieved context.
-- High answer relevancy: The answers generally address the questions asked.
-- Prompt contribution: The strict instruction to answer only from the retrieved context contributes to the high faithfulness score.
+---
 
-## 3. Out-of-Scope Behavior (Guardrail Evaluation)
+## 3. Guardrail: out-of-scope questions
+Scored with a deterministic refusal check, not Faithfulness/Answer Relevancy (Answer Relevancy scores a correct refusal as 0).
 
-Out-of-scope questions are evaluated using refusal rate rather than Faithfulness or Answer Relevancy. Answer Relevancy may assign a score of 0 to a correct refusal, making it unsuitable for measuring this guardrail behavior.
+| Test | Result |
+|---|---|
+| Out-of-scope refusal rate | 6/6 |
 
-| Test                      | Result  |
-| ------------------------- | ------- |
-| Out-of-scope refusal rate | 6/6     |
+Small sample; more "AWS-sounding but not in the docs" questions are planned.
 
-The final refusal rate must be calculated from the deterministic check results for the six out-of-scope questions.
+---
 
-## 4. End-to-End Evaluation Summary
+## 4. Latency and cost (Langfuse + local timing, 44 queries each, 0 errors)
 
-| Stage       | Key Metric                               | Result                             |
-| ----------- | ---------------------------------------- | ---------------------------------- |
-| Retrieval   | Contextual Recall / Contextual Precision | 0.97 / 0.94                        |
-| Generation  | Faithfulness / Answer Relevancy          | 0.99 / 0.95                        |
-| Guardrail   | Out-of-scope refusal                     | 6/6                                |
-| Performance | p95 latency / Cost per query             | To be added after Langfuse tracing |
+### End-to-end
 
-The selected pipeline prioritizes retrieval recall while maintaining strong precision and generation quality. Guardrail and performance results remain pending.
+| Reranker config | p50 | p95 |
+|---|---|---|
+| bge-reranker-v2-m3, full length | 11.7 s | 18.8 s |
+| bge-reranker-v2-m3, `max_length=256`, `batch_size=16` | 8.4 s | 11.1 s |
+| bge-reranker-v2-m3, `max_length=512` | ~13 s | ~18 s |
+| ms-marco-MiniLM-L-6-v2 | 4.0 s | 6.0 s |
+| **Jina hosted (final)** | **3.8 s** | **5.0 s** |
 
-## 5. Known Limitations
+### Per-stage average
 
-1. Small evaluation dataset: The evaluation contains 44 in-scope and 6 out-of-scope questions. Each in-scope question accounts for approximately 2.3% of the retrieval and generation evaluation set.
-2. LLM-judge variability: LLM-judged metrics can be noisy, and different models were used to judge retrieval and generation.
-3. Remaining failures: The recorded failures are:
-   - Retrieval recall: 3 cases
-   - Retrieval precision: 2 cases
-   - Faithfulness: 1 case
-   - Answer Relevancy: 2 cases
+| Stage | v2-m3 (full) | MiniLM |
+|---|---|---|
+| Retrieve | 175 ms | 124 ms |
+| Rerank | 10,667 ms | 323 ms |
+| LLM | 849 ms | 2,920 ms |
 
-These failures are documented in `POSTMORTEMS.md` and categorized into dataset bugs and retrieval misses. 4. Incomplete guardrail evaluation: The out-of-scope refusal result still needs to be filled in from the deterministic check. 5. Performance evaluation pending: p95 latency and cost per query will be added after Langfuse tracing.
+- **Cost:** about $0.0001 per query at list price (~$0.10 per 1,000 queries).
+- **Cold start:** first query is reported separately from warm p50/p95.
 
-Final selected configuration: Hybrid search (BM25 + vector) → rerank 20 candidates → retain top 5 chunks → generate an answer grounded strictly in the retrieved context.
+---
+
+## 5. Quality vs latency trade-off
+
+| Reranker | Pool → k | Recall | Precision | p50 |
+|---|---|---|---|---|
+| bge-reranker-v2-m3 | 20 → 5 | **0.97** | 0.94 | 11.7 s |
+| bge-reranker-v2-m3 (`max_length=256`) | 20 → 5 | 0.86 | 0.93 | 8.4 s |
+| bge-reranker-base | 20 → 5 | 0.88 | 0.94 | not measured |
+| MiniLM-L-6-v2 | 20 → 5 | 0.86 | 0.91 | 4.0 s |
+| **Jina hosted (final)** | 20 → 5 | 0.88 | 0.91 | 3.8 s |
+
+---
+
+## 6. Postmortem summary
+
+| Problem | Cause | Fix | Result |
+|---|---|---|---|
+| Rerank was ~90% of latency | 568M cross-encoder scoring 20 long chunks on CPU | Truncation (`max_length=256`), batching | p50 11.7 s → 8.4 s |
+| Swapped to MiniLM for speed | Small model trained on short web passages | Measured quality before adopting | Rerank 33x faster, recall fell 0.97 → 0.86 |
+| Reduced pool to save time | Reranker can't recover chunks it never sees | Reverted to pool 20 | Recall 0.87 → 0.97 |
+| Judge returned empty / truncated JSON | Reasoning model burned `max_tokens` on hidden reasoning; free-tier output-token cap | Switched to non-reasoning Llama judge | Evals completed |
+| Generator answered "cannot find" for most questions | Joined chunks into a string, so `"\n\n".join()` iterated characters | Passed the list directly | Correct answers |
+
+---
+
+## 7. Known limitations
+1. Small dataset (44 + 6); one question ≈ 2.3%.
+2. LLM-judge noise; the judge (`gpt-oss-20b`) is the same model as the generator, which may favour its own answers.
+3. Remaining failures (retrieval recall, precision, faithfulness, relevancy) are logged in `POSTMORTEMS.md`, split into dataset bugs and retrieval misses.
+4. Latency measured on a local CPU, not the deployment host.
+5. Golden answers were drafted by ChatGPT; some contain details not in the docs (dataset bugs).
+
+## 8. Final decision
+**Hybrid search → Jina hosted reranker (pool 20 → top 5) → grounded LLM answer, with local MiniLM as fallback.**
+
+- **Why not bge-reranker-v2-m3:** best recall (0.97) but ~12 s p50 on CPU and ~2 GB of weights to host.
+- **Why Jina:** recall 0.88 and p50 3.8 s, with no model weights to deploy. Hosted rerankers need an API key and are subject to rate limits, so the local fallback keeps the app up.
+- **Accepted trade-off:** about 9 points of recall versus the heaviest local model, in exchange for ~3x lower latency and a small deployment.
+
+## 9. Next steps
+- Audit the ~9 failed recall cases; fix golden answers containing facts not in the docs.
+- Reduce LLM latency (non-reasoning model or lower `reasoning_effort`, `max_tokens` cap, streaming).
+- Re-check generation scores with a judge different from the generator.
+- FastAPI + Docker + deploy, user feedback in Langfuse, CI evals.

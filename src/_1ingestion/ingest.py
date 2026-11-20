@@ -89,7 +89,7 @@ def extract_txt(pdf, max_pages=None, verbose=False):
     full_text = "\n".join(text)
     return full_text
 
-def chunk_text(text, chunk_size=500, overlap=50):
+def chunk_text(text, chunk_size=500, overlap=100):
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=chunk_size,
         chunk_overlap=overlap,

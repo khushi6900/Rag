@@ -12,7 +12,7 @@ import httpx
 
 class GrokJudge(DeepEvalBaseLLM):
     def __init__(self, model_id="openai/gpt-oss-20b",
-                api_key: Optional[str] = None, max_tokens=1500):
+                api_key: Optional[str] = None, max_tokens=2048):
         self.model_id = model_id
         self.model = ChatGroq(
             model=model_id,

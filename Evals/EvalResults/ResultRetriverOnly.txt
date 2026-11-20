@@ -1258,3 +1258,898 @@ after reranking (retrieve_k=20 -> top_k= 5)
 
 » Want to share evals with your team, or a place for your test cases to live? ❤️ 🏡
   » Run 'deepeval view' to analyze and save testing results on Confident AI.
+
+
+========================================================================================
+after reranking cross-encoder/ms-marco-MiniLM-L-6-v2 (retrieve_k=20 -> top_k= 5)
+========================================================================================
+
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ 🚀 DeepEval Evaluation Results                                                                                               │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_0 (Passed 2 metrics)                                                                                            │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_1 (Passed 2 metrics)                                                                                            │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                              │
+│  ❌ test_case_2                                                                                                              │
+│  ├──   Input:              What is the role of the AWS MCP Server in the Agent Toolkit for AWS?                              │
+│  │     Actual Output:      It is a managed server that gives agents access to AWS through the Model Context Protocol.        │
+│  │                         Agents can search AWS documentation without authentication, while API calls, sandboxed            │
+│  │                         scripts, and curated skills use the agent's existing IAM credentials.                             │
+│  │     Expected Output:    It is a managed server that gives agents access to AWS through the Model Context Protocol.        │
+│  │                         Agents can search AWS documentation without authentication, while API calls, sandboxed            │
+│  │                         scripts, and curated skills use the agent's existing IAM credentials.                             │
+│  └── Metrics                                                                                                                 │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                             │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        PASS  │ Contextual Recall    │ 1.00  │ 0.70      │ The score is 1.00 because every sentence in the...                 │
+│        FAIL  │ Contextual Precision │ 0.48  │ 0.70      │ The score is 0.48 because nodes 1 and 2, which are irrelevant,     │
+│              │                      │       │           │ are ranked before the relevant nodes 3, 4, and 5. Node 1 states    │
+│              │                      │       │           │ "The AWS shared responsibility model applies to data protection    │
+│              │                      │       │           │ in Agent Toolkit for AWS," and node 2 says "Monitoring AWS MCP     │
+│              │                      │       │           │ Server ... AWS provides the following monitoring tools to watch    │
+│              │                      │       │           │ AWS MCP Server," neither of which describe the server’s role.      │
+│              │                      │       │           │ These irrelevant nodes should be lower, but their higher           │
+│              │                      │       │           │ placement lowers precision. The relevant nodes correctly           │
+│              │                      │       │           │ describe the server as a stateless proxy and a managed server      │
+│              │                      │       │           │ that gives agents access to AWS through MCP, yet their lower       │
+│              │                      │       │           │ ranks and the redundancy in node 5 keep the precision from         │
+│              │                      │       │           │ reaching 1.                                                        │
+│                                                                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                              │
+│  ❌ test_case_3                                                                                                              │
+│  ├──   Input:              What is the difference between OAuth and SigV4 authentication for the AWS MCP Server?             │
+│  │     Actual Output:      OAuth is the simpler option for direct connections, including web clients and users who           │
+│  │                         commonly work with a single AWS account. SigV4 is the advanced option using the AWS CLI and       │
+│  │                         MCP Proxy for AWS, and it supports workflows such as switching between multiple AWS accounts.     │
+│  │     Expected Output:    OAuth is the simpler option for direct connections, including web clients and users who           │
+│  │                         commonly work with a single AWS account. SigV4 is the advanced option using the AWS CLI and       │
+│  │                         MCP Proxy for AWS, and it supports workflows such as switching between multiple AWS accounts.     │
+│  └── Metrics                                                                                                                 │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                             │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Contextual Recall    │ 0.50  │ 0.70      │ The score is 0.50 because the expected output correctly cites      │
+│              │                      │       │           │ SigV4 and MCP Proxy using node 1 and node 3 in retrieval           │
+│              │                      │       │           │ context, but incorrectly states OAuth is simpler, which is not     │
+│              │                      │       │           │ supported by any node, resulting in partial recall.                │
+│        PASS  │ Contextual Precision │ 1.00  │ 0.70      │ The score is 1.00 because all relevant nodes (n...                 │
+│                                                                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_4 (Passed 2 metrics)                                                                                            │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_5 (Passed 2 metrics)                                                                                            │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                              │
+│  ❌ test_case_6                                                                                                              │
+│  ├──   Input:              What are AWS Knowledge Tools provided by the AWS MCP Server?                                      │
+│  │     Actual Output:      They include aws___retrieve_skill for retrieving domain-specific AWS expertise,                   │
+│  │                         aws___search_documentation for searching AWS documentation and skills,                            │
+│  │                         aws___read_documentation for retrieving AWS documentation as markdown, aws___list_regions for     │
+│  │                         listing AWS Regions, and aws___get_regional_availability for checking regional availability.      │
+│  │     Expected Output:    They include aws___retrieve_skill for retrieving domain-specific AWS expertise,                   │
+│  │                         aws___search_documentation for searching AWS documentation and skills,                            │
+│  │                         aws___read_documentation for retrieving AWS documentation as markdown, aws___list_regions for     │
+│  │                         listing AWS Regions, and aws___get_regional_availability for checking regional availability.      │
+│  └── Metrics                                                                                                                 │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                             │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Contextual Recall    │ 0.00  │ 0.70      │ The score is 0.00 because none of the nodes in the retrieval       │
+│              │                      │       │           │ context contain the specific skill names listed in the expected    │
+│              │                      │       │           │ output, and the expected output references a heading that is       │
+│              │                      │       │           │ absent from the context.                                           │
+│        FAIL  │ Contextual Precision │ 0.37  │ 0.70      │ The score is 0.37 because the top‑ranked nodes (1, 2, and 4) are   │
+│              │                      │       │           │ irrelevant, as their reasons state they do not mention the         │
+│              │                      │       │           │ knowledge tools, while the relevant nodes (3 and 5) appear lower   │
+│              │                      │       │           │ in the list. This ranking places irrelevant nodes above relevant   │
+│              │                      │       │           │ ones, reducing precision. However, the relevant nodes are still    │
+│              │                      │       │           │ present and correctly identified, which keeps the score from       │
+│              │                      │       │           │ being lower.                                                       │
+│                                                                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                              │
+│  ❌ test_case_7                                                                                                              │
+│  ├──   Input:              What is an Agent Toolkit skill and how do agents use it?                                          │
+│  │     Actual Output:      A skill is a directory containing a SKILL.md file and optional supporting files. The              │
+│  │                         instructions describe the steps, APIs, mistakes to avoid, and verification procedures for a       │
+│  │                         task. Agents determine whether a skill is relevant, load its instructions, follow its             │
+│  │                         procedures, and release the skill content after the task.                                         │
+│  │     Expected Output:    A skill is a directory containing a SKILL.md file and optional supporting files. The              │
+│  │                         instructions describe the steps, APIs, mistakes to avoid, and verification procedures for a       │
+│  │                         task. Agents determine whether a skill is relevant, load its instructions, follow its             │
+│  │                         procedures, and release the skill content after the task.                                         │
+│  └── Metrics                                                                                                                 │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                             │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Contextual Recall    │ 0.67  │ 0.70      │ The score is 0.67 because the retrieval context includes nodes     │
+│              │                      │       │           │ 1, 2, and 3 that cover the agent’s reading, loading, and           │
+│              │                      │       │           │ releasing of skill instructions, but it does not mention the       │
+│              │                      │       │           │ directory containing SKILL.md, which is a key detail missing       │
+│              │                      │       │           │ from the expected output.                                          │
+│        PASS  │ Contextual Precision │ 1.00  │ 0.70      │ The score is 1.00 because all relevant nodes ar...                 │
+│                                                                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_8 (Passed 2 metrics)                                                                                            │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                              │
+│  ❌ test_case_9                                                                                                              │
+│  ├──   Input:              What CloudWatch metrics are available for the AWS MCP Server?                                     │
+│  │     Actual Output:      The available metrics are Invocation, Success, UserError, SystemError, and Throttle. They         │
+│  │                         measure tool invocations, successful requests, 4XX client errors excluding throttles, 5XX         │
+│  │                         server errors, and 429 throttled requests respectively.                                           │
+│  │     Expected Output:    The available metrics are Invocation, Success, UserError, SystemError, and Throttle. They         │
+│  │                         measure tool invocations, successful requests, 4XX client errors excluding throttles, 5XX         │
+│  │                         server errors, and 429 throttled requests respectively.                                           │
+│  └── Metrics                                                                                                                 │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                             │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Contextual Recall    │ 0.00  │ 0.70      │ The score is 0.00 because none of the expected metrics are         │
+│              │                      │       │           │ supported by the retrieval context; the only node mentions         │
+│              │                      │       │           │ Invocation, Success, and UserError, while SystemError and          │
+│              │                      │       │           │ Throttle are absent, leading to complete mismatch.                 │
+│        PASS  │ Contextual Precision │ 1.00  │ 0.70      │ The score is 1.00 because node 1, ranked first,...                 │
+│                                                                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_10 (Passed 2 metrics)                                                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_11 (Passed 2 metrics)                                                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_12 (Passed 2 metrics)                                                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_13 (Passed 2 metrics)                                                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_14 (Passed 2 metrics)                                                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                              │
+│  ❌ test_case_15                                                                                                             │
+│  ├──   Input:              How does Amazon CloudSearch automatically scale for increasing data volume?                       │
+│  │     Actual Output:      When the data exceeds the capacity of the current search instance type, CloudSearch scales to     │
+│  │                         a larger instance type. If the data exceeds the largest instance type, it partitions the          │
+│  │                         search index across multiple search instances. When the data volume shrinks, it can scale down    │
+│  │                         to fewer or smaller instances.                                                                    │
+│  │     Expected Output:    When the data exceeds the capacity of the current search instance type, CloudSearch scales to     │
+│  │                         a larger instance type. If the data exceeds the largest instance type, it partitions the          │
+│  │                         search index across multiple search instances. When the data volume shrinks, it can scale down    │
+│  │                         to fewer or smaller instances.                                                                    │
+│  └── Metrics                                                                                                                 │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                             │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Contextual Recall    │ 0.67  │ 0.70      │ The score is 0.67 because two of the three sentences in the        │
+│              │                      │       │           │ expected output are supported by node(s) in retrieval context      │
+│              │                      │       │           │ (sentences 1 and 2 are backed by node 1), while the third          │
+│              │                      │       │           │ sentence about scaling down when data volume shrinks is not        │
+│              │                      │       │           │ supported by any node.                                             │
+│        PASS  │ Contextual Precision │ 1.00  │ 0.70      │ The score is 1.00 because all relevant nodes (n...                 │
+│                                                                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                              │
+│  ❌ test_case_16                                                                                                             │
+│  ├──   Input:              What is a dynamic field in Amazon CloudSearch?                                                    │
+│  │     Actual Output:      A dynamic field is defined using a wildcard at the beginning, end, or as the only character in    │
+│  │                         the field name. Its pattern determines which unrecognized document fields inherit its indexing    │
+│  │                         options. Regular index fields take precedence over dynamic fields.                                │
+│  │     Expected Output:    A dynamic field is defined using a wildcard at the beginning, end, or as the only character in    │
+│  │                         the field name. Its pattern determines which unrecognized document fields inherit its indexing    │
+│  │                         options. Regular index fields take precedence over dynamic fields.                                │
+│  └── Metrics                                                                                                                 │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                             │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Contextual Recall    │ 0.67  │ 0.70      │ The score is 0.67 because node 1 and node 2 in the retrieval       │
+│              │                      │       │           │ context provide partial coverage of the expected output’s          │
+│              │                      │       │           │ description of dynamic fields and indexing options, but some       │
+│              │                      │       │           │ details are missing, leading to a moderate recall.                 │
+│        PASS  │ Contextual Precision │ 0.87  │ 0.70      │ The score is 0.87 because the top two nodes (ra...                 │
+│                                                                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_17 (Passed 2 metrics)                                                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                              │
+│  ❌ test_case_18                                                                                                             │
+│  ├──   Input:              What are autocomplete suggesters in Amazon CloudSearch used for?                                  │
+│  │     Actual Output:      Suggesters provide autocomplete suggestions for incomplete queries. They are based on a           │
+│  │                         particular text field and can return matching field values and document IDs; fuzzy matching       │
+│  │                         can also be configured to correct certain typos.                                                  │
+│  │     Expected Output:    Suggesters provide autocomplete suggestions for incomplete queries. They are based on a           │
+│  │                         particular text field and can return matching field values and document IDs; fuzzy matching       │
+│  │                         can also be configured to correct certain typos.                                                  │
+│  └── Metrics                                                                                                                 │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                             │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Contextual Recall    │ 0.50  │ 0.70      │ The score is 0.50 because the sentence about suggesters is         │
+│              │                      │       │           │ supported by node 2 in the retrieval context, but the details      │
+│              │                      │       │           │ about field values, document IDs, and fuzzy matching are not       │
+│              │                      │       │           │ found in any node, resulting in partial recall.                    │
+│        PASS  │ Contextual Precision │ 1.00  │ 0.70      │ The score is 1.00 because every node in the ret...                 │
+│                                                                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_19 (Passed 2 metrics)                                                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_20 (Passed 2 metrics)                                                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_21 (Passed 2 metrics)                                                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_22 (Passed 2 metrics)                                                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_23 (Passed 2 metrics)                                                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                              │
+│  ❌ test_case_24                                                                                                             │
+│  ├──   Input:              What is a construct in AWS CDK?                                                                   │
+│  │     Actual Output:      A construct is a reusable cloud component used to define AWS infrastructure. The AWS CDK          │
+│  │                         Construct Library provides modular constructs that can be used, modified, and integrated to       │
+│  │                         build applications and infrastructure.                                                            │
+│  │     Expected Output:    A construct is a reusable cloud component used to define AWS infrastructure. The AWS CDK          │
+│  │                         Construct Library provides modular constructs that can be used, modified, and integrated to       │
+│  │                         build applications and infrastructure.                                                            │
+│  └── Metrics                                                                                                                 │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                             │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        PASS  │ Contextual Recall    │ 1.00  │ 0.70      │ The score is 1.00 because every sentence in the...                 │
+│        FAIL  │ Contextual Precision │ 0.50  │ 0.70      │ The score is 0.50 because the only relevant node is node 2,        │
+│              │                      │       │           │ which defines constructs as reusable pieces of code: "AWS CDK      │
+│              │                      │       │           │ Construct Library – A collection of pre‑written modular and        │
+│              │                      │       │           │ reusable pieces of code, called constructs, that you can use,      │
+│              │                      │       │           │ modify, and integrate to develop your infrastructure quickly."     │
+│              │                      │       │           │ However, node 1 is ranked higher and is irrelevant, stating only   │
+│              │                      │       │           │ that the library exists: "AWS CDK API reference contains           │
+│              │                      │       │           │ official reference documentation for the AWS CDK Library,          │
+│              │                      │       │           │ including the AWS Construct Library." The presence of this         │
+│              │                      │       │           │ irrelevant node before the relevant one lowers precision, so the   │
+│              │                      │       │           │ score is not higher than 0.50. All other nodes (3, 4, 5) are       │
+│              │                      │       │           │ also irrelevant, reinforcing the current precision.                │
+│                                                                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_25 (Passed 2 metrics)                                                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_26 (Passed 2 metrics)                                                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_27 (Passed 2 metrics)                                                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_28 (Passed 2 metrics)                                                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_29 (Passed 2 metrics)                                                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                              │
+│  ❌ test_case_30                                                                                                             │
+│  ├──   Input:              What is Amazon EventBridge?                                                                       │
+│  │     Actual Output:      Amazon EventBridge is a serverless service that uses events to connect application components,    │
+│  │                         making it easier to build scalable event-driven applications. It provides ways to ingest,         │
+│  │                         filter, transform, and deliver events.                                                            │
+│  │     Expected Output:    Amazon EventBridge is a serverless service that uses events to connect application components,    │
+│  │                         making it easier to build scalable event-driven applications. It provides ways to ingest,         │
+│  │                         filter, transform, and deliver events.                                                            │
+│  └── Metrics                                                                                                                 │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                             │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Contextual Recall    │ 0.50  │ 0.70      │ The score is 0.50 because sentence 1 is supported by node 1 in     │
+│              │                      │       │           │ retrieval context, while sentence 2 is unsupported as no node      │
+│              │                      │       │           │ contains that phrase.                                              │
+│        PASS  │ Contextual Precision │ 1.00  │ 0.70      │ The score is 1.00 because the first node (rank ...                 │
+│                                                                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                              │
+│  ❌ test_case_31                                                                                                             │
+│  ├──   Input:              What are the two main ways EventBridge processes and delivers events?                             │
+│  │     Actual Output:      EventBridge uses event buses and pipes. Event buses route events from sources to zero or more     │
+│  │                         targets, while pipes are intended for point-to-point integrations from a single source to a       │
+│  │                         single target.                                                                                    │
+│  │     Expected Output:    EventBridge uses event buses and pipes. Event buses route events from sources to zero or more     │
+│  │                         targets, while pipes are intended for point-to-point integrations from a single source to a       │
+│  │                         single target.                                                                                    │
+│  └── Metrics                                                                                                                 │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                             │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Contextual Recall    │ 0.50  │ 0.70      │ The score is 0.50 because the first sentence is supported by       │
+│              │                      │       │           │ node 1, but the second sentence about pipes is not supported by    │
+│              │                      │       │           │ any node.                                                          │
+│        PASS  │ Contextual Precision │ 1.00  │ 0.70      │ The score is 1.00 because the top-ranked node (...                 │
+│                                                                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_32 (Passed 2 metrics)                                                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_33 (Passed 2 metrics)                                                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_34 (Passed 2 metrics)                                                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_35 (Passed 2 metrics)                                                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                              │
+│  ❌ test_case_36                                                                                                             │
+│  ├──   Input:              In the getting-started example, what happens when an object is created in the configured          │
+│  │                         Amazon S3 bucket?                                                                                 │
+│  │     Actual Output:      The S3 Object Created event matches the EventBridge rule's event pattern. EventBridge sends       │
+│  │                         the matching event to an Amazon SNS topic, which sends an email notification to the configured    │
+│  │                         address after the subscription is confirmed.                                                      │
+│  │     Expected Output:    The S3 Object Created event matches the EventBridge rule's event pattern. EventBridge sends       │
+│  │                         the matching event to an Amazon SNS topic, which sends an email notification to the configured    │
+│  │                         address after the subscription is confirmed.                                                      │
+│  └── Metrics                                                                                                                 │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                             │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Contextual Recall    │ 0.50  │ 0.70      │ The score is 0.50 because sentence 1 of the expected output is     │
+│              │                      │       │           │ partially supported by node 1 in the retrieval context (matching   │
+│              │                      │       │           │ the event pattern), but the remaining details about the SNS        │
+│              │                      │       │           │ topic and email notification are not mentioned in any node,        │
+│              │                      │       │           │ leaving half of the content unsupported.                           │
+│        PASS  │ Contextual Precision │ 1.00  │ 0.70      │ The score is 1.00 because the first three nodes...                 │
+│                                                                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                              │
+│  ❌ test_case_37                                                                                                             │
+│  ├──   Input:              Which event fields does the example EventBridge rule use to match S3 object-creation events?      │
+│  │     Actual Output:      The example matches the source aws.s3, the detail-type Object Created, and the name of the        │
+│  │                         specific S3 bucket.                                                                               │
+│  │     Expected Output:    The example matches the source aws.s3, the detail-type Object Created, and the name of the        │
+│  │                         specific S3 bucket.                                                                               │
+│  └── Metrics                                                                                                                 │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                             │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        PASS  │ Contextual Recall    │ 1.00  │ 0.70      │ The score is 1.00 because sentence 1 is fully s...                 │
+│        FAIL  │ Contextual Precision │ 0.50  │ 0.70      │ The score is 0.50 because the relevant node (node 2) is ranked     │
+│              │                      │       │           │ below an irrelevant node (node 1), as shown by the reason "The     │
+│              │                      │       │           │ first document describes an event pattern with \"source\":         │
+│              │                      │       │           │ [\"aws.ec2\"], \"detail-type\": [\"EC2 Instance State-change       │
+│              │                      │       │           │ Notification\"], and a \"detail\" field containing \"state\". It   │
+│              │                      │       │           │ does not mention S3, the detail-type \"Object Created\", or a      │
+│              │                      │       │           │ bucket name.". This misranking reduces precision to 0.50. The      │
+│              │                      │       │           │ other irrelevant nodes (nodes 3, 4, 5) are ranked below the        │
+│              │                      │       │           │ relevant node, so they do not lower the score further.             │
+│                                                                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_38 (Passed 2 metrics)                                                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_39 (Passed 2 metrics)                                                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_40 (Passed 2 metrics)                                                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_41 (Passed 2 metrics)                                                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                              │
+│  ❌ test_case_42                                                                                                             │
+│  ├──   Input:              What is the purpose of a route table in Amazon VPC?                                               │
+│  │     Actual Output:      A route table contains rules called routes that determine where network traffic from a subnet     │
+│  │                         or gateway is directed. Each route specifies a destination and the target, such as a gateway,     │
+│  │                         network interface, or connection, through which the traffic should be sent.                       │
+│  │     Expected Output:    A route table contains rules called routes that determine where network traffic from a subnet     │
+│  │                         or gateway is directed. Each route specifies a destination and the target, such as a gateway,     │
+│  │                         network interface, or connection, through which the traffic should be sent.                       │
+│  └── Metrics                                                                                                                 │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                                             │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Contextual Recall    │ 0.50  │ 0.70      │ The score is 0.50 because sentence 1 of the expected output is     │
+│              │                      │       │           │ supported by node 1 in the retrieval context, while sentence 2     │
+│              │                      │       │           │ has no corresponding information in any node, resulting in only    │
+│              │                      │       │           │ half of the content being recalled.                                │
+│        PASS  │ Contextual Precision │ 1.00  │ 0.70      │ The score is 1.00 because all five nodes are re...                 │
+│                                                                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_43 (Passed 2 metrics)                                                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Aggregate Metrics                                                                                                            │
+│                                                                                                                              │
+│  Metric                             ┃ Average Score          ┃ Pass Rate                                         ┃ Total     │
+│ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━ │
+│  Contextual Recall                  │ 0.86                   │ 75.00% | passed=33 | failed=11                    │ 44        │
+│  Contextual Precision               │ 0.91                   │ 90.91% | passed=40 | failed=4                     │ 44        │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+
+⚠ WARNING: No hyperparameters logged.
+» Log hyperparameters to attribute prompts and models to your test runs.
+
+================================================================================
+
+
+✓ Evaluation completed 🎉! (time taken: 459.88s | token cost: None)
+» Test Results (44 total tests):
+   » Pass Rate: 68.18% | Passed: 30 | Failed: 14
+
+ ================================================================================ 
+
+» Want to share evals with your team, or a place for your test cases to live? ❤️ 🏡
+  » Run 'deepeval view' to analyze and save testing results on Confident AI.
+
+
+
+========================================================================================
+after reranking (BAAI/bge-reranker-v2-m3")(retrieve_k=10 -> top_k= 5)
+========================================================================================
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Aggregate Metrics                                                                                                            │
+│                                                                                                                              │
+│  Metric                             ┃ Average Score          ┃ Pass Rate                                         ┃ Total     │
+│ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━ │
+│  Contextual Recall                  │ 0.87                   │ 79.55% | passed=35 | failed=9                     │ 44        │
+│  Contextual Precision               │ 0.95                   │ 100.00% | passed=44 | failed=0                    │ 44        │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+
+========================================================================================
+after reranking (jina)(retrieve_k=10 -> top_k= 5)
+========================================================================================
+
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ 🚀 DeepEval Evaluation Results                                                                        │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_0 (Passed 2 metrics)                                                                     │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_1 (Passed 2 metrics)                                                                     │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_2 (Passed 2 metrics)                                                                     │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_3 (Passed 2 metrics)                                                                     │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_4 (Passed 2 metrics)                                                                     │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_5 (Passed 2 metrics)                                                                     │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                       │
+│  ❌ test_case_6                                                                                       │
+│  ├──   Input:              What are AWS Knowledge Tools provided by the AWS MCP Server?               │
+│  │     Actual Output:      They include aws___retrieve_skill for retrieving domain-specific AWS       │
+│  │                         expertise, aws___search_documentation for searching AWS documentation      │
+│  │                         and skills, aws___read_documentation for retrieving AWS documentation      │
+│  │                         as markdown, aws___list_regions for listing AWS Regions, and               │
+│  │                         aws___get_regional_availability for checking regional availability.        │
+│  │     Expected Output:    They include aws___retrieve_skill for retrieving domain-specific AWS       │
+│  │                         expertise, aws___search_documentation for searching AWS documentation      │
+│  │                         and skills, aws___read_documentation for retrieving AWS documentation      │
+│  │                         as markdown, aws___list_regions for listing AWS Regions, and               │
+│  │                         aws___get_regional_availability for checking regional availability.        │
+│  └── Metrics                                                                                          │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                      │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Contextual Recall    │ 0.00  │ 0.70      │ The score is 0.00 because sentence 1 of     │
+│              │                      │       │           │ the expected output cannot be supported     │
+│              │                      │       │           │ by any node in the retrieval context;       │
+│              │                      │       │           │ none of the nodes (1–5) contain the         │
+│              │                      │       │           │ specific skill names such as                │
+│              │                      │       │           │ aws___retrieve_skill,                       │
+│              │                      │       │           │ aws___search_documentation, etc.            │
+│        FAIL  │ Contextual Precision │ 0.20  │ 0.70      │ The score is 0.20 because only the fifth    │
+│              │                      │       │           │ node is relevant, while nodes 1–4 are       │
+│              │                      │       │           │ irrelevant and ranked higher. Node 1:       │
+│              │                      │       │           │ "The first context mentions deprecation     │
+│              │                      │       │           │ of aws___call_aws and recommendation of     │
+│              │                      │       │           │ aws___run_script, but it does not list      │
+│              │                      │       │           │ the knowledge tools such as                 │
+│              │                      │       │           │ aws___retrieve_skill,                       │
+│              │                      │       │           │ aws___search_documentation,                 │
+│              │                      │       │           │ aws___read_documentation,                   │
+│              │                      │       │           │ aws___list_regions, or                      │
+│              │                      │       │           │ aws___get_regional_availability." Node 2:   │
+│              │                      │       │           │ "The second context discusses monitoring    │
+│              │                      │       │           │ tools for AWS MCP Server and does not       │
+│              │                      │       │           │ mention any of the knowledge tools." Node   │
+│              │                      │       │           │ 3: "The third context states that           │
+│              │                      │       │           │ knowledge tools provide current             │
+│              │                      │       │           │ information, but it does not list the       │
+│              │                      │       │           │ specific tools (aws___retrieve_skill,       │
+│              │                      │       │           │ aws___search_documentation, etc.)           │
+│              │                      │       │           │ required for the answer." Node 4: "The      │
+│              │                      │       │           │ fourth context focuses on metrics and       │
+│              │                      │       │           │ usage patterns for AWS MCP Server, not on   │
+│              │                      │       │           │ knowledge tools."                           │
+│                                                                                                       │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                       │
+│  ❌ test_case_7                                                                                       │
+│  ├──   Input:              What is an Agent Toolkit skill and how do agents use it?                   │
+│  │     Actual Output:      A skill is a directory containing a SKILL.md file and optional             │
+│  │                         supporting files. The instructions describe the steps, APIs, mistakes      │
+│  │                         to avoid, and verification procedures for a task. Agents determine         │
+│  │                         whether a skill is relevant, load its instructions, follow its             │
+│  │                         procedures, and release the skill content after the task.                  │
+│  │     Expected Output:    A skill is a directory containing a SKILL.md file and optional             │
+│  │                         supporting files. The instructions describe the steps, APIs, mistakes      │
+│  │                         to avoid, and verification procedures for a task. Agents determine         │
+│  │                         whether a skill is relevant, load its instructions, follow its             │
+│  │                         procedures, and release the skill content after the task.                  │
+│  └── Metrics                                                                                          │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                      │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Contextual Recall    │ 0.67  │ 0.70      │ The score is 0.67 because the retrieval     │
+│              │                      │       │           │ context supports the second sentence of     │
+│              │                      │       │           │ the expected output (nodes 1 and 3          │
+│              │                      │       │           │ provide details on relevance, loading,      │
+│              │                      │       │           │ following, and releasing skill content),    │
+│              │                      │       │           │ but it does not cover the first sentence    │
+│              │                      │       │           │ about a skill being a directory with        │
+│              │                      │       │           │ SKILL.md and optional files (node 2 does    │
+│              │                      │       │           │ not mention the directory structure),       │
+│              │                      │       │           │ resulting in partial recall.                │
+│        PASS  │ Contextual Precision │ 1.00  │ 0.70      │ The score is 1.00 because the top three     │
+│              │                      │       │           │ nodes c...                                  │
+│                                                                                                       │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_8 (Passed 2 metrics)                                                                     │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                       │
+│  ❌ test_case_9                                                                                       │
+│  ├──   Input:              What CloudWatch metrics are available for the AWS MCP Server?              │
+│  │     Actual Output:      The available metrics are Invocation, Success, UserError, SystemError,     │
+│  │                         and Throttle. They measure tool invocations, successful requests, 4XX      │
+│  │                         client errors excluding throttles, 5XX server errors, and 429 throttled    │
+│  │                         requests respectively.                                                     │
+│  │     Expected Output:    The available metrics are Invocation, Success, UserError, SystemError,     │
+│  │                         and Throttle. They measure tool invocations, successful requests, 4XX      │
+│  │                         client errors excluding throttles, 5XX server errors, and 429 throttled    │
+│  │                         requests respectively.                                                     │
+│  └── Metrics                                                                                          │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                      │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Contextual Recall    │ 0.00  │ 0.70      │ The score is 0.00 because none of the       │
+│              │                      │       │           │ nodes in the retrieval context provide      │
+│              │                      │       │           │ all five metrics; node 1 lists only         │
+│              │                      │       │           │ Invocation, Success, UserError, node 4      │
+│              │                      │       │           │ mentions throttled requests but not a       │
+│              │                      │       │           │ Throttle metric, and no node mentions       │
+│              │                      │       │           │ SystemError or 5XX server errors.           │
+│        PASS  │ Contextual Precision │ 0.95  │ 0.70      │ The score is 0.95 because the first three   │
+│              │                      │       │           │ nodes...                                    │
+│                                                                                                       │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_10 (Passed 2 metrics)                                                                    │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_11 (Passed 2 metrics)                                                                    │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_12 (Passed 2 metrics)                                                                    │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_13 (Passed 2 metrics)                                                                    │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_14 (Passed 2 metrics)                                                                    │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                       │
+│  ❌ test_case_15                                                                                      │
+│  ├──   Input:              How does Amazon CloudSearch automatically scale for increasing data        │
+│  │                         volume?                                                                    │
+│  │     Actual Output:      When the data exceeds the capacity of the current search instance type,    │
+│  │                         CloudSearch scales to a larger instance type. If the data exceeds the      │
+│  │                         largest instance type, it partitions the search index across multiple      │
+│  │                         search instances. When the data volume shrinks, it can scale down to       │
+│  │                         fewer or smaller instances.                                                │
+│  │     Expected Output:    When the data exceeds the capacity of the current search instance type,    │
+│  │                         CloudSearch scales to a larger instance type. If the data exceeds the      │
+│  │                         largest instance type, it partitions the search index across multiple      │
+│  │                         search instances. When the data volume shrinks, it can scale down to       │
+│  │                         fewer or smaller instances.                                                │
+│  └── Metrics                                                                                          │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                      │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Contextual Recall    │ 0.67  │ 0.70      │ The score is 0.67 because two of the        │
+│              │                      │       │           │ three sentences in the expected output      │
+│              │                      │       │           │ are supported by node(s) in retrieval       │
+│              │                      │       │           │ context (sentences 1 and 2 are backed by    │
+│              │                      │       │           │ node 1), while the third sentence about     │
+│              │                      │       │           │ scaling down when data volume shrinks is    │
+│              │                      │       │           │ not supported by any node.                  │
+│        PASS  │ Contextual Precision │ 1.00  │ 0.70      │ The score is 1.00 because all relevant      │
+│              │                      │       │           │ nodes (n...                                 │
+│                                                                                                       │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                       │
+│  ❌ test_case_16                                                                                      │
+│  ├──   Input:              What is a dynamic field in Amazon CloudSearch?                             │
+│  │     Actual Output:      A dynamic field is defined using a wildcard at the beginning, end, or      │
+│  │                         as the only character in the field name. Its pattern determines which      │
+│  │                         unrecognized document fields inherit its indexing options. Regular         │
+│  │                         index fields take precedence over dynamic fields.                          │
+│  │     Expected Output:    A dynamic field is defined using a wildcard at the beginning, end, or      │
+│  │                         as the only character in the field name. Its pattern determines which      │
+│  │                         unrecognized document fields inherit its indexing options. Regular         │
+│  │                         index fields take precedence over dynamic fields.                          │
+│  └── Metrics                                                                                          │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                      │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Contextual Recall    │ 0.67  │ 0.70      │ The score is 0.67 because two of the        │
+│              │                      │       │           │ three sentences in the expected output      │
+│              │                      │       │           │ are supported by nodes 1 and 4 in the       │
+│              │                      │       │           │ retrieval context, while the third          │
+│              │                      │       │           │ sentence has no matching node.              │
+│        PASS  │ Contextual Precision │ 1.00  │ 0.70      │ The score is 1.00 because all relevant      │
+│              │                      │       │           │ nodes (n...                                 │
+│                                                                                                       │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                       │
+│  ❌ test_case_17                                                                                      │
+│  ├──   Input:              How can Amazon CloudSearch ignore unrecognized document fields?            │
+│  │     Actual Output:      You can define a dynamic field named * and configure it as a literal       │
+│  │                         field with search, facet, and return options disabled. Unrecognized        │
+│  │                         fields then inherit those settings, so their contents are not              │
+│  │                         searchable or returnable.                                                  │
+│  │     Expected Output:    You can define a dynamic field named * and configure it as a literal       │
+│  │                         field with search, facet, and return options disabled. Unrecognized        │
+│  │                         fields then inherit those settings, so their contents are not              │
+│  │                         searchable or returnable.                                                  │
+│  └── Metrics                                                                                          │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                      │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        PASS  │ Contextual Recall    │ 1.00  │ 0.70      │ The score is 1.00 because every sentence    │
+│              │                      │       │           │ in the...                                   │
+│        FAIL  │ Contextual Precision │ 0.68  │ 0.70      │ The score is 0.68 because the irrelevant    │
+│              │                      │       │           │ node at rank 1, which says 'The first       │
+│              │                      │       │           │ context discusses generic metadata fields   │
+│              │                      │       │           │ and errors for unrecognized fields, but     │
+│              │                      │       │           │ it does not mention dynamic fields or       │
+│              │                      │       │           │ disabling indexing options, which are key   │
+│              │                      │       │           │ to the expected answer.', is ranked above   │
+│              │                      │       │           │ the relevant nodes at ranks 2-5 that each   │
+│              │                      │       │           │ state 'The second context explicitly        │
+│              │                      │       │           │ states that you can use dynamic fields to   │
+│              │                      │       │           │ ignore all unrecognized fields by           │
+│              │                      │       │           │ defining a literal field called * and       │
+│              │                      │       │           │ disabling all indexing options for the      │
+│              │                      │       │           │ field.', 'The third context references      │
+│              │                      │       │           │ "Using a Dynamic Field to Ignore            │
+│              │                      │       │           │ Unrecognized Fields in Amazon               │
+│              │                      │       │           │ CloudSearch" and discusses dynamic          │
+│              │                      │       │           │ fields, indicating relevance to the         │
+│              │                      │       │           │ answer.', 'The fourth context mentions      │
+│              │                      │       │           │ dynamic fields and references the same      │
+│              │                      │       │           │ article about ignoring unrecognized         │
+│              │                      │       │           │ fields, showing it is related to the        │
+│              │                      │       │           │ solution.', and 'The fifth context          │
+│              │                      │       │           │ explains that fields will inherit options   │
+│              │                      │       │           │ and not be searchable or returnable, and    │
+│              │                      │       │           │ that you can selectively ignore fields      │
+│              │                      │       │           │ matching a pattern, directly supporting     │
+│              │                      │       │           │ the expected answer.' The presence of the   │
+│              │                      │       │           │ irrelevant node at the top pulls the        │
+│              │                      │       │           │ precision down from 1 to 0.68.              │
+│                                                                                                       │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                       │
+│  ❌ test_case_18                                                                                      │
+│  ├──   Input:              What are autocomplete suggesters in Amazon CloudSearch used for?           │
+│  │     Actual Output:      Suggesters provide autocomplete suggestions for incomplete queries.        │
+│  │                         They are based on a particular text field and can return matching field    │
+│  │                         values and document IDs; fuzzy matching can also be configured to          │
+│  │                         correct certain typos.                                                     │
+│  │     Expected Output:    Suggesters provide autocomplete suggestions for incomplete queries.        │
+│  │                         They are based on a particular text field and can return matching field    │
+│  │                         values and document IDs; fuzzy matching can also be configured to          │
+│  │                         correct certain typos.                                                     │
+│  └── Metrics                                                                                          │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                      │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Contextual Recall    │ 0.50  │ 0.70      │ The score is 0.50 because sentence 1 is     │
+│              │                      │       │           │ supported by node 1 in the retrieval        │
+│              │                      │       │           │ context, while sentence 2 lacks support,    │
+│              │                      │       │           │ resulting in partial recall.                │
+│        PASS  │ Contextual Precision │ 1.00  │ 0.70      │ The score is 1.00 because every node        │
+│              │                      │       │           │ (rank 1 th...                               │
+│                                                                                                       │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_19 (Passed 2 metrics)                                                                    │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_20 (Passed 2 metrics)                                                                    │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_21 (Passed 2 metrics)                                                                    │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_22 (Passed 2 metrics)                                                                    │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_23 (Passed 2 metrics)                                                                    │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_24 (Passed 2 metrics)                                                                    │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_25 (Passed 2 metrics)                                                                    │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_26 (Passed 2 metrics)                                                                    │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_27 (Passed 2 metrics)                                                                    │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_28 (Passed 2 metrics)                                                                    │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_29 (Passed 2 metrics)                                                                    │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                       │
+│  ❌ test_case_30                                                                                      │
+│  ├──   Input:              What is Amazon EventBridge?                                                │
+│  │     Actual Output:      Amazon EventBridge is a serverless service that uses events to connect     │
+│  │                         application components, making it easier to build scalable event-driven    │
+│  │                         applications. It provides ways to ingest, filter, transform, and           │
+│  │                         deliver events.                                                            │
+│  │     Expected Output:    Amazon EventBridge is a serverless service that uses events to connect     │
+│  │                         application components, making it easier to build scalable event-driven    │
+│  │                         applications. It provides ways to ingest, filter, transform, and           │
+│  │                         deliver events.                                                            │
+│  └── Metrics                                                                                          │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                      │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Contextual Recall    │ 0.50  │ 0.70      │ The score is 0.50 because the first         │
+│              │                      │       │           │ sentence of the expected output is          │
+│              │                      │       │           │ partially supported by node 1 in the        │
+│              │                      │       │           │ retrieval context, while the rest of the    │
+│              │                      │       │           │ content has no matching evidence.           │
+│        PASS  │ Contextual Precision │ 1.00  │ 0.70      │ The score is 1.00 because the first node    │
+│              │                      │       │           │ in the...                                   │
+│                                                                                                       │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_31 (Passed 2 metrics)                                                                    │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_32 (Passed 2 metrics)                                                                    │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_33 (Passed 2 metrics)                                                                    │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_34 (Passed 2 metrics)                                                                    │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                       │
+│  ❌ test_case_35                                                                                      │
+│  ├──   Input:              What is an event pattern in Amazon EventBridge?                            │
+│  │     Actual Output:      An event pattern defines the event structure and fields that a rule        │
+│  │                         matches. EventBridge sends an event to the rule's targets when the         │
+│  │                         event matches the pattern criteria.                                        │
+│  │     Expected Output:    An event pattern defines the event structure and fields that a rule        │
+│  │                         matches. EventBridge sends an event to the rule's targets when the         │
+│  │                         event matches the pattern criteria.                                        │
+│  └── Metrics                                                                                          │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                      │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Contextual Recall    │ 0.00  │ 0.70      │ The score is 0.00 because none of the       │
+│              │                      │       │           │ nodes in the retrieval context provide      │
+│              │                      │       │           │ the information needed for any sentence     │
+│              │                      │       │           │ in the expected output; node 1 mentions     │
+│              │                      │       │           │ declarative filtering but not that an       │
+│              │                      │       │           │ event pattern defines the event             │
+│              │                      │       │           │ structure, and node 5 only mentions         │
+│              │                      │       │           │ archiving, not sending to targets.          │
+│        PASS  │ Contextual Precision │ 1.00  │ 0.70      │ The score is 1.00 because all nodes (1-5)   │
+│              │                      │       │           │ are r...                                    │
+│                                                                                                       │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                       │
+│  ❌ test_case_36                                                                                      │
+│  ├──   Input:              In the getting-started example, what happens when an object is created     │
+│  │                         in the configured Amazon S3 bucket?                                        │
+│  │     Actual Output:      The S3 Object Created event matches the EventBridge rule's event           │
+│  │                         pattern. EventBridge sends the matching event to an Amazon SNS topic,      │
+│  │                         which sends an email notification to the configured address after the      │
+│  │                         subscription is confirmed.                                                 │
+│  │     Expected Output:    The S3 Object Created event matches the EventBridge rule's event           │
+│  │                         pattern. EventBridge sends the matching event to an Amazon SNS topic,      │
+│  │                         which sends an email notification to the configured address after the      │
+│  │                         subscription is confirmed.                                                 │
+│  └── Metrics                                                                                          │
+│       Status ┃ Metric               ┃ Score ┃ Threshold ┃ Reason                                      │
+│      ━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        FAIL  │ Contextual Recall    │ 0.50  │ 0.70      │ The score is 0.50 because the first         │
+│              │                      │       │           │ sentence is partially supported: node 1     │
+│              │                      │       │           │ confirms the event pattern match, but the   │
+│              │                      │       │           │ subsequent parts about SNS topic and        │
+│              │                      │       │           │ email notification are not reflected in     │
+│              │                      │       │           │ any node (only node 4 mentions email).      │
+│              │                      │       │           │ Thus only half of the content is            │
+│              │                      │       │           │ supported.                                  │
+│        PASS  │ Contextual Precision │ 0.83  │ 0.70      │ The score is 0.83 because "This excerpt     │
+│              │                      │       │           │ only sh...                                  │
+│                                                                                                       │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_37 (Passed 2 metrics)                                                                    │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_38 (Passed 2 metrics)                                                                    │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_39 (Passed 2 metrics)                                                                    │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_40 (Passed 2 metrics)                                                                    │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_41 (Passed 2 metrics)                                                                    │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_42 (Passed 2 metrics)                                                                    │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✅ test_case_43 (Passed 2 metrics)                                                                    │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Aggregate Metrics                                                                                     │
+│                                                                                                       │
+│  Metric                      ┃ Average Score      ┃ Pass Rate                              ┃ Total    │
+│ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━ │
+│  Contextual Recall           │ 0.88               │ 79.55% | passed=35 | failed=9          │ 44       │
+│  Contextual Precision        │ 0.91               │ 95.45% | passed=42 | failed=2          │ 44       │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+
+⚠ WARNING: No hyperparameters logged.
+» Log hyperparameters to attribute prompts and models to your test runs.
+
+================================================================================
+
+
+✓ Evaluation completed 🎉! (time taken: 917.6s | token cost: None)
+» Test Results (44 total tests):
+   » Pass Rate: 77.27% | Passed: 34 | Failed: 10
+
+ ================================================================================ 
+
+» Want to share evals with your team, or a place for your test cases to live? ❤️ 🏡
+  » Run 'deepeval view' to analyze and save testing results on Confident AI.
+

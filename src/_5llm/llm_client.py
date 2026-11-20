@@ -38,7 +38,8 @@ model = ChatGroq(
 def generate_response(prompt, max_tokens=500, temperature=0.5):
     messages = [HumanMessage(content=prompt)]
     response = model.invoke(messages)
-    return response.content
+    usage = response.usage_metadata
+    return response.content, usage
 
 ## For the Evaluation 
 def generate_response_from_context(

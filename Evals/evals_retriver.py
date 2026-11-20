@@ -15,7 +15,7 @@ load_dotenv()
 GOLDEN_DATA = "GoldenDataSet/golden_dataset.json"
 INDEX_FILE  = "faiss_index.bin"
 BM25_FILE = "bm25_index.pkl"
-MetaData    = "chunk_metadata.json"
+MetaData = "chunk_metadata.json"
 api_groq=os.getenv("GROQ_API_KEY")
 os.environ["DEEPEVAL_DISABLE_TIMEOUTS"] = "1"
 # os.environ["DEEPEVAL_DISABLE_CACHE"] = "YES"
@@ -43,7 +43,7 @@ for i, data in enumerate(goldens, 1):
             index=index,
             chunks=chunks,
             bm25=bm25,
-            retrieve_k=20, 
+            retrieve_k=30, 
             rerank_top_k=5
         )
         text_result = [t['text'] for t in final_chunks]
@@ -58,27 +58,27 @@ for i, data in enumerate(goldens, 1):
         retrieval_context=text_result,
     ))
 
-# cache_config = CacheConfig(
-#     use_cache=True,
-#     write_cache=True
-# )
+cache_config = CacheConfig(
+    use_cache=True,
+    write_cache=True
+)
 
-# ##Define the matric 
-# metric = [ContextualRecallMetric(
-#     threshold = 0.7, 
-#     model = JUDGE_MODEL
-#             ),
-# ContextualPrecisionMetric(
-#     threshold =0.7, 
-#     model = JUDGE_MODEL   )]
+##Define the matric 
+metric = [ContextualRecallMetric(
+    threshold = 0.7, 
+    model = JUDGE_MODEL
+            ),
+ContextualPrecisionMetric(
+    threshold =0.7, 
+    model = JUDGE_MODEL   )]
 
-# async_config = AsyncConfig(
-#     run_async = False, 
-#     max_concurrent=1    
-# )
-# evaluate(
-#     test_cases = test_case, 
-#     metrics = metric,
-#     async_config = async_config,
-#     cache_config=cache_config
-# )
+async_config = AsyncConfig(
+    run_async = False, 
+    max_concurrent=1    
+)
+evaluate(
+    test_cases = test_case, 
+    metrics = metric,
+    async_config = async_config,
+    cache_config=cache_config
+)

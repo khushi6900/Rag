@@ -1,0 +1,32 @@
+[  
+  {
+    "question": "What is the current stock price of Amazon.com, Inc.?",
+    "ground_truth": "I don't have enough information to answer that.",
+    "source_doc": null
+  },
+  {
+    "question": "What is the capital city of Japan?",
+    "ground_truth": "I don't have enough information to answer that.",
+    "source_doc": null
+  },
+  {
+    "question": "What will the weather be in Mumbai next Saturday?",
+    "ground_truth": "I don't have enough information to answer that.",
+    "source_doc": null
+  },
+  {
+    "question": "Who won the FIFA World Cup in 2018?",
+    "ground_truth": "I don't have enough information to answer that.",
+    "source_doc": null
+  },
+  {
+    "question": "What is Azure Cognitive Search's pricing model?",
+    "ground_truth": "I don't have enough information to answer that",
+    "source_doc": null
+  },
+  {
+    "question": "What is the current stock price of Amazon.com, Inc.?",
+    "ground_truth": "I don't have enough information to answer that",
+    "source_doc": null
+  }
+]

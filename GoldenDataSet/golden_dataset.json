@@ -1,32 +1,222 @@
 [
   {
-    "question": "What is the current stock price of Amazon.com, Inc.?",
-    "ground_truth": "I don't have enough information to answer that.",
-    "source_doc": null
+    "question": "What is the Agent Toolkit for AWS designed to provide AI coding agents?",
+    "ground_truth": "It provides AI coding agents with the tools, knowledge, and guardrails needed to build, deploy, and manage applications on AWS, including secure AWS access, current documentation, and step-by-step guidance.",
+    "source_doc": "mcp-ug.pdf"
   },
   {
-    "question": "What is the capital city of Japan?",
-    "ground_truth": "I don't have enough information to answer that.",
-    "source_doc": null
+    "question": "What four components make up the Agent Toolkit for AWS?",
+    "ground_truth": "The four components are the AWS MCP Server, Agent skills, Plugins, and Rules files.",
+    "source_doc": "mcp-ug.pdf"
   },
   {
-    "question": "What will the weather be in Mumbai next Saturday?",
-    "ground_truth": "I don't have enough information to answer that.",
-    "source_doc": null
+    "question": "What is the role of the AWS MCP Server in the Agent Toolkit for AWS?",
+    "ground_truth": "It is a managed server that gives agents access to AWS through the Model Context Protocol. Agents can search AWS documentation without authentication, while API calls, sandboxed scripts, and curated skills use the agent's existing IAM credentials.",
+    "source_doc": "mcp-ug.pdf"
   },
   {
-    "question": "Who won the FIFA World Cup in 2018?",
-    "ground_truth": "I don't have enough information to answer that.",
-    "source_doc": null
+    "question": "What is the difference between OAuth and SigV4 authentication for the AWS MCP Server?",
+    "ground_truth": "OAuth is the simpler option for direct connections, including web clients and users who commonly work with a single AWS account. SigV4 is the advanced option using the AWS CLI and MCP Proxy for AWS, and it supports workflows such as switching between multiple AWS accounts.",
+    "source_doc": "mcp-ug.pdf"
   },
   {
-    "question": "What is Azure Cognitive Search's pricing model?",
-    "ground_truth": "I don't have enough information to answer that",
-    "source_doc": null
+    "question": "Why should older AWS API MCP Server or AWS Knowledge MCP Server entries be removed when switching to the AWS MCP Server?",
+    "ground_truth": "They should be removed to avoid tool conflicts that can confuse AI agents and reduce performance. The guide recommends switching to the managed AWS MCP Server because it reduces setup and maintenance effort and provides enhanced security controls through IAM condition keys.",
+    "source_doc": "mcp-ug.pdf"
   },
   {
-    "question": "What is the current stock price of Amazon.com, Inc.?",
-    "ground_truth": "I don't have enough information to answer that",
-    "source_doc": null
+    "question": "How does multi-profile support work with the AWS MCP Server?",
+    "ground_truth": "With the MCP Proxy for AWS, multiple AWS CLI profiles can be configured and selected on a per-call basis. The proxy adds an aws_profile parameter to certain tools, routes the request through the selected profile's credentials, and strips that parameter before forwarding the request to the AWS MCP Server. Multi-profile switching requires SigV4 authentication.",
+    "source_doc": "mcp-ug.pdf"
+  },
+  {
+    "question": "What are AWS Knowledge Tools provided by the AWS MCP Server?",
+    "ground_truth": "They include aws___retrieve_skill for retrieving domain-specific AWS expertise, aws___search_documentation for searching AWS documentation and skills, aws___read_documentation for retrieving AWS documentation as markdown, aws___list_regions for listing AWS Regions, and aws___get_regional_availability for checking regional availability.",
+    "source_doc": "mcp-ug.pdf"
+  },
+  {
+    "question": "What is an Agent Toolkit skill and how do agents use it?",
+    "ground_truth": "A skill is a directory containing a SKILL.md file and optional supporting files. The instructions describe the steps, APIs, mistakes to avoid, and verification procedures for a task. Agents determine whether a skill is relevant, load its instructions, follow its procedures, and release the skill content after the task.",
+    "source_doc": "mcp-ug.pdf"
+  },
+  {
+    "question": "How does the AWS MCP Server use IAM authorization?",
+    "ground_truth": "The server authenticates requests using SigV4, adds standardized MCP condition context keys, and forwards the requests to the downstream AWS service. The downstream service authorizes the operation using the existing IAM policies, so separate MCP-specific IAM actions are not required.",
+    "source_doc": "mcp-ug.pdf"
+  },
+  {
+    "question": "What CloudWatch metrics are available for the AWS MCP Server?",
+    "ground_truth": "The available metrics are Invocation, Success, UserError, SystemError, and Throttle. They measure tool invocations, successful requests, 4XX client errors excluding throttles, 5XX server errors, and 429 throttled requests respectively.",
+    "source_doc": "mcp-ug.pdf"
+  },
+  {
+    "question": "What is Amazon CloudSearch?",
+    "ground_truth": "Amazon CloudSearch is a fully managed cloud service for setting up, managing, and scaling a search solution for a website or application. It can search large collections such as web pages, document files, forum posts, and product information.",
+    "source_doc": "cloudsearch-dg.pdf"
+  },
+  {
+    "question": "What are the main steps for building a search solution with Amazon CloudSearch?",
+    "ground_truth": "The main steps are to create and configure a search domain, upload the data to the domain for indexing, and search the domain by sending search requests to its search endpoint.",
+    "source_doc": "cloudsearch-dg.pdf"
+  },
+  {
+    "question": "What is a facet in Amazon CloudSearch and what is it used for?",
+    "ground_truth": "A facet is an index field representing a category used to refine and filter search results. CloudSearch can calculate how many hits share each facet value, allowing applications to display counts and provide interactive faceted navigation.",
+    "source_doc": "cloudsearch-dg.pdf"
+  },
+  {
+    "question": "How does Amazon CloudSearch process search strings before matching documents?",
+    "ground_truth": "It converts characters to lowercase, splits the string into terms using whitespace and punctuation boundaries, removes field-specific stopwords, and maps stems and synonyms according to the configured field analysis options. It then looks up the processed terms in the index and filters and sorts the matching documents.",
+    "source_doc": "cloudsearch-dg.pdf"
+  },
+  {
+    "question": "What are the four query parsers supported by Amazon CloudSearch?",
+    "ground_truth": "The four query parsers are simple, structured, lucene, and dismax. The simple parser is the default when q.parser is not specified.",
+    "source_doc": "cloudsearch-dg.pdf"
+  },
+  {
+    "question": "How does Amazon CloudSearch automatically scale for increasing data volume?",
+    "ground_truth": "When the data exceeds the capacity of the current search instance type, CloudSearch scales to a larger instance type. If the data exceeds the largest instance type, it partitions the search index across multiple search instances. When the data volume shrinks, it can scale down to fewer or smaller instances.",
+    "source_doc": "cloudsearch-dg.pdf"
+  },
+  {
+    "question": "What is a dynamic field in Amazon CloudSearch?",
+    "ground_truth": "A dynamic field is defined using a wildcard at the beginning, end, or as the only character in the field name. Its pattern determines which unrecognized document fields inherit its indexing options. Regular index fields take precedence over dynamic fields.",
+    "source_doc": "cloudsearch-dg.pdf"
+  },
+  {
+    "question": "How can Amazon CloudSearch ignore unrecognized document fields?",
+    "ground_truth": "You can define a dynamic field named * and configure it as a literal field with search, facet, and return options disabled. Unrecognized fields then inherit those settings, so their contents are not searchable or returnable.",
+    "source_doc": "cloudsearch-dg.pdf"
+  },
+  {
+    "question": "What are autocomplete suggesters in Amazon CloudSearch used for?",
+    "ground_truth": "Suggesters provide autocomplete suggestions for incomplete queries. They are based on a particular text field and can return matching field values and document IDs; fuzzy matching can also be configured to correct certain typos.",
+    "source_doc": "cloudsearch-dg.pdf"
+  },
+  {
+    "question": "What is the maximum number of search hits that can be retrieved at once in Amazon CloudSearch?",
+    "ground_truth": "The maximum number of hits that can be retrieved at once is 10,000. The size parameter can contain values from 0 through 10,000.",
+    "source_doc": "cloudsearch-dg.pdf"
+  },
+  {
+    "question": "What is the AWS Cloud Development Kit (AWS CDK)?",
+    "ground_truth": "The AWS CDK is an open-source software development framework for defining cloud infrastructure in code and provisioning it through AWS CloudFormation.",
+    "source_doc": "awscdk.pdf"
+  },
+  {
+    "question": "What are the two primary parts of the AWS CDK?",
+    "ground_truth": "The AWS CDK consists of the AWS CDK Construct Library, which provides modular and reusable constructs for defining infrastructure, and the AWS CDK Toolkit, which provides tools for managing and interacting with CDK applications, including synthesis and deployment.",
+    "source_doc": "awscdk.pdf"
+  },
+  {
+    "question": "Which programming languages does AWS CDK support?",
+    "ground_truth": "AWS CDK supports TypeScript, JavaScript, Python, Java, C#/.NET, and Go.",
+    "source_doc": "awscdk.pdf"
+  },
+  {
+    "question": "How does AWS CDK use AWS CloudFormation to provision infrastructure?",
+    "ground_truth": "You define infrastructure using CDK code and constructs, and the CDK synthesizes the application into an AWS CloudFormation template. AWS CloudFormation then provisions or updates the resources described by that template.",
+    "source_doc": "awscdk.pdf"
+  },
+  {
+    "question": "What is a construct in AWS CDK?",
+    "ground_truth": "A construct is a reusable cloud component used to define AWS infrastructure. The AWS CDK Construct Library provides modular constructs that can be used, modified, and integrated to build applications and infrastructure.",
+    "source_doc": "awscdk.pdf"
+  },
+  {
+    "question": "What is the difference between low-level and high-level constructs in AWS CDK?",
+    "ground_truth": "Low-level constructs define individual AWS CloudFormation resources and their properties. High-level constructs help define larger application components more quickly and provide sensible, secure defaults for AWS resources.",
+    "source_doc": "awscdk.pdf"
+  },
+  {
+    "question": "What does the `cdk synth` command do?",
+    "ground_truth": "The `cdk synth` command synthesizes a CDK stack into an AWS CloudFormation template and deployment artifacts. It can be used to validate the CDK application and catch errors before deployment.",
+    "source_doc": "awscdk.pdf"
+  },
+  {
+    "question": "Why must an AWS environment be bootstrapped before deploying a CDK application?",
+    "ground_truth": "Bootstrapping provisions resources that the CDK uses to perform and manage deployments. These include an Amazon S3 bucket and Amazon ECR repository for assets, along with IAM roles used to provide permissions during development and deployment.",
+    "source_doc": "awscdk.pdf"
+  },
+  {
+    "question": "What is an AWS CDK stack?",
+    "ground_truth": "A CDK stack is a grouping of AWS resources defined in a CDK application and deployed as a single AWS CloudFormation stack. A CDK application can contain one or more stacks.",
+    "source_doc": "awscdk.pdf"
+  },
+  {
+    "question": "What prerequisites are required before deploying an AWS CDK application?",
+    "ground_truth": "Before deployment, configure security credentials for the CDK CLI, bootstrap the target AWS environment, configure an AWS environment for each CDK stack, and develop a CDK application containing at least one stack.",
+    "source_doc": "awscdk.pdf"
+  },
+  {
+    "question": "What is Amazon EventBridge?",
+    "ground_truth": "Amazon EventBridge is a serverless service that uses events to connect application components, making it easier to build scalable event-driven applications. It provides ways to ingest, filter, transform, and deliver events.",
+    "source_doc": "user-guide.pdf"
+  },
+  {
+    "question": "What are the two main ways EventBridge processes and delivers events?",
+    "ground_truth": "EventBridge uses event buses and pipes. Event buses route events from sources to zero or more targets, while pipes are intended for point-to-point integrations from a single source to a single target.",
+    "source_doc": "user-guide.pdf"
+  },
+  {
+    "question": "How do EventBridge event buses work?",
+    "ground_truth": "Event buses receive events and route them to zero or more targets. They can route events from sources such as applications, AWS services, and third-party software, with optional transformation before delivery.",
+    "source_doc": "user-guide.pdf"
+  },
+  {
+    "question": "What is the purpose of EventBridge Pipes?",
+    "ground_truth": "EventBridge Pipes supports point-to-point integrations. Each pipe receives events from a single source, can filter or enrich and transform them, and delivers them to a single target.",
+    "source_doc": "user-guide.pdf"
+  },
+  {
+    "question": "What does an EventBridge rule do?",
+    "ground_truth": "A rule defines criteria for matching incoming events, or can run on a schedule. When an event matches an event pattern, EventBridge sends it to the target or targets specified by the rule.",
+    "source_doc": "user-guide.pdf"
+  },
+  {
+    "question": "What is an event pattern in Amazon EventBridge?",
+    "ground_truth": "An event pattern defines the event structure and fields that a rule matches. EventBridge sends an event to the rule's targets when the event matches the pattern criteria.",
+    "source_doc": "user-guide.pdf"
+  },
+  {
+    "question": "In the getting-started example, what happens when an object is created in the configured Amazon S3 bucket?",
+    "ground_truth": "The S3 Object Created event matches the EventBridge rule's event pattern. EventBridge sends the matching event to an Amazon SNS topic, which sends an email notification to the configured address after the subscription is confirmed.",
+    "source_doc": "user-guide.pdf"
+  },
+  {
+    "question": "Which event fields does the example EventBridge rule use to match S3 object-creation events?",
+    "ground_truth": "The example matches the source aws.s3, the detail-type Object Created, and the name of the specific S3 bucket.",
+    "source_doc": "user-guide.pdf"
+  },
+  {
+    "question": "What is Amazon EventBridge Scheduler used for?",
+    "ground_truth": "EventBridge Scheduler is a serverless service for creating, running, and managing tasks centrally. It supports recurring schedules using cron and rate expressions, as well as one-time invocations, and provides options such as flexible time windows and retry limits.",
+    "source_doc": "user-guide.pdf"
+  },
+  {
+    "question": "What is the difference between an event bus and a pipe?",
+    "ground_truth": "An event bus is suited to routing events from many sources to many targets. A pipe is designed for a point-to-point integration, receiving events from one source and delivering them to one target, with optional filtering, enrichment, and transformation.",
+    "source_doc": "user-guide.pdf"
+  },
+  {
+    "question": "Why should users delete AWS resources created for an EventBridge tutorial when they no longer need them?",
+    "ground_truth": "The guide notes that deleting resources that are no longer being used helps prevent unnecessary charges to the AWS account.",
+    "source_doc": "user-guide.pdf"
+  },
+  {
+    "question": "What is Amazon VPC?",
+    "ground_truth": "Amazon Virtual Private Cloud (Amazon VPC) lets you launch AWS resources in a logically isolated virtual network that you define. This network resembles a traditional network operated in your own data center, while using AWS's scalable infrastructure.",
+    "source_doc": "vpc-ug.pdf"
+  },
+  {
+    "question": "What is the purpose of a route table in Amazon VPC?",
+    "ground_truth": "A route table contains rules called routes that determine where network traffic from a subnet or gateway is directed. Each route specifies a destination and the target, such as a gateway, network interface, or connection, through which the traffic should be sent.",
+    "source_doc": "vpc-ug.pdf"
+  },
+  {
+    "question": "How can instances in a private subnet initiate outbound internet connections without allowing unsolicited inbound connections from the internet?",
+    "ground_truth": "You can use a network address translation (NAT) device. Configure the NAT device with an Elastic IP address and connect it to the internet through an internet gateway, then route traffic from the private subnet through the NAT device.",
+    "source_doc": "vpc-ug.pdf"
   }
 ]
