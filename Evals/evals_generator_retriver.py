@@ -7,24 +7,21 @@ import json
 import re
 import time
 
-import boto3
-from pydantic import BaseModel
-from botocore.config import Config
-from botocore.exceptions import ClientError
-from src._3retrieval.retriever import load_index, load_bm25
-from rag_pipeline import ask
 from deepeval import evaluate
-from deepeval.test_case import LLMTestCase
-from .grok_model import GrokJudge
+from deepeval.evaluate import AsyncConfig, CacheConfig
 from deepeval.metrics import (
-    FaithfulnessMetric,
     AnswerRelevancyMetric,
-    ContextualRelevancyMetric,
     ContextualPrecisionMetric,
     ContextualRecallMetric,
+    ContextualRelevancyMetric,
+    FaithfulnessMetric,
 )
-from deepeval.models.base_model import DeepEvalBaseLLM
-from deepeval.evaluate import AsyncConfig, CacheConfig
+from deepeval.test_case import LLMTestCase
+
+from rag_pipeline import ask
+from src._3retrieval.retriever import load_bm25, load_index
+
+from .grok_model import GrokJudge
 
 
 def _sanitize_json(s: str) -> str:

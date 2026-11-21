@@ -1,12 +1,12 @@
-import json, requests
-import boto3
-import numpy as np
-import faiss
-import time
+import json
 import os
 import pickle
+
+import faiss
+import numpy as np
+import requests
 from dotenv import load_dotenv
-from sentence_transformers import SentenceTransformer, CrossEncoder
+from sentence_transformers import SentenceTransformer
 
 load_dotenv()
 # ---- CONFIG ----

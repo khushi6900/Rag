@@ -5,9 +5,11 @@ try.ipynb
 .venv
 .env
 __pycache__/
-.deepeval\
+.deepeval/
 Evals/*.json
 Evals/*.txt
 .deepeval
 aws_embeddings/
 embed_checkpoint.json
+Evals/bedrok_model.py
+

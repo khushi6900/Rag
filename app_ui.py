@@ -1,4 +1,5 @@
 import os
+
 import requests
 import streamlit as st
 
@@ -73,8 +74,7 @@ if prompt := st.chat_input("Ask about the AWS docs..."):
     st.session_state.messages.append({"role": "user", "content": prompt, "meta": None})
     with st.chat_message("user"):
         st.markdown(prompt)
-    with st.chat_message("assistant"):
-        with st.spinner("Searching the docs..."):
-            reply = ask_api(prompt)
+    with st.chat_message("assistant"), st.spinner("Searching the docs..."):
+        reply = ask_api(prompt)
     st.session_state.messages.append({"role": "assistant", **reply})
     st.rerun()

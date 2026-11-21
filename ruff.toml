@@ -1,0 +1,4 @@
+exclude = ["try.py", ".rag-venv", ".deepeval"]
+
+[lint]
+select = ["E9", "F"]   # syntax errors, undefined names, unused imports

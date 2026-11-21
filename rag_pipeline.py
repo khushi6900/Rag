@@ -1,7 +1,15 @@
-from src._3retrieval.retriever import hybrid_retrieve, load_bm25, load_index, INDEX_FILE, METADATA_FILE, BM25_FILE
+from dotenv import load_dotenv
+
+from src._3retrieval.retriever import (
+    BM25_FILE,
+    INDEX_FILE,
+    METADATA_FILE,
+    hybrid_retrieve,
+    load_bm25,
+    load_index,
+)
 from src._4prompts.prompt_templates import build_prompt
 from src._5llm.llm_client import generate_response
-from dotenv import load_dotenv
 
 load_dotenv()
 def ask(query, index, chunks, bm25, retrieve_k=5, top_k=3):

@@ -1,11 +1,19 @@
-import time, json, logging
-from fastapi import FastAPI, Request, HTTPException
+import json
+import logging
+import time
 from collections import defaultdict
 from contextlib import asynccontextmanager
+
+from fastapi import FastAPI, HTTPException, Request
+from langfuse import get_client
 from pydantic import BaseModel
-from langfuse import observe, get_client
-from opentelemetry import context as otel_context
-from src._3retrieval.retriever import (hybrid_retrieve, rerank_chunks, load_index, load_bm25)
+
+from src._3retrieval.retriever import (
+    hybrid_retrieve,
+    load_bm25,
+    load_index,
+    rerank_chunks,
+)
 from src._5llm.llm_client import generate_response_from_context
 
 state = {}
