@@ -1,13 +1,15 @@
-import os
 import json
+import os
 import time
+
 from deepeval import evaluate
-from deepeval.test_case import LLMTestCase
-from deepeval.metrics import FaithfulnessMetric, AnswerRelevancyMetric
 from deepeval.evaluate import AsyncConfig, CacheConfig
+from deepeval.metrics import AnswerRelevancyMetric, FaithfulnessMetric
+from deepeval.test_case import LLMTestCase
+
+from src._5llm.llm_client import generate_response_from_context
 
 from .grok_model import GrokJudge
-from src._5llm.llm_client import generate_response_from_context
 
 api_groq=os.getenv("GROQ_API_KEY")
 

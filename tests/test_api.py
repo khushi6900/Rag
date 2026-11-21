@@ -1,4 +1,5 @@
 from fastapi.testclient import TestClient
+
 from src.api import app
 
 # No `with` block, so the startup lifespan (index loading) is skipped.

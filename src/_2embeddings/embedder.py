@@ -1,14 +1,11 @@
 import json
-import boto3
-import numpy as np
-import faiss
-from tqdm import tqdm
-import re
-import time
-from rank_bm25 import BM25Okapi
 import pickle
-from sentence_transformers import SentenceTransformer
+import re
 
+import faiss
+from rank_bm25 import BM25Okapi
+from sentence_transformers import SentenceTransformer
+from tqdm import tqdm
 
 # ---- CONFIG ----
 REGION = "us-east-1"

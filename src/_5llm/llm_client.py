@@ -1,9 +1,8 @@
-import boto3
-import json
 import os
+
 from dotenv import load_dotenv
-from langchain_groq.chat_models  import ChatGroq
 from langchain_core.messages import HumanMessage
+from langchain_groq.chat_models import ChatGroq
 
 load_dotenv()
 # REGION = "us-east-1" 

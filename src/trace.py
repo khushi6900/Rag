@@ -1,9 +1,17 @@
-from dotenv import load_dotenv
-from langfuse import observe, get_client
-from src._3retrieval.retriever import (hybrid_retrieve, rerank_chunks, load_index, load_bm25)
-from src._5llm.llm_client import generate_response_from_context
-import json, time
+import json
+import time
+
 import numpy as np
+from dotenv import load_dotenv
+from langfuse import get_client, observe
+
+from src._3retrieval.retriever import (
+    hybrid_retrieve,
+    load_bm25,
+    load_index,
+    rerank_chunks,
+)
+from src._5llm.llm_client import generate_response_from_context
 
 load_dotenv()
 GOLDEN_DATA = "GoldenDataSet/golden_dataset.json"

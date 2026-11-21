@@ -1,14 +1,15 @@
 import json
-from dotenv import load_dotenv
+import os
+
 from deepeval import evaluate
-from deepeval.test_case import LLMTestCase
-from deepeval.metrics import ToxicityMetric
-from rag_pipeline import ask, load_index, load_bm25
-from src._3retrieval.retriever import INDEX_FILE, METADATA_FILE, BM25_FILE
-from deepeval.models import OllamaModel
 from deepeval.evaluate import AsyncConfig
+from deepeval.metrics import ToxicityMetric
+from deepeval.test_case import LLMTestCase
+from dotenv import load_dotenv
+
 from Evals.bedrok_model import BedrockJudge
-import os 
+from rag_pipeline import ask, load_bm25, load_index
+from src._3retrieval.retriever import BM25_FILE, INDEX_FILE, METADATA_FILE
 
 load_dotenv()
 GOLDEN_PATH = "GoldenDataSet/toxicity_dataset.json"
