@@ -22,7 +22,8 @@ def ask(query, index, chunks, bm25, retrieve_k=5, top_k=3):
     # print(f"Reranked to top {len(top_chunks)} chunks for query: '{query}'")
     # print(f"Top chunks: {[chunk['text'] for chunk in top_chunks]}")
     prompt = build_prompt(query, candidates)
-    answer = generate_response(prompt)
+    out = generate_response(prompt)
+    answer, usage = out if isinstance(out, tuple) else (out, {})
 
     sources = list({r["source"] for r in candidates})
     return {"answer": answer, "sources": sources, "retrieved_chunks": candidates}
