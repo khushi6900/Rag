@@ -28,14 +28,8 @@ jobs:
       - name: ruff check
         run: ruff check .
       - name: pytest
-        run: pytest -q
+        run: python -m pytest -q
         env: { JINA_API_KEY: dummy, GROQ_API_KEY: dummy }
-
-      - name: Run the toxicity eval script
-        run: python -m Evals.evals_toxicity
-        env:
-          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
-          JINA_API_KEY: ${{ secrets.JINA_API_KEY }}
 
   toxicity-eval:
     if: github.event_name == 'workflow_dispatch'
