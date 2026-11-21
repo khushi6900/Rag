@@ -39,7 +39,7 @@ jobs:
 
   toxicity-eval:
     if: github.event_name == 'workflow_dispatch'
-    neeeds: test
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
