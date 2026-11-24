@@ -12,4 +12,4 @@ Evals/*.txt
 aws_embeddings/
 embed_checkpoint.json
 Evals/bedrok_model.py
-
+api.py

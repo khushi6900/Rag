@@ -1,10 +1,13 @@
-import os
-
+import os, json, time
 import requests
 import streamlit as st
+from rag_pipeline import ask, load_index, load_bm25
 
 API_URL = os.getenv("API_URL", "http://127.0.0.1:8000")
 NO_ANSWER = "I cannot find the answer in the provided context."
+INDEX_FILE = "faiss_index.bin"
+BM25_FILE = "bm25_index.pkl"
+METADATA_FILE = "chunk_metadata.json"
 
 st.set_page_config(page_title="AWS Docs Assistant", page_icon="☁️")
 st.title("☁️ AWS Docs Assistant")
@@ -19,37 +22,33 @@ if "messages" not in st.session_state:
          "(Agent Toolkit, CloudSearch, CDK, EventBridge, VPC).", "meta": None}
     ]
 
+@st.cache_resource
+def load_resources():
+    index, chunks = load_index(INDEX_FILE, METADATA_FILE)
+    bm25 = load_bm25(BM25_FILE)
+    return index, chunks, bm25
 
 def send_feedback(idx: int, value: bool):
-    msg = st.session_state.messages[idx]
-    try:
-        http.post(f"{API_URL}/feedback",
-                  json={"trace_id": msg["meta"].get("trace_id", ""), "thumbs_up": value},
-                  timeout=10)
-    except requests.RequestException:
-        pass
-    msg["meta"]["feedback"] = "up" if value else "down"
+    meta = st.session_state.messages[idx]["meta"]
+    record = {"ts": time.time(), "question": meta["question"], "answer": meta["answer"], "thumbs_up": value}
+    print(json.dumps(record), flush=True)          # appears in the Streamlit Cloud logs
+    meta["feedback"] = "up" if value else "down"
 
-
+index, chunks, bm25 = load_resources()
 def ask_api(question: str) -> dict:
+    n = st.session_state.get("n_questions", 0)
+    if n >= 20:
+        return {"content": "Session limit reached (20 questions). Please come back later.", "meta": None}
+    st.session_state["n_questions"] = n + 1
     try:
-        r = http.post(f"{API_URL}/ask", json={"query": question}, timeout=60)
-        if r.status_code == 429:
-            return {"content": "Too many requests. Please wait a minute and try again.", "meta": None}
-        if r.status_code == 400:
-            return {"content": "Please enter a question of 1-500 characters.", "meta": None}
-        r.raise_for_status()
-        data = r.json()
-        refused = data["answer"].strip() == NO_ANSWER or not data.get("sources")
-        content = ("I couldn't find this in the AWS documentation I have indexed."
-                   if refused else data["answer"])
-        return {"content": content,
-                "meta": {"sources": [] if refused else data.get("sources", []),
-                         "trace_id": data.get("trace_id", ""), "feedback": None, "refused": refused}}
-    except requests.RequestException as e:
-        return {"content": f"The service is unavailable right now ({type(e).__name__}). Please try again shortly.",
-                "meta": None}
-
+        data = ask(question, index, chunks, bm25)
+    except Exception as e:
+        return {"content": f"Something went wrong ({type(e).__name__}). Please try again.", "meta": None}
+    refused = data["answer"].strip() == NO_ANSWER or not data.get("sources")
+    content = "I couldn't find this in the AWS documentation I have indexed." if refused else data["answer"]
+    return {"content": content,
+            "meta": {"sources": [] if refused else data["sources"], "question": question,
+                     "answer": data["answer"], "feedback": None, "refused": refused}}
 
 # render history
 for i, m in enumerate(st.session_state.messages):
@@ -60,7 +59,12 @@ for i, m in enumerate(st.session_state.messages):
             if meta["sources"]:
                 with st.expander("Sources"):
                     for s in meta["sources"]:
-                        st.write(f"- {s.get('source', 'unknown')} (relevance {s.get('score')})")
+                        if isinstance(s, dict):
+                            source = s.get("source", "unknown")
+                            score = s.get("score", "N/A")
+                            st.write(f"- {source} (relevance: {score})")
+                        else:
+                            st.write(f"- {s}")
             if meta["feedback"] is None:
                 c1, c2, _ = st.columns([1, 1, 8])
                 c1.button("👍", key=f"up_{i}", on_click=send_feedback, args=(i, True))
