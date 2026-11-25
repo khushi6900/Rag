@@ -1,10 +1,11 @@
 import json
+import os
+import re
+
 import boto3
 import pdfplumber
-import os
-from tqdm import tqdm
-import re
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+from tqdm import tqdm
 
 s3 = boto3.client('s3')
 bucket = 'aws-rag-docs'

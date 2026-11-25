@@ -1,15 +1,25 @@
-from deepeval.test_case import LLMTestCase, SingleTurnParams
-from deepeval.evaluate import AsyncConfig
-from deepeval.metrics import GEval  ##Used GEval for correctness and completeness and style of the response 
-from dotenv import load_dotenv
-from deepeval.metrics.g_eval import Rubric
-from deepeval import evaluate
-from rag_pipeline import ask
-from src._3retrieval.retriever import INDEX_FILE , METADATA_FILE , load_index, load_bm25, BM25_FILE
-import os 
-import time
 import json
+import os
+import time
+
+from deepeval import evaluate
+from deepeval.evaluate import AsyncConfig
+from deepeval.metrics import (
+    GEval,  ##Used GEval for correctness and completeness and style of the response 
+)
+from deepeval.metrics.g_eval import Rubric
+from deepeval.test_case import LLMTestCase, SingleTurnParams
+from dotenv import load_dotenv
+
 from Evals.bedrok_model import BedrockJudge
+from rag_pipeline import ask
+from src._3retrieval.retriever import (
+    BM25_FILE,
+    INDEX_FILE,
+    METADATA_FILE,
+    load_bm25,
+    load_index,
+)
 
 load_dotenv()
 

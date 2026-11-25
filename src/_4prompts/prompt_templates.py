@@ -1,4 +1,9 @@
-from src._3retrieval.retriever import retrieve_top_k, load_index, INDEX_FILE, METADATA_FILE
+from src._3retrieval.retriever import (
+    INDEX_FILE,
+    METADATA_FILE,
+    load_index,
+    retrieve_top_k,
+)
 
 RAG_ANSWER_PROMPT = """You are a helpful assistant answering questions using ONLY the context provided below.
 If the answer is not contained in the context, say "I don't have enough information to answer that" — do not make up an answer.

@@ -1,16 +1,16 @@
-import json, requests
-import boto3
-import numpy as np
-import faiss
-import time
+import json
 import os
 import pickle
+
+import faiss
+import numpy as np
+import requests
 from dotenv import load_dotenv
-from sentence_transformers import SentenceTransformer, CrossEncoder
+from sentence_transformers import SentenceTransformer
 
 load_dotenv()
 # ---- CONFIG ----
-REGION = "us-east-1"
+# REGION = "us-east-1"
 # EMBED_MODEL_ID = "amazon.titan-embed-text-v2:0"
 EMBED_MODEL_ID = "BAAI/bge-small-en-v1.5"
 INDEX_FILE = "faiss_index.bin"

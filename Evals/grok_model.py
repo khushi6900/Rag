@@ -1,18 +1,26 @@
-import json, re, os
-from typing import Optional
-from pydantic import BaseModel
-from pydantic_core import ValidationError
-from langchain_groq.chat_models  import ChatGroq
-from deepeval.models import DeepEvalBaseLLM
-from tenacity import retry, wait_exponential, stop_after_attempt, retry_if_exception_type
-from groq import RateLimitError
+import json
+import os
+import re
+
 import groq
 import httpcore
 import httpx
+from deepeval.models import DeepEvalBaseLLM
+from groq import RateLimitError
+from langchain_groq.chat_models import ChatGroq
+from pydantic import BaseModel
+from pydantic_core import ValidationError
+from tenacity import (
+    retry,
+    retry_if_exception_type,
+    stop_after_attempt,
+    wait_exponential,
+)
+
 
 class GrokJudge(DeepEvalBaseLLM):
     def __init__(self, model_id="openai/gpt-oss-20b",
-                api_key: Optional[str] = None, max_tokens=2048):
+                api_key: str | None = None, max_tokens=2048):
         self.model_id = model_id
         self.model = ChatGroq(
             model=model_id,
@@ -57,7 +65,7 @@ class GrokJudge(DeepEvalBaseLLM):
         stop=stop_after_attempt(5),
         reraise=True
     )
-    def generate(self, prompt: str, schema: Optional[type[BaseModel]] = None):
+    def generate(self, prompt: str, schema: type[BaseModel] | None = None):
         if schema is None:
             return self.model.invoke(prompt).content
         res = self.model.invoke(self._build_prompt(prompt, schema)).content
@@ -76,7 +84,7 @@ class GrokJudge(DeepEvalBaseLLM):
         stop=stop_after_attempt(5),
         reraise=True
     )
-    async def a_generate(self, prompt: str, schema: Optional[type[BaseModel]] = None):
+    async def a_generate(self, prompt: str, schema: type[BaseModel] | None = None):
         if schema is None:
             return (await self.model.ainvoke(prompt)).content
         res = (await self.model.ainvoke(self._build_prompt(prompt, schema))).content

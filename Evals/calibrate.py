@@ -1,5 +1,11 @@
 import json
-from src._3retrieval.retriever import hybrid_retrieve, rerank_chunks, load_index, load_bm25
+
+from src._3retrieval.retriever import (
+    hybrid_retrieve,
+    load_bm25,
+    load_index,
+    rerank_chunks,
+)
 
 index, chunks = load_index(index_file="faiss_index.bin", metadata_file="chunk_metadata.json")
 bm25 = load_bm25("bm25_index.pkl")
@@ -12,6 +18,7 @@ ins = [g["question"] for g in json.load(open("GoldenDataSet/golden_dataset.json"
 oos = [g["question"] for g in json.load(open("GoldenDataSet/golden_out_of_scope.json"))]
 
 import time
+
 a = []
 for q in ins: a.append(top_score(q)); time.sleep(2)     # keeps Jina under its rate limit
 b = []

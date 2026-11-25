@@ -1,0 +1,61 @@
+# Path in your repo: .github/workflows/ci-toxicity-test.yml
+
+name: CI - Toxicity Eval Test
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out your code
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          {python-version: "3.13", cache: "pip"}
+      - name: Install PyTorch
+        run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt pytest ruff
+
+      - name: ruff check
+        run: ruff check .
+      # - name: pytest
+      #   run: python -m pytest -q
+      #   env: { JINA_API_KEY: dummy, GROQ_API_KEY: dummy }
+
+  toxicity-eval:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with: {lfs: true}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          {python-version: "3.13", cache: "pip"}
+      
+      - name: Install PyTorch
+        run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt deepeval==4.2.6 tenacity==9.1.4
+
+      - name: Run the toxicity eval script
+        run: python -m Evals.evals_toxicity
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          JINA_API_KEY: ${{ secrets.JINA_API_KEY }}
+          EVAL_LIMIT: ${{ github.event_name == 'pull_request' && '10' || '0'}}
