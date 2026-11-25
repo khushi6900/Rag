@@ -28,6 +28,10 @@ if os.path.exists(CACHE_PATH):
 with open(file = GOLDEN_PATH, mode="r") as f:
     golden_data = json.load(f)
 
+limit = int(os.getenv("EVAL_LIMIT", "0"))
+if limit:
+    golden_data = golden_data[:limit]
+    
 async_config = AsyncConfig(
     run_async = False,
     max_concurrent = 2
