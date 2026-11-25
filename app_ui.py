@@ -8,11 +8,11 @@ from rag_pipeline import load_bm25, load_index, retrieve_context
 from src._3retrieval.retriever import BM25_FILE, INDEX_FILE, METADATA_FILE
 from src._5llm.llm_client import stream_response_from_context
 
-NO_ANSWER = getattr(rp, "NO_ANSWER", "I cannot find the answer in the provided context.")
+NO_ANSWER = getattr(rp, "NO_ANSWER", "I couldn't find this in the AWS documentation I have indexed (Agent Toolkit, CloudSearch, CDK, EventBridge, VPC). Try rephrasing, or ask about one of those topics.")
 MAX_QUESTIONS_PER_SESSION = 20
 
-st.set_page_config(page_title="AWS Docs Assistant", page_icon="☁️")
-st.title("☁️ AWS Docs Assistant")
+st.set_page_config(page_title="AWS Docs Assistant")
+st.title("AWS Docs Assistant")
 st.caption("Answers come only from the indexed AWS user guides. Questions outside them are declined.")
 
 
@@ -44,8 +44,32 @@ def send_feedback(idx: int, value: bool):
     print(json.dumps(record), flush=True)  # visible in the Streamlit Cloud logs
     meta["feedback"] = "up" if value else "down"
 
+import re
+
+GREETING = (
+    "Hi! I'm an assistant for AWS documentation. I can answer questions about the Agent Toolkit for AWS, "
+    "Amazon CloudSearch, the AWS CDK, Amazon EventBridge and Amazon VPC. Try: "
+    "\"What is an event pattern in EventBridge?\""
+)
+_HI = r"(?:hi+|hello|hey+|good (?:morning|afternoon|evening))(?: there)?"
+SMALLTALK = [
+    (rf"{_HI}", GREETING),
+    (rf"(?:{_HI}\s*)?(?:how can you help(?: me)?|what can you do|who are you|what are you|what do you do)", GREETING),
+    (r"(?:thanks|thank you|thx|great|cool|ok|okay)", "You're welcome! Ask me anything else about the AWS docs."),
+    (r"(?:bye|goodbye|see you)", "Goodbye! Come back anytime."),
+]
+
+def smalltalk_reply(q: str):
+    t = " ".join(re.sub(r"[^\w\s']", " ", q.lower()).split())
+    for pattern, reply in SMALLTALK:
+        if re.fullmatch(pattern, t):
+            return reply
+    return None
 
 def run_question(question: str) -> dict:
+    reply = smalltalk_reply(question)
+    if reply:
+        return {"content": reply, "meta": None}
     if st.session_state.n_questions >= MAX_QUESTIONS_PER_SESSION:
         return {"content": "Session limit reached. Please come back later.", "meta": None}
     st.session_state.n_questions += 1
