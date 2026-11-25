@@ -27,7 +27,7 @@ def ask(query, index, chunks, bm25, retrieve_k=5, top_k=3):
     top, refused = retrieve_context(query, index, chunks, bm25, retrieve_k=retrieve_k, top_k=top_k)
     if refused:
         return {"answer": NO_ANSWER, "sources": [], "usage": {}}
-    answer, usage = generate_response_from_context(query, [c["content"] for c in top])
+    answer, usage = generate_response_from_context(query, [c["text"] for c in top])
     return {"answer": answer, "sources": sorted({c["source"] for c in top}), "retrieved_chunks": top, "usage": usage}
 
 if __name__ == "__main__":
