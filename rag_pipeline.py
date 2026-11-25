@@ -7,26 +7,28 @@ from src._3retrieval.retriever import (
     hybrid_retrieve,
     load_bm25,
     load_index,
+    rerank_chunks,
 )
-from src._4prompts.prompt_templates import build_prompt
-from src._5llm.llm_client import generate_response
+from src._5llm.llm_client import generate_response_from_context
 
 load_dotenv()
-def ask(query, index, chunks, bm25, retrieve_k=5, top_k=3):
-    candidates = hybrid_retrieve(query,index, chunks, bm25, k=retrieve_k)
+REFUSE_BELOW = 0.5
+NO_ANSWER = "I cannot find the answer in the provided context."
+
+def retrieve_context(query, index, chunks, bm25, retrieve_k=30, top_k=5):
+    candidates = hybrid_retrieve(query=query, index=index, chunks=chunks, bm25=bm25, k=retrieve_k)
     if not candidates:
-        return {"answer": "I don't have enough information to answer that.", "sources": []}
-    # print(f"Retrieved {len(candidates)} candidate chunks for query: '{query}'")
+        return [], True
+    top = rerank_chunks(query, candidates, top_k=top_k)
+    refused = not top[0].get("fallback") and top[0]["rerank_score"] < REFUSE_BELOW
+    return top, refused
 
-    # top_chunks = rerank_chunks(query, candidates, top_k=top_k)
-    # print(f"Reranked to top {len(top_chunks)} chunks for query: '{query}'")
-    # print(f"Top chunks: {[chunk['text'] for chunk in top_chunks]}")
-    prompt = build_prompt(query, candidates)
-    out = generate_response(prompt)
-    answer, usage = out if isinstance(out, tuple) else (out, {})
-
-    sources = list({r["source"] for r in candidates})
-    return {"answer": answer, "sources": sources, "retrieved_chunks": candidates}
+def ask(query, index, chunks, bm25, retrieve_k=5, top_k=3):
+    top, refused = retrieve_context(query, index, chunks, bm25, retrieve_k=retrieve_k, top_k=top_k)
+    if refused:
+        return {"answer": NO_ANSWER, "sources": [], "usage": {}}
+    answer, usage = generate_response_from_context(query, [c["text"] for c in top])
+    return {"answer": answer, "sources": sorted({c["source"] for c in top}), "retrieved_chunks": top, "usage": usage}
 
 if __name__ == "__main__":
     index, chunks = load_index(INDEX_FILE, METADATA_FILE)

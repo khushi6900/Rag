@@ -71,6 +71,28 @@ def generate_response_from_context(
         temperature=temperature
     )
 
+def stream_response_from_context(query: str, context: list[str]):
+    context_text = "\n\n".join(context)
+    prompt = f"""
+            You are a helpful assistant.
+    
+            Answer ONLY using the provided context.
+            If the answer is not contained in the context, say:
+            "I don't have enough information to answer that"
+    
+            Context:
+            {context_text}
+    
+            Question:
+            {query}
+    
+            Answer:
+            """
+    
+    for chunk in model.stream(prompt):
+        if chunk.content:
+            yield chunk.content
+
 if __name__ == "__main__":
     prompt = "What is Amazon API Gateway?"
     response = generate_response(prompt)
