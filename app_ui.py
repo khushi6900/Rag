@@ -4,7 +4,7 @@ import time
 import streamlit as st
 
 import rag_pipeline as rp
-from rag_pipeline import ask, load_bm25, load_index, retrieve_context
+from rag_pipeline import load_bm25, load_index, retrieve_context
 from src._3retrieval.retriever import BM25_FILE, INDEX_FILE, METADATA_FILE
 from src._5llm.llm_client import stream_response_from_context
 

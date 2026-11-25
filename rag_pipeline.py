@@ -9,8 +9,7 @@ from src._3retrieval.retriever import (
     load_index,
     rerank_chunks,
 )
-from src._4prompts.prompt_templates import build_prompt
-from src._5llm.llm_client import generate_response, generate_response_from_context
+from src._5llm.llm_client import generate_response_from_context
 
 load_dotenv()
 REFUSE_BELOW = 0.5
